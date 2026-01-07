@@ -94,11 +94,12 @@ Access the notebook via the forwarded port (Codespaces will show a notification)
 
 ### Using GPU in Codespaces
 
-GitHub Codespaces can provide GPU-enabled machines:
+GitHub Codespaces can provide GPU-enabled machines for machine learning workloads.
 
 1. **Create GPU Codespace:**
-   - Currently requires GitHub Enterprise or special access
-   - Select a GPU-enabled machine type when creating
+   - GPU-enabled Codespaces are available with GitHub Team and Enterprise Cloud
+   - Individual availability may vary - check [GitHub Codespaces documentation](https://docs.github.com/en/codespaces/developing-in-a-codespace/getting-started-with-github-codespaces-for-machine-learning) for current status
+   - Select a GPU-enabled machine type when creating the codespace
 
 2. **Verify GPU availability:**
    ```bash
@@ -106,7 +107,7 @@ GitHub Codespaces can provide GPU-enabled machines:
    nvidia-smi
    ```
 
-**Note:** GPU Codespaces may have limited availability and higher costs.
+**Note:** GPU Codespaces availability and pricing varies by plan. Check the [GitHub pricing page](https://github.com/pricing) for current information.
 
 ## Codespace Management
 

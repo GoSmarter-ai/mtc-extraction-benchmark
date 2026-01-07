@@ -1,6 +1,7 @@
 #!/bin/bash
 # Quick validation script for the devcontainer setup
 # Run this after opening the devcontainer to verify everything is working
+# Note: We intentionally don't use 'set -e' because we want to show all validation results
 
 echo "====== DevContainer Validation ======"
 echo ""

@@ -367,16 +367,48 @@ Make sure to be accurate and thorough in your extraction..."""
 
 ```python
 from functools import lru_cache
+import hashlib
 
 @lru_cache(maxsize=1000)
-def extract_cached(text_hash: str, text: str) -> Dict:
-    """Cache extraction results to avoid redundant API calls."""
+def extract_cached(text_hash: str) -> Dict:
+    """Cache extraction results to avoid redundant API calls.
+    
+    Args:
+        text_hash: MD5 hash of the text to extract from
+        
+    Note: The actual text must be retrieved separately.
+    This is a simplified example - in production, you'd want
+    a more robust caching mechanism.
+    """
+    # In a real implementation, you'd retrieve the text from a store
+    # using the hash, or pass both hash and text but cache by hash
     return extract_with_github_models(text)
 
 # Use it
-import hashlib
 text_hash = hashlib.md5(ocr_text.encode()).hexdigest()
-result = extract_cached(text_hash, ocr_text)
+# Store text separately if needed
+result = extract_cached(text_hash)
+
+# Better approach: Use a proper cache with both key and value
+from functools import wraps
+
+def cache_by_text_hash(func):
+    """Decorator to cache function results by text hash."""
+    cache = {}
+    
+    @wraps(func)
+    def wrapper(text: str) -> Dict:
+        text_hash = hashlib.md5(text.encode()).hexdigest()
+        if text_hash not in cache:
+            cache[text_hash] = func(text)
+        return cache[text_hash]
+    
+    return wrapper
+
+@cache_by_text_hash
+def extract_with_cache(text: str) -> Dict:
+    """Extract with automatic caching by text hash."""
+    return extract_with_github_models(text)
 ```
 
 ## Example: Complete Integration

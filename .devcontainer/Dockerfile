@@ -69,7 +69,7 @@ RUN pip install --no-cache-dir \
     pillow \
     opencv-python-headless
 
-# Install PyTorch with CUDA support
+# Install PyTorch with CUDA support (using cu121 for broader compatibility)
 RUN pip install --no-cache-dir \
     torch \
     torchvision \
