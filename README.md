@@ -116,3 +116,52 @@ This project will be considered successful if:
 - Building reproducible ML pipelines
 - Designing evaluation frameworks for unstructured data extraction
 - Clear technical communication and documentation
+
+## Getting Started
+
+### Development Environment
+
+This project includes a complete development container configuration for consistent and reproducible development environments.
+
+**Quick Start with GitHub Codespaces:**
+1. Click the "Code" button above
+2. Select "Codespaces" tab
+3. Click "Create codespace on main"
+
+**Or use VS Code locally:**
+1. Install [Docker](https://www.docker.com/products/docker-desktop) and [VS Code](https://code.visualstudio.com/)
+2. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Clone this repository
+4. Open in VS Code and click "Reopen in Container" when prompted
+
+The devcontainer includes:
+- Python 3.11 with all required ML/AI packages
+- OCR tools (Tesseract, PaddleOCR, DocTR)
+- PyTorch with CUDA support for GPU acceleration
+- Jupyter Lab for notebook-based development
+- All document processing libraries
+
+### Documentation
+
+- **[DevContainer Iteration Guide](docs/devcontainer-iteration.md)**: Learn how to modify and customize the development environment
+- **[GitHub Codespaces Guide](docs/codespaces-guide.md)**: Complete guide to working with GitHub Codespaces
+- **[GitHub Models Integration](docs/github-models-integration.md)**: How to use GitHub Models API for LLM-based extraction
+
+### Project Structure
+
+```
+mtc-extraction-benchmark/
+├── .devcontainer/          # Development container configuration
+│   ├── devcontainer.json   # VS Code devcontainer settings
+│   └── Dockerfile          # Container image with dependencies
+├── docs/                   # Documentation
+│   ├── devcontainer-iteration.md
+│   ├── codespaces-guide.md
+│   └── github-models-integration.md
+├── data/                   # Dataset directory (not in repo)
+├── src/                    # Source code (to be created)
+├── notebooks/              # Jupyter notebooks (to be created)
+├── scripts/                # Utility scripts (to be created)
+├── tests/                  # Test suite (to be created)
+└── README.md              # This file
+```
