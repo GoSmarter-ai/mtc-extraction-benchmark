@@ -1,5 +1,7 @@
 # MTC Extraction Benchmark — Open-Source Document AI for Mill/Material Test Certificates
 
+> **Quick Start**: New to the project? See [QUICKSTART.md](QUICKSTART.md) for a 5-minute setup guide!
+
 ## Overview
 
 This project explores the **implementation, accuracy, and comparative performance** of multiple **open-source AI solutions** for extracting structured information from **Mill Certificates / Material Test Certificates (MTCs)**.

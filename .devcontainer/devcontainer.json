@@ -49,7 +49,7 @@
 	"forwardPorts": [8888, 5000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install --upgrade pip && echo 'Container ready!'",
+	"postCreateCommand": "pip install --upgrade pip && echo 'Container ready! Run: bash .devcontainer/validate-setup.sh to validate your setup'",
 
 	// Configure settings for running containers.
 	"mounts": [
