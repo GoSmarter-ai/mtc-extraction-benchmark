@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
+# Import GPG keys for repositories
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F23C5A6CF475977595C89F51BA6932366A755776
+
 # Add deadsnakes PPA for Python 3.11
 RUN add-apt-repository ppa:deadsnakes/ppa
 
