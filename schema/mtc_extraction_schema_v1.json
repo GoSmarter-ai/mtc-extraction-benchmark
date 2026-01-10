@@ -1,0 +1,202 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "title": "Mill Test Certificate v1",
+    "type": "object",
+    "required": [
+        "document",
+        "traceability",
+        "chemical_composition",
+        "mechanical_properties"
+    ],
+    "properties": {
+        "document": {
+            "type": "object",
+            "required": [
+                "certificate_number",
+                "issuing_date",
+                "standard"
+            ],
+            "properties": {
+                "certificate_number": {
+                    "type": "string"
+                },
+                "issuing_date": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "standard": {
+                    "type": "string",
+                    "description": "e.g. EN 10204 3.1"
+                },
+                "customer": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "order_number": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            }
+        },
+        "traceability": {
+            "type": "object",
+            "required": [
+                "heat_number"
+            ],
+            "properties": {
+                "heat_number": {
+                    "type": "string"
+                },
+                "consignment_number": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "vessel_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            }
+        },
+        "product": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "quality": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "production_process": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            }
+        },
+        "chemical_composition": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "element",
+                    "actual",
+                    "unit"
+                ],
+                "properties": {
+                    "element": {
+                        "type": "string",
+                        "enum": [
+                            "C",
+                            "Si",
+                            "Mn",
+                            "P",
+                            "S",
+                            "Ni",
+                            "Cr",
+                            "Mo",
+                            "Cu",
+                            "V",
+                            "N",
+                            "B"
+                        ]
+                    },
+                    "actual": {
+                        "type": [
+                            "number",
+                            "null"
+                        ]
+                    },
+                    "unit": {
+                        "type": "string",
+                        "enum": [
+                            "%"
+                        ]
+                    }
+                }
+            }
+        },
+        "mechanical_properties": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "property",
+                    "value",
+                    "unit"
+                ],
+                "properties": {
+                    "property": {
+                        "type": "string",
+                        "enum": [
+                            "yield_strength",
+                            "tensile_strength",
+                            "elongation",
+                            "carbon_equivalent",
+                            "rm_re_ratio",
+                            "radiation",
+                            "rebend_test"
+                        ]
+                    },
+                    "value": {
+                        "type": [
+                            "number",
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "unit": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "MPa",
+                            "%",
+                            "ratio",
+                            "R/h",
+                            null
+                        ]
+                    }
+                }
+            }
+        },
+        "approval": {
+            "type": "object",
+            "properties": {
+                "certificate_of_approval_number": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "form_number": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cares_approved": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                }
+            }
+        }
+    }
+}
