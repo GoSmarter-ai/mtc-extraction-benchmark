@@ -1,185 +1,173 @@
 import os
-import json
 from pathlib import Path
-from typing import List, Dict, Any, Optional
-import logging
+import cv2
+import numpy as np
+from PIL import Image
+from paddleocr import PaddleOCR
+from pdf2image import convert_from_path
+import gc
 
-try:
-    from paddleocr import PaddleOCR
-    PADDLEOCR_AVAILABLE = True
-except ImportError:
-    PADDLEOCR_AVAILABLE = False
-    logging.warning("PaddleOCR not installed. Run: pip install paddlepaddle paddleocr")
-
-
-class PaddleOCRExtractor:
-    def __init__(self, lang='en', use_angle_cls=True, show_log=False):
-
-        if not PADDLEOCR_AVAILABLE:
-            raise ImportError("PaddleOCR not installed. Install with: pip install paddlepaddle paddleocr")
-        
-        self.ocr = PaddleOCR(use_angle_cls=use_angle_cls, lang=lang, show_log=show_log)
-        self.logger = logging.getLogger(__name__)
+def process_pdf_with_paddleocr(input_dir, output_dir):
+    """
+    Process PDF files using PaddleOCR and save results with bounding boxes.
+    Memory-optimized version.
     
-    def extract_from_image(self, image_path: str) -> Dict[str, Any]:
-        if not os.path.exists(image_path):
-            raise FileNotFoundError(f"Image not found: {image_path}")
-        
-        self.logger.info(f"Processing: {image_path}")
-        
-        # Run OCR
-        result = self.ocr.ocr(image_path, cls=True)
-        
-        # Parse results
-        extracted_data = {
-            'source_file': os.path.basename(image_path),
-            'text_regions': [],
-            'full_text': [],
-            'metadata': {
-                'total_regions': 0,
-                'avg_confidence': 0.0,
-                'high_confidence_count': 0  # confidence > 0.9
-            }
-        }
-        
-        if not result or not result[0]:
-            self.logger.warning(f"No text detected in {image_path}")
-            return extracted_data
-        
-        confidences = []
-        
-        for line in result[0]:
-            # line[0] = bounding box coordinates [[x1,y1], [x2,y2], [x3,y3], [x4,y4]]
-            # line[1] = (text, confidence)
-            bbox = line[0]
-            text, confidence = line[1]
-            
-            # Store structured data
-            region = {
-                'text': text,
-                'confidence': round(confidence, 4),
-                'bbox': bbox,
-                'bbox_simplified': {
-                    'x': int(min(p[0] for p in bbox)),
-                    'y': int(min(p[1] for p in bbox)),
-                    'width': int(max(p[0] for p in bbox) - min(p[0] for p in bbox)),
-                    'height': int(max(p[1] for p in bbox) - min(p[1] for p in bbox))
-                }
-            }
-            
-            extracted_data['text_regions'].append(region)
-            extracted_data['full_text'].append(text)
-            confidences.append(confidence)
-            
-            if confidence > 0.9:
-                extracted_data['metadata']['high_confidence_count'] += 1
-        
-        # Calculate metadata
-        extracted_data['metadata']['total_regions'] = len(extracted_data['text_regions'])
-        if confidences:
-            extracted_data['metadata']['avg_confidence'] = round(sum(confidences) / len(confidences), 4)
-        
-        self.logger.info(f"Extracted {len(extracted_data['text_regions'])} text regions "
-                        f"(avg confidence: {extracted_data['metadata']['avg_confidence']:.2%})")
-        
-        return extracted_data
+    Args:
+        input_dir: Directory containing input PDF files
+        output_dir: Directory to save output images and text files
+    """
+    # Check if directories exist
+    if not os.path.exists(input_dir):
+        print(f"Error: Input directory '{input_dir}' does not exist!")
+        return
     
-    def save_results(self, extracted_data: Dict[str, Any], output_dir: str, 
-                     save_boxes: bool = True, save_text: bool = True) -> Dict[str, str]:
-        os.makedirs(output_dir, exist_ok=True)
-        
-        source_file = extracted_data['source_file']
-        base_name = Path(source_file).stem
-        
-        saved_files = {}
-        
-        # Save bounding boxes as JSON
-        if save_boxes:
-            boxes_path = os.path.join(output_dir, 'boxes', f'{base_name}.json')
-            os.makedirs(os.path.dirname(boxes_path), exist_ok=True)
-            
-            with open(boxes_path, 'w', encoding='utf-8') as f:
-                json.dump(extracted_data['text_regions'], f, indent=2, ensure_ascii=False)
-            
-            saved_files['boxes'] = boxes_path
-            self.logger.info(f"Saved boxes: {boxes_path}")
-        
-        # Save plain text
-        if save_text:
-            text_path = os.path.join(output_dir, 'text', f'{base_name}.txt')
-            os.makedirs(os.path.dirname(text_path), exist_ok=True)
-            
-            with open(text_path, 'w', encoding='utf-8') as f:
-                f.write('\n'.join(extracted_data['full_text']))
-            
-            saved_files['text'] = text_path
-            self.logger.info(f"Saved text: {text_path}")
-        
-        # Save metadata
-        metadata_path = os.path.join(output_dir, 'metadata', f'{base_name}_meta.json')
-        os.makedirs(os.path.dirname(metadata_path), exist_ok=True)
-        
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            json.dump(extracted_data['metadata'], f, indent=2)
-        
-        saved_files['metadata'] = metadata_path
-        
-        return saved_files
+    if not os.path.exists(output_dir):
+        print(f"Error: Output directory '{output_dir}' does not exist!")
+        return
     
-    def process_directory(self, input_dir: str, output_dir: str, 
-                         file_extensions: List[str] = ['.png', '.jpg', '.jpeg', '.pdf']) -> Dict[str, Any]:
-
-        input_path = Path(input_dir)
+    # Initialize PaddleOCR with optimized settings
+    print("Initializing PaddleOCR (this may take a moment)...")
+    ocr = PaddleOCR(use_textline_orientation=True, lang='en')
+    print("PaddleOCR initialized!\n")
+    
+    # Get all PDF files from input directory
+    input_path = Path(input_dir)
+    pdf_files = list(input_path.glob('*.pdf'))
+    
+    if not pdf_files:
+        print(f"No PDF files found in {input_dir}")
+        return
+    
+    print(f"Found {len(pdf_files)} PDF file(s)\n")
+    
+    # Process each PDF
+    for pdf_file in pdf_files:
+        print(f"Processing: {pdf_file.name}")
         
-        if not input_path.exists():
-            raise FileNotFoundError(f"Input directory not found: {input_dir}")
+        # Convert PDF to images with reduced DPI to save memory
+        try:
+            # Use 200 DPI instead of 300 to reduce memory usage
+            print(f"  Converting PDF to images (DPI=200)...")
+            images = convert_from_path(str(pdf_file), dpi=200)
+            print(f"  Converted to {len(images)} page(s)")
+        except Exception as e:
+            print(f"  Error converting PDF: {e}")
+            continue
         
-        # Find all image files
-        image_files = []
-        for ext in file_extensions:
-            image_files.extend(input_path.glob(f'*{ext}'))
-        
-        if not image_files:
-            self.logger.warning(f"No images found in {input_dir}")
-            return {}
-        
-        self.logger.info(f"Found {len(image_files)} images to process")
-        
-        # Process each image
-        results = {
-            'processed': 0,
-            'failed': 0,
-            'total_regions': 0,
-            'files': []
-        }
-        
-        for image_file in image_files:
+        # Process each page
+        for page_num, pil_image in enumerate(images, 1):
+            print(f"  Processing page {page_num}/{len(images)}...")
+            
             try:
-                extracted = self.extract_from_image(str(image_file))
-                self.save_results(extracted, output_dir)
+                # Resize image if too large (max width 2000px to save memory)
+                max_width = 2000
+                if pil_image.width > max_width:
+                    ratio = max_width / pil_image.width
+                    new_height = int(pil_image.height * ratio)
+                    pil_image = pil_image.resize((max_width, new_height), Image.LANCZOS)
+                    print(f"    Resized image to {max_width}x{new_height}")
                 
-                results['processed'] += 1
-                results['total_regions'] += extracted['metadata']['total_regions']
-                results['files'].append(str(image_file))
+                # Convert PIL Image to numpy array for OpenCV
+                img_array = np.array(pil_image)
+                img_array = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
+                
+                # Clear PIL image to free memory
+                del pil_image
+                gc.collect()
+                
+                # Run OCR
+                print(f"    Running OCR...")
+                result = ocr.predict(img_array)
+                print(f"    OCR complete!")
+                
+                # Create output filename
+                base_name = pdf_file.stem
+                page_suffix = f"_page{page_num}" if len(images) > 1 else ""
+                
+                # Draw bounding boxes and save image
+                img_with_boxes = img_array.copy()
+                text_output = []
+                text_count = 0
+                
+                # Handle result
+                if result and len(result) > 0 and result[0]:
+                    ocr_result = result[0] if isinstance(result[0], list) else result
+                    
+                    for line in ocr_result:
+                        try:
+                            # Each line contains: [box_coordinates, (text, confidence)]
+                            box = line[0]
+                            text = line[1][0]
+                            confidence = line[1][1]
+                            
+                            # Convert box coordinates to integer
+                            box = np.array(box, dtype=np.int32)
+                            
+                            # Draw bounding box
+                            cv2.polylines(img_with_boxes, [box], True, (0, 255, 0), 2)
+                            
+                            # Add text above the box (truncate if too long)
+                            display_text = text[:30] if len(text) > 30 else text
+                            cv2.putText(img_with_boxes, display_text, 
+                                       (box[0][0], max(box[0][1] - 10, 20)),
+                                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)
+                            
+                            # Store text with confidence
+                            text_output.append(f"{text} (confidence: {confidence:.4f})")
+                            text_count += 1
+                            
+                        except (IndexError, TypeError) as e:
+                            print(f"    Warning: Skipping malformed result: {e}")
+                            continue
+                
+                print(f"    Extracted {text_count} text blocks")
+                
+                # Save annotated image
+                output_img_path = os.path.join(output_dir, f"{base_name}{page_suffix}_annotated.jpg")
+                cv2.imwrite(output_img_path, img_with_boxes, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                print(f"    ✓ Saved: {base_name}{page_suffix}_annotated.jpg")
+                
+                # Save original image
+                output_orig_path = os.path.join(output_dir, f"{base_name}{page_suffix}_original.jpg")
+                cv2.imwrite(output_orig_path, img_array, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                print(f"    ✓ Saved: {base_name}{page_suffix}_original.jpg")
+                
+                # Save extracted text
+                output_txt_path = os.path.join(output_dir, f"{base_name}{page_suffix}_text.txt")
+                with open(output_txt_path, 'w', encoding='utf-8') as f:
+                    f.write(f"OCR Results for: {pdf_file.name} - Page {page_num}\n")
+                    f.write("=" * 80 + "\n\n")
+                    for text in text_output:
+                        f.write(text + "\n")
+                print(f"    ✓ Saved: {base_name}{page_suffix}_text.txt")
+                
+                # Clean up memory after each page
+                del img_array, img_with_boxes, result, text_output
+                gc.collect()
                 
             except Exception as e:
-                self.logger.error(f"Failed to process {image_file}: {e}")
-                results['failed'] += 1
+                print(f"    Error processing page {page_num}: {e}")
+                continue
         
-        self.logger.info(f"Processing complete: {results['processed']} successful, {results['failed']} failed")
-        
-        return results
+        # Clean up after processing all pages of this PDF
+        del images
+        gc.collect()
+        print(f"  ✓ Completed: {pdf_file.name}\n")
+    
+    print(f"✓ All processing complete! Results saved to: {output_dir}")
 
 
 if __name__ == "__main__":
-    # Quick test
-    logging.basicConfig(level=logging.INFO)
+    # Set your input and output directories
+    INPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/raw/diler"
+    OUTPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/processed"
     
-    extractor = PaddleOCRExtractor()
+    print("=" * 60)
+    print("PaddleOCR PDF Processor (Memory Optimized)")
+    print("=" * 60)
+    print(f"Input directory:  {INPUT_DIR}")
+    print(f"Output directory: {OUTPUT_DIR}")
+    print("=" * 60 + "\n")
     
-    # Example usage
-    print("PaddleOCR Extractor initialized successfully!")
-    print("\nUsage example:")
-    print("  extractor = PaddleOCRExtractor()")
-    print("  data = extractor.extract_from_image('data/raw/dataset/page_1.png')")
-    print("  extractor.save_results(data, 'data/processed')")
+    # Process PDFs
+    process_pdf_with_paddleocr(INPUT_DIR, OUTPUT_DIR)
