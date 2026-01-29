@@ -8,14 +8,6 @@ from pdf2image import convert_from_path
 import gc
 
 def process_pdf_with_paddleocr(input_dir, output_dir):
-    """
-    Process PDF files using PaddleOCR and save results with bounding boxes.
-    Memory-optimized version.
-    
-    Args:
-        input_dir: Directory containing input PDF files
-        output_dir: Directory to save output images and text files
-    """
     # Check if directories exist
     if not os.path.exists(input_dir):
         print(f"Error: Input directory '{input_dir}' does not exist!")
@@ -77,8 +69,21 @@ def process_pdf_with_paddleocr(input_dir, output_dir):
                 
                 # Run OCR
                 print(f"    Running OCR...")
-                result = ocr.predict(img_array)
+                # predict() returns a generator, need to convert to list
+                results = list(ocr.predict(img_array))
                 print(f"    OCR complete!")
+                print(f"    DEBUG: Number of results: {len(results)}")
+                if results and len(results) > 0:
+                    print(f"    DEBUG: Result type: {type(results[0])}")
+                    if hasattr(results[0], 'keys'):
+                        print(f"    DEBUG: Result keys: {list(results[0].keys())}")
+                        if 'rec_texts' in results[0]:
+                            print(f"    DEBUG: rec_texts length: {len(results[0]['rec_texts'])}")
+                            if len(results[0]['rec_texts']) > 0:
+                                print(f"    DEBUG: First text: {results[0]['rec_texts'][0]}")
+                        if 'dt_polys' in results[0]:
+                            print(f"    DEBUG: dt_polys length: {len(results[0]['dt_polys'])}")
+
                 
                 # Create output filename
                 base_name = pdf_file.stem
@@ -89,16 +94,23 @@ def process_pdf_with_paddleocr(input_dir, output_dir):
                 text_output = []
                 text_count = 0
                 
-                # Handle result
-                if result and len(result) > 0 and result[0]:
-                    ocr_result = result[0] if isinstance(result[0], list) else result
+                # Process results - the result dict has 'rec_texts', 'rec_scores', 'rec_polys' 
+                if results and len(results) > 0:
+                    result = results[0]  # Get first (and usually only) result
                     
-                    for line in ocr_result:
+                    # Extract data from result - use correct plural key names
+                    rec_texts = result.get('rec_texts', [])
+                    rec_scores = result.get('rec_scores', [])
+                    rec_polys = result.get('rec_polys', [])
+                    
+                    print(f"    Found {len(rec_texts)} text blocks")
+                    
+                    # Process each detected text box
+                    for idx in range(len(rec_texts)):
                         try:
-                            # Each line contains: [box_coordinates, (text, confidence)]
-                            box = line[0]
-                            text = line[1][0]
-                            confidence = line[1][1]
+                            text = rec_texts[idx]
+                            box = rec_polys[idx]
+                            confidence = rec_scores[idx]
                             
                             # Convert box coordinates to integer
                             box = np.array(box, dtype=np.int32)
@@ -116,33 +128,45 @@ def process_pdf_with_paddleocr(input_dir, output_dir):
                             text_output.append(f"{text} (confidence: {confidence:.4f})")
                             text_count += 1
                             
-                        except (IndexError, TypeError) as e:
-                            print(f"    Warning: Skipping malformed result: {e}")
+                        except (IndexError, TypeError, KeyError) as e:
+                            print(f"    Warning: Error at index {idx}: {e}")
                             continue
+                else:
+                    print(f"    Warning: No OCR results found or unexpected result format")
                 
                 print(f"    Extracted {text_count} text blocks")
                 
+                # Always save files even if no text detected
                 # Save annotated image
                 output_img_path = os.path.join(output_dir, f"{base_name}{page_suffix}_annotated.jpg")
-                cv2.imwrite(output_img_path, img_with_boxes, [cv2.IMWRITE_JPEG_QUALITY, 85])
-                print(f"    ✓ Saved: {base_name}{page_suffix}_annotated.jpg")
+                success = cv2.imwrite(output_img_path, img_with_boxes, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                if success:
+                    print(f"    ✓ Saved: {base_name}{page_suffix}_annotated.jpg")
+                else:
+                    print(f"    ✗ Failed to save annotated image")
                 
                 # Save original image
                 output_orig_path = os.path.join(output_dir, f"{base_name}{page_suffix}_original.jpg")
-                cv2.imwrite(output_orig_path, img_array, [cv2.IMWRITE_JPEG_QUALITY, 85])
-                print(f"    ✓ Saved: {base_name}{page_suffix}_original.jpg")
+                success = cv2.imwrite(output_orig_path, img_array, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                if success:
+                    print(f"    ✓ Saved: {base_name}{page_suffix}_original.jpg")
+                else:
+                    print(f"    ✗ Failed to save original image")
                 
                 # Save extracted text
                 output_txt_path = os.path.join(output_dir, f"{base_name}{page_suffix}_text.txt")
                 with open(output_txt_path, 'w', encoding='utf-8') as f:
                     f.write(f"OCR Results for: {pdf_file.name} - Page {page_num}\n")
                     f.write("=" * 80 + "\n\n")
-                    for text in text_output:
-                        f.write(text + "\n")
+                    if text_output:
+                        for text in text_output:
+                            f.write(text + "\n")
+                    else:
+                        f.write("No text detected on this page.\n")
                 print(f"    ✓ Saved: {base_name}{page_suffix}_text.txt")
                 
                 # Clean up memory after each page
-                del img_array, img_with_boxes, result, text_output
+                del img_array, img_with_boxes, results, text_output
                 gc.collect()
                 
             except Exception as e:
@@ -158,9 +182,9 @@ def process_pdf_with_paddleocr(input_dir, output_dir):
 
 
 if __name__ == "__main__":
-    # Set your input and output directories
+    
     INPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/raw/diler"
-    OUTPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/processed"
+    OUTPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr"
     
     print("=" * 60)
     print("PaddleOCR PDF Processor (Memory Optimized)")
