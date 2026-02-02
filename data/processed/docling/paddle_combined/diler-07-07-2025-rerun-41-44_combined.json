@@ -1,0 +1,6209 @@
+[
+  {
+    "page": 1,
+    "file": "diler-07-07-2025-rerun-41-44_page1_text.txt",
+    "text_lines": [
+      {
+        "text": "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+        "confidence": 0.9847
+      },
+      {
+        "text": "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+        "confidence": 0.987
+      },
+      {
+        "text": "ISSUING DATE: 07.07 2025",
+        "confidence": 0.9916
+      },
+      {
+        "text": "CUSTOMER: MW STEEL TRADING LIMITED LONDON THAMESPORT LIBERTY",
+        "confidence": 0.9898
+      },
+      {
+        "text": "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+        "confidence": 0.9746
+      },
+      {
+        "text": "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+        "confidence": 0.9885
+      },
+      {
+        "text": "QUALITY CONTROL DEPARTMENT",
+        "confidence": 0.998
+      },
+      {
+        "text": "ORDER NO: MK250508-001",
+        "confidence": 0.9805
+      },
+      {
+        "text": "CONSIGNMENT NO: 2025-3133/01",
+        "confidence": 0.9795
+      },
+      {
+        "text": "SIZE",
+        "confidence": 0.9982
+      },
+      {
+        "text": ":",
+        "confidence": 0.635
+      },
+      {
+        "text": "32MMX14M.",
+        "confidence": 0.9982
+      },
+      {
+        "text": "QUALITY",
+        "confidence": 0.9997
+      },
+      {
+        "text": "BS4449:2005 GR B500 B",
+        "confidence": 0.9915
+      },
+      {
+        "text": "PRODUCTION PROSES :QST",
+        "confidence": 0.9897
+      },
+      {
+        "text": "ORDER NO: 2025-3133 LOT-1",
+        "confidence": 0.9693
+      },
+      {
+        "text": "VESSEL NAME: MV WHITE IVY",
+        "confidence": 0.9814
+      },
+      {
+        "text": "CARES APPROVED",
+        "confidence": 0.9987
+      },
+      {
+        "text": "CHEMICAL COMPOSITION",
+        "confidence": 0.9795
+      },
+      {
+        "text": "MECHANICAL PROPERTIES",
+        "confidence": 0.9996
+      },
+      {
+        "text": "Heat",
+        "confidence": 0.9985
+      },
+      {
+        "text": "carbon",
+        "confidence": 0.9996
+      },
+      {
+        "text": "RADIATION",
+        "confidence": 0.9997
+      },
+      {
+        "text": "Weight",
+        "confidence": 0.9989
+      },
+      {
+        "text": "Cross Sectional",
+        "confidence": 0.9872
+      },
+      {
+        "text": "Yield Point",
+        "confidence": 0.9784
+      },
+      {
+        "text": "Tensile Strength",
+        "confidence": 0.9705
+      },
+      {
+        "text": "Percentage",
+        "confidence": 0.9991
+      },
+      {
+        "text": "Agt",
+        "confidence": 0.9961
+      },
+      {
+        "text": "Rebend",
+        "confidence": 0.9995
+      },
+      {
+        "text": "Number",
+        "confidence": 0.9999
+      },
+      {
+        "text": "o*",
+        "confidence": 0.5514
+      },
+      {
+        "text": "%",
+        "confidence": 0.2971
+      },
+      {
+        "text": "%",
+        "confidence": 0.4157
+      },
+      {
+        "text": "0",
+        "confidence": 0.8383
+      },
+      {
+        "text": "Mn",
+        "confidence": 0.9059
+      },
+      {
+        "text": "N",
+        "confidence": 0.7542
+      },
+      {
+        "text": "fr$",
+        "confidence": 0.5934
+      },
+      {
+        "text": "Mo",
+        "confidence": 0.9922
+      },
+      {
+        "text": "$C",
+        "confidence": 0.6643
+      },
+      {
+        "text": ">*",
+        "confidence": 0.7442
+      },
+      {
+        "text": "2z",
+        "confidence": 0.5884
+      },
+      {
+        "text": "8",
+        "confidence": 0.7147
+      },
+      {
+        "text": "equvalent",
+        "confidence": 0.9987
+      },
+      {
+        "text": "μRH",
+        "confidence": 0.9532
+      },
+      {
+        "text": "Per",
+        "confidence": 0.9987
+      },
+      {
+        "text": "area",
+        "confidence": 0.9998
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9959
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9652
+      },
+      {
+        "text": "Rm/Re",
+        "confidence": 0.9972
+      },
+      {
+        "text": "elongation",
+        "confidence": 0.9937
+      },
+      {
+        "text": "%",
+        "confidence": 0.9961
+      },
+      {
+        "text": "Test",
+        "confidence": 0.9995
+      },
+      {
+        "text": "%",
+        "confidence": 0.7379
+      },
+      {
+        "text": "%",
+        "confidence": 0.9991
+      },
+      {
+        "text": "value",
+        "confidence": 0.9989
+      },
+      {
+        "text": "Kg/m",
+        "confidence": 0.9589
+      },
+      {
+        "text": "mm2",
+        "confidence": 0.9887
+      },
+      {
+        "text": "(Re)",
+        "confidence": 0.9964
+      },
+      {
+        "text": "(Rm)",
+        "confidence": 0.9889
+      },
+      {
+        "text": "Lo=5do",
+        "confidence": 0.9829
+      },
+      {
+        "text": "25990085",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9332
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9982
+      },
+      {
+        "text": "0.020",
+        "confidence": 0.9866
+      },
+      {
+        "text": "0.012",
+        "confidence": 0.9982
+      },
+      {
+        "text": "0.63",
+        "confidence": 0.9696
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9886
+      },
+      {
+        "text": "0.03",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0,001",
+        "confidence": 0.9505
+      },
+      {
+        "text": "0.00",
+        "confidence": 0.9984
+      },
+      {
+        "text": "0,0020",
+        "confidence": 0.9911
+      },
+      {
+        "text": "0.0056",
+        "confidence": 0.9963
+      },
+      {
+        "text": "0.0005",
+        "confidence": 0.9254
+      },
+      {
+        "text": "0,30",
+        "confidence": 0.8872
+      },
+      {
+        "text": "13",
+        "confidence": 0.9998
+      },
+      {
+        "text": "6.201",
+        "confidence": 0.9952
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9856
+      },
+      {
+        "text": "583",
+        "confidence": 0.9999
+      },
+      {
+        "text": "665",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.986
+      },
+      {
+        "text": "21.36",
+        "confidence": 0.9786
+      },
+      {
+        "text": "8.46",
+        "confidence": 0.9947
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9917
+      },
+      {
+        "text": "6.200",
+        "confidence": 0.9927
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9978
+      },
+      {
+        "text": "584",
+        "confidence": 0.9999
+      },
+      {
+        "text": "669",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.15",
+        "confidence": 0.9701
+      },
+      {
+        "text": "20.54",
+        "confidence": 0.9121
+      },
+      {
+        "text": "9,70",
+        "confidence": 0.8793
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9902
+      },
+      {
+        "text": "6.190",
+        "confidence": 0.9771
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9826
+      },
+      {
+        "text": "590",
+        "confidence": 0.9999
+      },
+      {
+        "text": "673",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.931
+      },
+      {
+        "text": "19.55",
+        "confidence": 0.9294
+      },
+      {
+        "text": "8.79",
+        "confidence": 0.9989
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9938
+      },
+      {
+        "text": "6.185",
+        "confidence": 0.9977
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9998
+      },
+      {
+        "text": "593",
+        "confidence": 0.9997
+      },
+      {
+        "text": "671",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.13",
+        "confidence": 0.9825
+      },
+      {
+        "text": "19.78",
+        "confidence": 0.9481
+      },
+      {
+        "text": "9.79",
+        "confidence": 0.9615
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9976
+      },
+      {
+        "text": "25990041",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.8879
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9822
+      },
+      {
+        "text": "0.033",
+        "confidence": 0.9965
+      },
+      {
+        "text": "0.017",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0.64",
+        "confidence": 0.9965
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0.05",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.002",
+        "confidence": 0.9965
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9989
+      },
+      {
+        "text": "0.0010",
+        "confidence": 0.9227
+      },
+      {
+        "text": "0.0053",
+        "confidence": 0.9935
+      },
+      {
+        "text": "0.0007",
+        "confidence": 0.9879
+      },
+      {
+        "text": "0.32",
+        "confidence": 0.9304
+      },
+      {
+        "text": "11",
+        "confidence": 0.9996
+      },
+      {
+        "text": "6.207",
+        "confidence": 0.9286
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9984
+      },
+      {
+        "text": "621",
+        "confidence": 0.9999
+      },
+      {
+        "text": "739",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9321
+      },
+      {
+        "text": "17.21",
+        "confidence": 0.9898
+      },
+      {
+        "text": "10.62",
+        "confidence": 0.9914
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9959
+      },
+      {
+        "text": "6.212",
+        "confidence": 0.9989
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9953
+      },
+      {
+        "text": "611",
+        "confidence": 0.9995
+      },
+      {
+        "text": "712",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.17",
+        "confidence": 0.9964
+      },
+      {
+        "text": "18.55",
+        "confidence": 0.9981
+      },
+      {
+        "text": "10,57",
+        "confidence": 0.9772
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9952
+      },
+      {
+        "text": "6.209",
+        "confidence": 0.9897
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9972
+      },
+      {
+        "text": "564",
+        "confidence": 0.9984
+      },
+      {
+        "text": "675",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1,20",
+        "confidence": 0.9518
+      },
+      {
+        "text": "18.64",
+        "confidence": 0.9921
+      },
+      {
+        "text": "10,99",
+        "confidence": 0.9072
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9985
+      },
+      {
+        "text": "6.204",
+        "confidence": 0.9974
+      },
+      {
+        "text": "804,00",
+        "confidence": 0.8904
+      },
+      {
+        "text": "598",
+        "confidence": 0.9995
+      },
+      {
+        "text": "712",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9854
+      },
+      {
+        "text": "17.66",
+        "confidence": 0.9736
+      },
+      {
+        "text": "10.36",
+        "confidence": 0.9302
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9972
+      },
+      {
+        "text": "25990040",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.948
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9795
+      },
+      {
+        "text": "0,026",
+        "confidence": 0.9306
+      },
+      {
+        "text": "0.019",
+        "confidence": 0.9744
+      },
+      {
+        "text": "0.64",
+        "confidence": 0.997
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9809
+      },
+      {
+        "text": "0.05",
+        "confidence": 0.995
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9969
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0,0010",
+        "confidence": 0.9774
+      },
+      {
+        "text": "0.0052",
+        "confidence": 0.998
+      },
+      {
+        "text": "0.0007",
+        "confidence": 0.9358
+      },
+      {
+        "text": "0.32",
+        "confidence": 0.957
+      },
+      {
+        "text": "14",
+        "confidence": 0.9999
+      },
+      {
+        "text": "6.187",
+        "confidence": 0.9985
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9892
+      },
+      {
+        "text": "598",
+        "confidence": 0.9998
+      },
+      {
+        "text": "719",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9087
+      },
+      {
+        "text": "17.43",
+        "confidence": 0.9948
+      },
+      {
+        "text": "10.98",
+        "confidence": 0.9891
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9991
+      },
+      {
+        "text": "6.203",
+        "confidence": 0.9994
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9555
+      },
+      {
+        "text": "616",
+        "confidence": 0.9987
+      },
+      {
+        "text": "735",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9851
+      },
+      {
+        "text": "17.22",
+        "confidence": 0.9832
+      },
+      {
+        "text": "9.77",
+        "confidence": 0.9926
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9987
+      },
+      {
+        "text": "6.199",
+        "confidence": 0.9981
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9851
+      },
+      {
+        "text": "561",
+        "confidence": 0.9993
+      },
+      {
+        "text": "675",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9995
+      },
+      {
+        "text": "18.10",
+        "confidence": 0.9242
+      },
+      {
+        "text": "9,99",
+        "confidence": 0.9715
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9962
+      },
+      {
+        "text": "6.195",
+        "confidence": 0.9365
+      },
+      {
+        "text": "804,00",
+        "confidence": 0.932
+      },
+      {
+        "text": "579",
+        "confidence": 0.9998
+      },
+      {
+        "text": "718",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.24",
+        "confidence": 0.9969
+      },
+      {
+        "text": "17.71",
+        "confidence": 0.9059
+      },
+      {
+        "text": "10.23",
+        "confidence": 0.9567
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9983
+      },
+      {
+        "text": "25990039",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9964
+      },
+      {
+        "text": "0.17",
+        "confidence": 0.9878
+      },
+      {
+        "text": "0,028",
+        "confidence": 0.9656
+      },
+      {
+        "text": "0.018",
+        "confidence": 0.9979
+      },
+      {
+        "text": "0.62",
+        "confidence": 0.9991
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.05",
+        "confidence": 0.9382
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9573
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.0010",
+        "confidence": 0.9855
+      },
+      {
+        "text": "0.0060",
+        "confidence": 0.9782
+      },
+      {
+        "text": "0,0007",
+        "confidence": 0.9894
+      },
+      {
+        "text": "0.31",
+        "confidence": 0.9989
+      },
+      {
+        "text": "18",
+        "confidence": 0.9999
+      },
+      {
+        "text": "6.204",
+        "confidence": 0.9936
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9484
+      },
+      {
+        "text": "568",
+        "confidence": 0.9995
+      },
+      {
+        "text": "692",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.22",
+        "confidence": 0.9996
+      },
+      {
+        "text": "21.76",
+        "confidence": 0.9873
+      },
+      {
+        "text": "10.01",
+        "confidence": 0.9991
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9975
+      },
+      {
+        "text": "6.209",
+        "confidence": 0.9921
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9986
+      },
+      {
+        "text": "606",
+        "confidence": 0.9982
+      },
+      {
+        "text": "719",
+        "confidence": 0.9974
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9072
+      },
+      {
+        "text": "20.01",
+        "confidence": 0.9988
+      },
+      {
+        "text": "8,56",
+        "confidence": 0.9641
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9976
+      },
+      {
+        "text": "6.207",
+        "confidence": 0.9993
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9945
+      },
+      {
+        "text": "573",
+        "confidence": 0.9999
+      },
+      {
+        "text": "689",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9666
+      },
+      {
+        "text": "20.10",
+        "confidence": 0.9987
+      },
+      {
+        "text": "8.56",
+        "confidence": 0.884
+      },
+      {
+        "text": "OK",
+        "confidence": 0.999
+      },
+      {
+        "text": "6.195",
+        "confidence": 0.9942
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9585
+      },
+      {
+        "text": "568",
+        "confidence": 0.9999
+      },
+      {
+        "text": "687",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.21",
+        "confidence": 0.9927
+      },
+      {
+        "text": "20.11",
+        "confidence": 0.9964
+      },
+      {
+        "text": "10.10",
+        "confidence": 0.911
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9974
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9957
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9889
+      },
+      {
+        "text": "0.030",
+        "confidence": 0.9822
+      },
+      {
+        "text": "0.017",
+        "confidence": 0.9924
+      },
+      {
+        "text": "0.65",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9924
+      },
+      {
+        "text": "0.06",
+        "confidence": 0.9883
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9029
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9993
+      },
+      {
+        "text": "0.0010",
+        "confidence": 0.9848
+      },
+      {
+        "text": "0.0058",
+        "confidence": 0.999
+      },
+      {
+        "text": "0.0007",
+        "confidence": 0.9218
+      },
+      {
+        "text": "0.32",
+        "confidence": 0.9959
+      },
+      {
+        "text": "15",
+        "confidence": 0.9997
+      },
+      {
+        "text": "6.194",
+        "confidence": 0.9964
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9895
+      },
+      {
+        "text": "558",
+        "confidence": 1.0
+      },
+      {
+        "text": "679",
+        "confidence": 0.9938
+      },
+      {
+        "text": "25990035",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.22",
+        "confidence": 0.9354
+      },
+      {
+        "text": "19.18",
+        "confidence": 0.9943
+      },
+      {
+        "text": "10.39",
+        "confidence": 0.9977
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9949
+      },
+      {
+        "text": "6.201",
+        "confidence": 0.9996
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.974
+      },
+      {
+        "text": "563",
+        "confidence": 0.9999
+      },
+      {
+        "text": "675",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.8945
+      },
+      {
+        "text": "19.86",
+        "confidence": 0.9967
+      },
+      {
+        "text": "9.30",
+        "confidence": 0.9944
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9976
+      },
+      {
+        "text": "6.197",
+        "confidence": 0.9971
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9986
+      },
+      {
+        "text": "571",
+        "confidence": 0.9999
+      },
+      {
+        "text": "699",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.22",
+        "confidence": 0.9646
+      },
+      {
+        "text": "20.05",
+        "confidence": 0.9995
+      },
+      {
+        "text": "9,63",
+        "confidence": 0.9111
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9966
+      },
+      {
+        "text": "6.189",
+        "confidence": 0.9943
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9952
+      },
+      {
+        "text": "568",
+        "confidence": 0.9994
+      },
+      {
+        "text": "687",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.21",
+        "confidence": 0.9818
+      },
+      {
+        "text": "19.70",
+        "confidence": 0.9975
+      },
+      {
+        "text": "8.77",
+        "confidence": 0.9994
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9965
+      },
+      {
+        "text": "DILER DEMIR",
+        "confidence": 0.9266
+      },
+      {
+        "text": "GELIK ENBUSTRI VE TICARET A..",
+        "confidence": 0.9339
+      },
+      {
+        "text": "CARES",
+        "confidence": 0.9713
+      },
+      {
+        "text": "UKAS",
+        "confidence": 0.9994
+      },
+      {
+        "text": "011001",
+        "confidence": 0.9209
+      },
+      {
+        "text": "0002",
+        "confidence": 0.9987
+      },
+      {
+        "text": "Cags sd",
+        "confidence": 0.5218
+      },
+      {
+        "text": "All incaming raw material has been checked by rad cactivity detection system",
+        "confidence": 0.9716
+      },
+      {
+        "text": "RESPONSIBLE CHIEF",
+        "confidence": 0.9987
+      },
+      {
+        "text": "CERTIFICATE OF APPROVAL NUMBER O11001",
+        "confidence": 0.9669
+      },
+      {
+        "text": "Page 77",
+        "confidence": 0.9993
+      },
+      {
+        "text": "Form No C8.03 2-4/R-0",
+        "confidence": 0.9394
+      },
+      {
+        "text": "EVRE OZAKYOL",
+        "confidence": 0.9664
+      }
+    ],
+    "full_text": [
+      "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+      "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+      "ISSUING DATE: 07.07 2025",
+      "CUSTOMER: MW STEEL TRADING LIMITED LONDON THAMESPORT LIBERTY",
+      "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+      "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+      "QUALITY CONTROL DEPARTMENT",
+      "ORDER NO: MK250508-001",
+      "CONSIGNMENT NO: 2025-3133/01",
+      "SIZE",
+      ":",
+      "32MMX14M.",
+      "QUALITY",
+      "BS4449:2005 GR B500 B",
+      "PRODUCTION PROSES :QST",
+      "ORDER NO: 2025-3133 LOT-1",
+      "VESSEL NAME: MV WHITE IVY",
+      "CARES APPROVED",
+      "CHEMICAL COMPOSITION",
+      "MECHANICAL PROPERTIES",
+      "Heat",
+      "carbon",
+      "RADIATION",
+      "Weight",
+      "Cross Sectional",
+      "Yield Point",
+      "Tensile Strength",
+      "Percentage",
+      "Agt",
+      "Rebend",
+      "Number",
+      "o*",
+      "%",
+      "%",
+      "0",
+      "Mn",
+      "N",
+      "fr$",
+      "Mo",
+      "$C",
+      ">*",
+      "2z",
+      "8",
+      "equvalent",
+      "μRH",
+      "Per",
+      "area",
+      "N/mm2(MPa)",
+      "N/mm2(MPa)",
+      "Rm/Re",
+      "elongation",
+      "%",
+      "Test",
+      "%",
+      "%",
+      "value",
+      "Kg/m",
+      "mm2",
+      "(Re)",
+      "(Rm)",
+      "Lo=5do",
+      "25990085",
+      "0.19",
+      "0.20",
+      "0.020",
+      "0.012",
+      "0.63",
+      "0.02",
+      "0.03",
+      "0,001",
+      "0.00",
+      "0,0020",
+      "0.0056",
+      "0.0005",
+      "0,30",
+      "13",
+      "6.201",
+      "804.00",
+      "583",
+      "665",
+      "1.14",
+      "21.36",
+      "8.46",
+      "OK",
+      "6.200",
+      "804.00",
+      "584",
+      "669",
+      "1.15",
+      "20.54",
+      "9,70",
+      "OK",
+      "6.190",
+      "804.00",
+      "590",
+      "673",
+      "1.14",
+      "19.55",
+      "8.79",
+      "OK",
+      "6.185",
+      "804.00",
+      "593",
+      "671",
+      "1.13",
+      "19.78",
+      "9.79",
+      "OK",
+      "25990041",
+      "0.20",
+      "0.20",
+      "0.033",
+      "0.017",
+      "0.64",
+      "0.02",
+      "0.05",
+      "0.002",
+      "0.01",
+      "0.0010",
+      "0.0053",
+      "0.0007",
+      "0.32",
+      "11",
+      "6.207",
+      "804.00",
+      "621",
+      "739",
+      "1.19",
+      "17.21",
+      "10.62",
+      "OK",
+      "6.212",
+      "804.00",
+      "611",
+      "712",
+      "1.17",
+      "18.55",
+      "10,57",
+      "OK",
+      "6.209",
+      "804.00",
+      "564",
+      "675",
+      "1,20",
+      "18.64",
+      "10,99",
+      "OK",
+      "6.204",
+      "804,00",
+      "598",
+      "712",
+      "1.19",
+      "17.66",
+      "10.36",
+      "OK",
+      "25990040",
+      "0.20",
+      "0.20",
+      "0,026",
+      "0.019",
+      "0.64",
+      "0.02",
+      "0.05",
+      "0.001",
+      "0.01",
+      "0,0010",
+      "0.0052",
+      "0.0007",
+      "0.32",
+      "14",
+      "6.187",
+      "804.00",
+      "598",
+      "719",
+      "1.20",
+      "17.43",
+      "10.98",
+      "OK",
+      "6.203",
+      "804.00",
+      "616",
+      "735",
+      "1.19",
+      "17.22",
+      "9.77",
+      "OK",
+      "6.199",
+      "804.00",
+      "561",
+      "675",
+      "1.20",
+      "18.10",
+      "9,99",
+      "OK",
+      "6.195",
+      "804,00",
+      "579",
+      "718",
+      "1.24",
+      "17.71",
+      "10.23",
+      "OK",
+      "25990039",
+      "0.19",
+      "0.17",
+      "0,028",
+      "0.018",
+      "0.62",
+      "0.02",
+      "0.05",
+      "0.001",
+      "0.01",
+      "0.0010",
+      "0.0060",
+      "0,0007",
+      "0.31",
+      "18",
+      "6.204",
+      "804.00",
+      "568",
+      "692",
+      "1.22",
+      "21.76",
+      "10.01",
+      "OK",
+      "6.209",
+      "804.00",
+      "606",
+      "719",
+      "1.19",
+      "20.01",
+      "8,56",
+      "OK",
+      "6.207",
+      "804.00",
+      "573",
+      "689",
+      "1.20",
+      "20.10",
+      "8.56",
+      "OK",
+      "6.195",
+      "804.00",
+      "568",
+      "687",
+      "1.21",
+      "20.11",
+      "10.10",
+      "OK",
+      "0.20",
+      "0.19",
+      "0.030",
+      "0.017",
+      "0.65",
+      "0.02",
+      "0.06",
+      "0.001",
+      "0.01",
+      "0.0010",
+      "0.0058",
+      "0.0007",
+      "0.32",
+      "15",
+      "6.194",
+      "804.00",
+      "558",
+      "679",
+      "25990035",
+      "1.22",
+      "19.18",
+      "10.39",
+      "OK",
+      "6.201",
+      "804.00",
+      "563",
+      "675",
+      "1.20",
+      "19.86",
+      "9.30",
+      "OK",
+      "6.197",
+      "804.00",
+      "571",
+      "699",
+      "1.22",
+      "20.05",
+      "9,63",
+      "OK",
+      "6.189",
+      "804.00",
+      "568",
+      "687",
+      "1.21",
+      "19.70",
+      "8.77",
+      "OK",
+      "DILER DEMIR",
+      "GELIK ENBUSTRI VE TICARET A..",
+      "CARES",
+      "UKAS",
+      "011001",
+      "0002",
+      "Cags sd",
+      "All incaming raw material has been checked by rad cactivity detection system",
+      "RESPONSIBLE CHIEF",
+      "CERTIFICATE OF APPROVAL NUMBER O11001",
+      "Page 77",
+      "Form No C8.03 2-4/R-0",
+      "EVRE OZAKYOL"
+    ]
+  },
+  {
+    "page": 2,
+    "file": "diler-07-07-2025-rerun-41-44_page2_text.txt",
+    "text_lines": [
+      {
+        "text": "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+        "confidence": 0.9757
+      },
+      {
+        "text": "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+        "confidence": 0.9791
+      },
+      {
+        "text": "ISSUING DATE: 07.07.2025",
+        "confidence": 0.9766
+      },
+      {
+        "text": "CUSTOMER: MW STEEL TRADING LIMITEO LONDON THAMESPCRT LIBERTY",
+        "confidence": 0.98
+      },
+      {
+        "text": "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+        "confidence": 0.9646
+      },
+      {
+        "text": "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+        "confidence": 0.9737
+      },
+      {
+        "text": "ORDER NO: MK250508-001",
+        "confidence": 0.9795
+      },
+      {
+        "text": "QUALITY CONTROL DEPARTMENT",
+        "confidence": 0.9989
+      },
+      {
+        "text": "CONSIGNMENT NO:2025-3133/01",
+        "confidence": 0.9325
+      },
+      {
+        "text": "SIZE",
+        "confidence": 0.9927
+      },
+      {
+        "text": "\"",
+        "confidence": 0.4328
+      },
+      {
+        "text": "32MMX14M.",
+        "confidence": 0.9943
+      },
+      {
+        "text": "QUALITY",
+        "confidence": 0.9992
+      },
+      {
+        "text": "BS4449:2005 GR B500 B",
+        "confidence": 0.9931
+      },
+      {
+        "text": "PRODUCTION PROSES : QST",
+        "confidence": 0.9707
+      },
+      {
+        "text": "ORDER NO: 2025-3133 LOT-1",
+        "confidence": 0.9795
+      },
+      {
+        "text": "VESSEL NAME: M/V WHITE IVY",
+        "confidence": 0.9731
+      },
+      {
+        "text": "CARES APPROVED",
+        "confidence": 0.9779
+      },
+      {
+        "text": "CHEMICAL COMPOSITION",
+        "confidence": 0.9997
+      },
+      {
+        "text": "MECHANICAL PROPERTIES",
+        "confidence": 0.9994
+      },
+      {
+        "text": "Heat",
+        "confidence": 0.999
+      },
+      {
+        "text": "carben",
+        "confidence": 0.9609
+      },
+      {
+        "text": "RADIATION",
+        "confidence": 0.9989
+      },
+      {
+        "text": "Weight",
+        "confidence": 0.9986
+      },
+      {
+        "text": "Cross Sectional",
+        "confidence": 0.968
+      },
+      {
+        "text": "Yield Point",
+        "confidence": 0.9734
+      },
+      {
+        "text": "Tensile Strength",
+        "confidence": 0.9967
+      },
+      {
+        "text": "Percentage",
+        "confidence": 0.9987
+      },
+      {
+        "text": "$A\\frac{}$",
+        "confidence": 0.6726
+      },
+      {
+        "text": "Rebend",
+        "confidence": 0.9803
+      },
+      {
+        "text": "Number",
+        "confidence": 1.0
+      },
+      {
+        "text": "*0",
+        "confidence": 0.5195
+      },
+      {
+        "text": "S",
+        "confidence": 0.6997
+      },
+      {
+        "text": "%",
+        "confidence": 0.9338
+      },
+      {
+        "text": "a",
+        "confidence": 0.333
+      },
+      {
+        "text": "Mn",
+        "confidence": 0.9269
+      },
+      {
+        "text": "N",
+        "confidence": 0.9611
+      },
+      {
+        "text": "%",
+        "confidence": 0.4951
+      },
+      {
+        "text": "Mo",
+        "confidence": 0.9385
+      },
+      {
+        "text": "Cu",
+        "confidence": 0.8364
+      },
+      {
+        "text": ">*",
+        "confidence": 0.9549
+      },
+      {
+        "text": "z*",
+        "confidence": 0.7495
+      },
+      {
+        "text": "",
+        "confidence": 0.0
+      },
+      {
+        "text": "equvalent",
+        "confidence": 0.9996
+      },
+      {
+        "text": "μRH",
+        "confidence": 0.9501
+      },
+      {
+        "text": "Per",
+        "confidence": 0.9986
+      },
+      {
+        "text": "area",
+        "confidence": 0.9999
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9968
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9975
+      },
+      {
+        "text": "Rm/Re",
+        "confidence": 0.9994
+      },
+      {
+        "text": "elongation",
+        "confidence": 0.9683
+      },
+      {
+        "text": "Test",
+        "confidence": 0.9636
+      },
+      {
+        "text": "%",
+        "confidence": 0.9981
+      },
+      {
+        "text": "%",
+        "confidence": 0.9996
+      },
+      {
+        "text": "%",
+        "confidence": 0.9992
+      },
+      {
+        "text": "value",
+        "confidence": 0.9797
+      },
+      {
+        "text": "Kg/m",
+        "confidence": 0.9967
+      },
+      {
+        "text": "mm2",
+        "confidence": 0.9997
+      },
+      {
+        "text": "(Re)",
+        "confidence": 0.9953
+      },
+      {
+        "text": "(Rm)",
+        "confidence": 0.9796
+      },
+      {
+        "text": "Lo=5d0",
+        "confidence": 0.9174
+      },
+      {
+        "text": "25990034",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.968
+      },
+      {
+        "text": "0.18",
+        "confidence": 0.9989
+      },
+      {
+        "text": "0.028",
+        "confidence": 0.9978
+      },
+      {
+        "text": "0.016",
+        "confidence": 0.9986
+      },
+      {
+        "text": "0.65",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.05",
+        "confidence": 0.9867
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9108
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9993
+      },
+      {
+        "text": "0.0010",
+        "confidence": 0.9898
+      },
+      {
+        "text": "0.0057",
+        "confidence": 0.9554
+      },
+      {
+        "text": "0,0007",
+        "confidence": 0.9358
+      },
+      {
+        "text": "0.31",
+        "confidence": 0.9993
+      },
+      {
+        "text": "16",
+        "confidence": 0.9999
+      },
+      {
+        "text": "6.185",
+        "confidence": 0.9936
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9197
+      },
+      {
+        "text": "601",
+        "confidence": 0.9996
+      },
+      {
+        "text": "714",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9957
+      },
+      {
+        "text": "19.56",
+        "confidence": 0.999
+      },
+      {
+        "text": "8.70",
+        "confidence": 0.9998
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9962
+      },
+      {
+        "text": "6.200",
+        "confidence": 0.999
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9957
+      },
+      {
+        "text": "602",
+        "confidence": 0.9676
+      },
+      {
+        "text": "715",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9192
+      },
+      {
+        "text": "21.69",
+        "confidence": 0.9999
+      },
+      {
+        "text": "9.82",
+        "confidence": 0.9933
+      },
+      {
+        "text": "OK",
+        "confidence": 0.99
+      },
+      {
+        "text": "6.194",
+        "confidence": 0.995
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9993
+      },
+      {
+        "text": "599",
+        "confidence": 0.9995
+      },
+      {
+        "text": "718",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9945
+      },
+      {
+        "text": "21.81",
+        "confidence": 0.9994
+      },
+      {
+        "text": "9.65",
+        "confidence": 0.99
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9966
+      },
+      {
+        "text": "6.188",
+        "confidence": 0.9619
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9254
+      },
+      {
+        "text": "613",
+        "confidence": 0.9998
+      },
+      {
+        "text": "728",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9931
+      },
+      {
+        "text": "21.84",
+        "confidence": 0.9978
+      },
+      {
+        "text": "9.32",
+        "confidence": 0.9539
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9923
+      },
+      {
+        "text": "25990032",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9913
+      },
+      {
+        "text": "0,21",
+        "confidence": 0.8857
+      },
+      {
+        "text": "0.020",
+        "confidence": 0.9851
+      },
+      {
+        "text": "0.017",
+        "confidence": 0.9057
+      },
+      {
+        "text": "0.71",
+        "confidence": 0.9967
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9981
+      },
+      {
+        "text": "0.06",
+        "confidence": 0.9969
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9415
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9914
+      },
+      {
+        "text": "0.0020",
+        "confidence": 0.9367
+      },
+      {
+        "text": "0.0055",
+        "confidence": 0.9711
+      },
+      {
+        "text": "0.0006",
+        "confidence": 0.9986
+      },
+      {
+        "text": "0.33",
+        "confidence": 0.9513
+      },
+      {
+        "text": "15",
+        "confidence": 1.0
+      },
+      {
+        "text": "6.200",
+        "confidence": 0.9987
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9827
+      },
+      {
+        "text": "599",
+        "confidence": 0.9997
+      },
+      {
+        "text": "711",
+        "confidence": 0.9993
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9662
+      },
+      {
+        "text": "17.70",
+        "confidence": 0.9975
+      },
+      {
+        "text": "10.11",
+        "confidence": 0.9872
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9787
+      },
+      {
+        "text": "6.214",
+        "confidence": 0.9818
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9997
+      },
+      {
+        "text": "597",
+        "confidence": 0.9999
+      },
+      {
+        "text": "707",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9974
+      },
+      {
+        "text": "18.16",
+        "confidence": 0.9793
+      },
+      {
+        "text": "10.72",
+        "confidence": 0.9981
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9843
+      },
+      {
+        "text": "6,206",
+        "confidence": 0.9609
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9832
+      },
+      {
+        "text": "619",
+        "confidence": 0.9997
+      },
+      {
+        "text": "728",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9163
+      },
+      {
+        "text": "17.96",
+        "confidence": 0.9956
+      },
+      {
+        "text": "9.54",
+        "confidence": 0.9654
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9778
+      },
+      {
+        "text": "6.197",
+        "confidence": 0.9989
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.999
+      },
+      {
+        "text": "589",
+        "confidence": 0.9996
+      },
+      {
+        "text": "726",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.23",
+        "confidence": 0.8843
+      },
+      {
+        "text": "17.45",
+        "confidence": 0.9688
+      },
+      {
+        "text": "10.75",
+        "confidence": 0.923
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9747
+      },
+      {
+        "text": "0.64",
+        "confidence": 0.9936
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9999
+      },
+      {
+        "text": "0,05",
+        "confidence": 0.8858
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9985
+      },
+      {
+        "text": "0,01",
+        "confidence": 0.9509
+      },
+      {
+        "text": "0,0010",
+        "confidence": 0.9833
+      },
+      {
+        "text": "0,0062",
+        "confidence": 0.992
+      },
+      {
+        "text": "0.0006",
+        "confidence": 0.9489
+      },
+      {
+        "text": "0.32",
+        "confidence": 0.9994
+      },
+      {
+        "text": "10",
+        "confidence": 0.9998
+      },
+      {
+        "text": "6.204",
+        "confidence": 0.9857
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9991
+      },
+      {
+        "text": "573",
+        "confidence": 1.0
+      },
+      {
+        "text": "691",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.21",
+        "confidence": 0.9936
+      },
+      {
+        "text": "19.95",
+        "confidence": 0.9486
+      },
+      {
+        "text": "9.99",
+        "confidence": 0.9009
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9803
+      },
+      {
+        "text": "25990031",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9684
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9995
+      },
+      {
+        "text": "0.029",
+        "confidence": 0.9036
+      },
+      {
+        "text": "0.021",
+        "confidence": 0.9934
+      },
+      {
+        "text": "6.207",
+        "confidence": 0.9984
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9773
+      },
+      {
+        "text": "584",
+        "confidence": 0.9999
+      },
+      {
+        "text": "698",
+        "confidence": 0.9993
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9885
+      },
+      {
+        "text": "19,79",
+        "confidence": 0.9284
+      },
+      {
+        "text": "9.77",
+        "confidence": 0.9866
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9664
+      },
+      {
+        "text": "6.200",
+        "confidence": 0.9432
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9513
+      },
+      {
+        "text": "602",
+        "confidence": 0.9999
+      },
+      {
+        "text": "720",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1,20",
+        "confidence": 0.9537
+      },
+      {
+        "text": "19.11",
+        "confidence": 0.9382
+      },
+      {
+        "text": "9.69",
+        "confidence": 0.999
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9896
+      },
+      {
+        "text": "6.198",
+        "confidence": 0.9831
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9985
+      },
+      {
+        "text": "566",
+        "confidence": 0.9999
+      },
+      {
+        "text": "694",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.23",
+        "confidence": 0.9935
+      },
+      {
+        "text": "20.68",
+        "confidence": 0.9887
+      },
+      {
+        "text": "8,69",
+        "confidence": 0.9464
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9847
+      },
+      {
+        "text": "0.01",
+        "confidence": 0.9144
+      },
+      {
+        "text": "0.0020",
+        "confidence": 0.9942
+      },
+      {
+        "text": "0,0055",
+        "confidence": 0.9772
+      },
+      {
+        "text": "0.0006",
+        "confidence": 0.9861
+      },
+      {
+        "text": "0.31",
+        "confidence": 0.9934
+      },
+      {
+        "text": "17",
+        "confidence": 0.9999
+      },
+      {
+        "text": "6.190",
+        "confidence": 0.9992
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9313
+      },
+      {
+        "text": "599",
+        "confidence": 0.9999
+      },
+      {
+        "text": "716",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1,20",
+        "confidence": 0.8859
+      },
+      {
+        "text": "20.51",
+        "confidence": 0.989
+      },
+      {
+        "text": "10,18",
+        "confidence": 0.908
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9865
+      },
+      {
+        "text": "25990024",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9706
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9982
+      },
+      {
+        "text": "0.020",
+        "confidence": 0.998
+      },
+      {
+        "text": "0,022",
+        "confidence": 0.9539
+      },
+      {
+        "text": "0.66",
+        "confidence": 0.9903
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9701
+      },
+      {
+        "text": "0.06",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.001",
+        "confidence": 0.9991
+      },
+      {
+        "text": "6.197",
+        "confidence": 0.9868
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9989
+      },
+      {
+        "text": "583",
+        "confidence": 0.9998
+      },
+      {
+        "text": "718",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.23",
+        "confidence": 0.996
+      },
+      {
+        "text": "21.61",
+        "confidence": 0.947
+      },
+      {
+        "text": "9.88",
+        "confidence": 0.9527
+      },
+      {
+        "text": "OK",
+        "confidence": 0.984
+      },
+      {
+        "text": "6.192",
+        "confidence": 0.9904
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9952
+      },
+      {
+        "text": "585",
+        "confidence": 0.9994
+      },
+      {
+        "text": "715",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1,22",
+        "confidence": 0.8758
+      },
+      {
+        "text": "19,69",
+        "confidence": 0.9473
+      },
+      {
+        "text": "10.27",
+        "confidence": 0.9995
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9975
+      },
+      {
+        "text": "6.187",
+        "confidence": 0.9994
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9959
+      },
+      {
+        "text": "599",
+        "confidence": 0.9997
+      },
+      {
+        "text": "728",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.22",
+        "confidence": 0.9991
+      },
+      {
+        "text": "19.40",
+        "confidence": 0.9756
+      },
+      {
+        "text": "10.41",
+        "confidence": 0.9428
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9975
+      },
+      {
+        "text": "0.76",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0.09",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9959
+      },
+      {
+        "text": "0.014",
+        "confidence": 0.9903
+      },
+      {
+        "text": "0.28",
+        "confidence": 0.991
+      },
+      {
+        "text": "0.0005",
+        "confidence": 0.9524
+      },
+      {
+        "text": "0,0077",
+        "confidence": 0.9745
+      },
+      {
+        "text": "0.0003",
+        "confidence": 0.978
+      },
+      {
+        "text": "0.37",
+        "confidence": 0.9996
+      },
+      {
+        "text": "19",
+        "confidence": 0.9997
+      },
+      {
+        "text": "6.093",
+        "confidence": 0.9771
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9959
+      },
+      {
+        "text": "564",
+        "confidence": 0.9993
+      },
+      {
+        "text": "666",
+        "confidence": 0.9983
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9833
+      },
+      {
+        "text": "17.06",
+        "confidence": 0.915
+      },
+      {
+        "text": "10.90",
+        "confidence": 0.9629
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9948
+      },
+      {
+        "text": "2504095",
+        "confidence": 0.9999
+      },
+      {
+        "text": "0,20",
+        "confidence": 0.8992
+      },
+      {
+        "text": "0.23",
+        "confidence": 0.9956
+      },
+      {
+        "text": "0.014",
+        "confidence": 0.9995
+      },
+      {
+        "text": "0.012",
+        "confidence": 0.9645
+      },
+      {
+        "text": "6.098",
+        "confidence": 0.9532
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9943
+      },
+      {
+        "text": "564",
+        "confidence": 0.9993
+      },
+      {
+        "text": "666",
+        "confidence": 0.9968
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9954
+      },
+      {
+        "text": "18.25",
+        "confidence": 0.9964
+      },
+      {
+        "text": "10,52",
+        "confidence": 0.922
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9972
+      },
+      {
+        "text": "6.095",
+        "confidence": 0.9925
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9991
+      },
+      {
+        "text": "597",
+        "confidence": 0.9998
+      },
+      {
+        "text": "696",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.17",
+        "confidence": 0.9561
+      },
+      {
+        "text": "16.38",
+        "confidence": 0.9694
+      },
+      {
+        "text": "10.12",
+        "confidence": 0.9823
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9949
+      },
+      {
+        "text": "6.090",
+        "confidence": 0.961
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9745
+      },
+      {
+        "text": "558",
+        "confidence": 0.9996
+      },
+      {
+        "text": "669",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9602
+      },
+      {
+        "text": "16.63",
+        "confidence": 0.9893
+      },
+      {
+        "text": "10.42",
+        "confidence": 0.9839
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9982
+      },
+      {
+        "text": "DILER DEMIR",
+        "confidence": 0.9283
+      },
+      {
+        "text": "CELIK ENSUSTRLVE TICARET A.S.",
+        "confidence": 0.9514
+      },
+      {
+        "text": "CARES",
+        "confidence": 0.9991
+      },
+      {
+        "text": "UKAS",
+        "confidence": 0.9996
+      },
+      {
+        "text": "011002",
+        "confidence": 0.9714
+      },
+      {
+        "text": "0002",
+        "confidence": 0.9602
+      },
+      {
+        "text": "CARE CloA Aps",
+        "confidence": 0.7005
+      },
+      {
+        "text": "All incoming raw material has been checked by radicactivity detection system",
+        "confidence": 0.9732
+      },
+      {
+        "text": "RESPONSIBLE CHIEF",
+        "confidence": 0.9988
+      },
+      {
+        "text": "CERTIFICATE OF APPROVAL NUMBER 011001",
+        "confidence": 0.9626
+      },
+      {
+        "text": "Page 78",
+        "confidence": 0.9992
+      },
+      {
+        "text": "Form No 08 03 2-4/R-0",
+        "confidence": 0.9486
+      },
+      {
+        "text": "ENRE OZAKYOL",
+        "confidence": 0.9618
+      }
+    ],
+    "full_text": [
+      "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+      "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+      "ISSUING DATE: 07.07.2025",
+      "CUSTOMER: MW STEEL TRADING LIMITEO LONDON THAMESPCRT LIBERTY",
+      "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+      "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+      "ORDER NO: MK250508-001",
+      "QUALITY CONTROL DEPARTMENT",
+      "CONSIGNMENT NO:2025-3133/01",
+      "SIZE",
+      "\"",
+      "32MMX14M.",
+      "QUALITY",
+      "BS4449:2005 GR B500 B",
+      "PRODUCTION PROSES : QST",
+      "ORDER NO: 2025-3133 LOT-1",
+      "VESSEL NAME: M/V WHITE IVY",
+      "CARES APPROVED",
+      "CHEMICAL COMPOSITION",
+      "MECHANICAL PROPERTIES",
+      "Heat",
+      "carben",
+      "RADIATION",
+      "Weight",
+      "Cross Sectional",
+      "Yield Point",
+      "Tensile Strength",
+      "Percentage",
+      "$A\\frac{}$",
+      "Rebend",
+      "Number",
+      "*0",
+      "S",
+      "%",
+      "a",
+      "Mn",
+      "N",
+      "%",
+      "Mo",
+      "Cu",
+      ">*",
+      "z*",
+      "",
+      "equvalent",
+      "μRH",
+      "Per",
+      "area",
+      "N/mm2(MPa)",
+      "N/mm2(MPa)",
+      "Rm/Re",
+      "elongation",
+      "Test",
+      "%",
+      "%",
+      "%",
+      "value",
+      "Kg/m",
+      "mm2",
+      "(Re)",
+      "(Rm)",
+      "Lo=5d0",
+      "25990034",
+      "0.19",
+      "0.18",
+      "0.028",
+      "0.016",
+      "0.65",
+      "0.02",
+      "0.05",
+      "0.001",
+      "0.01",
+      "0.0010",
+      "0.0057",
+      "0,0007",
+      "0.31",
+      "16",
+      "6.185",
+      "804.00",
+      "601",
+      "714",
+      "1.19",
+      "19.56",
+      "8.70",
+      "OK",
+      "6.200",
+      "804.00",
+      "602",
+      "715",
+      "1.19",
+      "21.69",
+      "9.82",
+      "OK",
+      "6.194",
+      "804.00",
+      "599",
+      "718",
+      "1.20",
+      "21.81",
+      "9.65",
+      "OK",
+      "6.188",
+      "804.00",
+      "613",
+      "728",
+      "1.19",
+      "21.84",
+      "9.32",
+      "OK",
+      "25990032",
+      "0.20",
+      "0,21",
+      "0.020",
+      "0.017",
+      "0.71",
+      "0.02",
+      "0.06",
+      "0.001",
+      "0.01",
+      "0.0020",
+      "0.0055",
+      "0.0006",
+      "0.33",
+      "15",
+      "6.200",
+      "804.00",
+      "599",
+      "711",
+      "1.19",
+      "17.70",
+      "10.11",
+      "OK",
+      "6.214",
+      "804.00",
+      "597",
+      "707",
+      "1.18",
+      "18.16",
+      "10.72",
+      "OK",
+      "6,206",
+      "804.00",
+      "619",
+      "728",
+      "1.18",
+      "17.96",
+      "9.54",
+      "OK",
+      "6.197",
+      "804.00",
+      "589",
+      "726",
+      "1.23",
+      "17.45",
+      "10.75",
+      "OK",
+      "0.64",
+      "0.02",
+      "0,05",
+      "0.001",
+      "0,01",
+      "0,0010",
+      "0,0062",
+      "0.0006",
+      "0.32",
+      "10",
+      "6.204",
+      "804.00",
+      "573",
+      "691",
+      "1.21",
+      "19.95",
+      "9.99",
+      "OK",
+      "25990031",
+      "0.20",
+      "0.19",
+      "0.029",
+      "0.021",
+      "6.207",
+      "804.00",
+      "584",
+      "698",
+      "1.20",
+      "19,79",
+      "9.77",
+      "OK",
+      "6.200",
+      "804.00",
+      "602",
+      "720",
+      "1,20",
+      "19.11",
+      "9.69",
+      "OK",
+      "6.198",
+      "804.00",
+      "566",
+      "694",
+      "1.23",
+      "20.68",
+      "8,69",
+      "OK",
+      "0.01",
+      "0.0020",
+      "0,0055",
+      "0.0006",
+      "0.31",
+      "17",
+      "6.190",
+      "804.00",
+      "599",
+      "716",
+      "1,20",
+      "20.51",
+      "10,18",
+      "OK",
+      "25990024",
+      "0.19",
+      "0.19",
+      "0.020",
+      "0,022",
+      "0.66",
+      "0.02",
+      "0.06",
+      "0.001",
+      "6.197",
+      "804.00",
+      "583",
+      "718",
+      "1.23",
+      "21.61",
+      "9.88",
+      "OK",
+      "6.192",
+      "804.00",
+      "585",
+      "715",
+      "1,22",
+      "19,69",
+      "10.27",
+      "OK",
+      "6.187",
+      "804.00",
+      "599",
+      "728",
+      "1.22",
+      "19.40",
+      "10.41",
+      "OK",
+      "0.76",
+      "0.09",
+      "0.10",
+      "0.014",
+      "0.28",
+      "0.0005",
+      "0,0077",
+      "0.0003",
+      "0.37",
+      "19",
+      "6.093",
+      "804.00",
+      "564",
+      "666",
+      "1.18",
+      "17.06",
+      "10.90",
+      "OK",
+      "2504095",
+      "0,20",
+      "0.23",
+      "0.014",
+      "0.012",
+      "6.098",
+      "804.00",
+      "564",
+      "666",
+      "1.18",
+      "18.25",
+      "10,52",
+      "OK",
+      "6.095",
+      "804.00",
+      "597",
+      "696",
+      "1.17",
+      "16.38",
+      "10.12",
+      "OK",
+      "6.090",
+      "804.00",
+      "558",
+      "669",
+      "1.20",
+      "16.63",
+      "10.42",
+      "OK",
+      "DILER DEMIR",
+      "CELIK ENSUSTRLVE TICARET A.S.",
+      "CARES",
+      "UKAS",
+      "011002",
+      "0002",
+      "CARE CloA Aps",
+      "All incoming raw material has been checked by radicactivity detection system",
+      "RESPONSIBLE CHIEF",
+      "CERTIFICATE OF APPROVAL NUMBER 011001",
+      "Page 78",
+      "Form No 08 03 2-4/R-0",
+      "ENRE OZAKYOL"
+    ]
+  },
+  {
+    "page": 3,
+    "file": "diler-07-07-2025-rerun-41-44_page3_text.txt",
+    "text_lines": [
+      {
+        "text": "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+        "confidence": 0.986
+      },
+      {
+        "text": "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+        "confidence": 0.9795
+      },
+      {
+        "text": "ISSUING DATE: 07.07.2025",
+        "confidence": 0.9617
+      },
+      {
+        "text": "CUSTOMER: MW STEEL TRADING LIMITED LONDON THAMESPORT LIBERTY",
+        "confidence": 0.9787
+      },
+      {
+        "text": "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+        "confidence": 0.9785
+      },
+      {
+        "text": "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+        "confidence": 0.9981
+      },
+      {
+        "text": "ORDER NO: MK250508-001",
+        "confidence": 0.9931
+      },
+      {
+        "text": "QUALITY CONTROL DEPARTMENT",
+        "confidence": 0.9988
+      },
+      {
+        "text": "CONSIGNMENT NO:2025-3133/01",
+        "confidence": 0.984
+      },
+      {
+        "text": "SIZE",
+        "confidence": 0.9981
+      },
+      {
+        "text": "32MMX14M.",
+        "confidence": 0.9956
+      },
+      {
+        "text": "QUALITY",
+        "confidence": 0.9995
+      },
+      {
+        "text": "BS4449:2005 GR B500 B",
+        "confidence": 0.9719
+      },
+      {
+        "text": "PRODUCTION PROSES : QST",
+        "confidence": 0.9681
+      },
+      {
+        "text": "ORDER NO: 2025-3133 LOT-1",
+        "confidence": 0.9787
+      },
+      {
+        "text": "VESSEL NAME: MN WHITE IVY",
+        "confidence": 0.9887
+      },
+      {
+        "text": "CARES APPROVED",
+        "confidence": 0.9826
+      },
+      {
+        "text": "CHEMICAL COMPOSITION",
+        "confidence": 0.9996
+      },
+      {
+        "text": "MECHANICAL PROPERTIES",
+        "confidence": 0.9996
+      },
+      {
+        "text": "Heat",
+        "confidence": 0.9994
+      },
+      {
+        "text": "carben",
+        "confidence": 0.9653
+      },
+      {
+        "text": "RADIATION",
+        "confidence": 0.9997
+      },
+      {
+        "text": "Weight",
+        "confidence": 0.9964
+      },
+      {
+        "text": "Cross Sectional",
+        "confidence": 0.9964
+      },
+      {
+        "text": "Yleld Point",
+        "confidence": 0.9272
+      },
+      {
+        "text": "Tensile Strength",
+        "confidence": 0.9969
+      },
+      {
+        "text": "Percentage",
+        "confidence": 0.9984
+      },
+      {
+        "text": "Agt",
+        "confidence": 0.997
+      },
+      {
+        "text": "Rebend",
+        "confidence": 0.9997
+      },
+      {
+        "text": "*0",
+        "confidence": 0.5837
+      },
+      {
+        "text": "s",
+        "confidence": 0.3694
+      },
+      {
+        "text": "2",
+        "confidence": 0.5707
+      },
+      {
+        "text": "*0",
+        "confidence": 0.6769
+      },
+      {
+        "text": "Mn",
+        "confidence": 0.9549
+      },
+      {
+        "text": "$N\\fra }$",
+        "confidence": 0.6449
+      },
+      {
+        "text": "Cr",
+        "confidence": 0.9908
+      },
+      {
+        "text": "Mo",
+        "confidence": 0.8447
+      },
+      {
+        "text": "Cu",
+        "confidence": 0.4675
+      },
+      {
+        "text": ">*",
+        "confidence": 0.8608
+      },
+      {
+        "text": "z2",
+        "confidence": 0.6257
+      },
+      {
+        "text": "Number",
+        "confidence": 1.0
+      },
+      {
+        "text": "∞",
+        "confidence": 0.4826
+      },
+      {
+        "text": "equvalent",
+        "confidence": 0.9995
+      },
+      {
+        "text": "μR/H",
+        "confidence": 0.821
+      },
+      {
+        "text": "Per",
+        "confidence": 0.9981
+      },
+      {
+        "text": "area",
+        "confidence": 0.9999
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9857
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9798
+      },
+      {
+        "text": "Rm/Re",
+        "confidence": 0.9575
+      },
+      {
+        "text": "elongation",
+        "confidence": 0.9462
+      },
+      {
+        "text": "%",
+        "confidence": 0.9982
+      },
+      {
+        "text": "Test",
+        "confidence": 0.982
+      },
+      {
+        "text": "%",
+        "confidence": 0.997
+      },
+      {
+        "text": "%",
+        "confidence": 0.9995
+      },
+      {
+        "text": "%",
+        "confidence": 0.9978
+      },
+      {
+        "text": "vatue",
+        "confidence": 0.961
+      },
+      {
+        "text": "Kg/m",
+        "confidence": 0.9822
+      },
+      {
+        "text": "mm2",
+        "confidence": 0.9994
+      },
+      {
+        "text": "(Re)",
+        "confidence": 0.9957
+      },
+      {
+        "text": "(Rm)",
+        "confidence": 0.8829
+      },
+      {
+        "text": "Lo=5do",
+        "confidence": 0.9774
+      },
+      {
+        "text": "2504094",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.18",
+        "confidence": 0.9962
+      },
+      {
+        "text": "0.22",
+        "confidence": 0.9986
+      },
+      {
+        "text": "0,028",
+        "confidence": 0.9057
+      },
+      {
+        "text": "0,013",
+        "confidence": 0.9111
+      },
+      {
+        "text": "0.75",
+        "confidence": 0.9455
+      },
+      {
+        "text": "0.09",
+        "confidence": 0.9977
+      },
+      {
+        "text": "0.08",
+        "confidence": 0.981
+      },
+      {
+        "text": "0.013",
+        "confidence": 0.9947
+      },
+      {
+        "text": "0.26",
+        "confidence": 0.994
+      },
+      {
+        "text": "0.0005",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0.0057",
+        "confidence": 0.9651
+      },
+      {
+        "text": "0,0004",
+        "confidence": 0.9543
+      },
+      {
+        "text": "0.35",
+        "confidence": 0.9793
+      },
+      {
+        "text": "18",
+        "confidence": 1.0
+      },
+      {
+        "text": "6.097",
+        "confidence": 0.909
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9863
+      },
+      {
+        "text": "592",
+        "confidence": 0.9998
+      },
+      {
+        "text": "691",
+        "confidence": 0.9977
+      },
+      {
+        "text": "1.17",
+        "confidence": 0.9747
+      },
+      {
+        "text": "18.25",
+        "confidence": 0.9845
+      },
+      {
+        "text": "9.67",
+        "confidence": 0.9759
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9967
+      },
+      {
+        "text": "6.108",
+        "confidence": 0.9939
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9889
+      },
+      {
+        "text": "564",
+        "confidence": 0.9987
+      },
+      {
+        "text": "669",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9879
+      },
+      {
+        "text": "16,69",
+        "confidence": 0.9159
+      },
+      {
+        "text": "9.93",
+        "confidence": 0.982
+      },
+      {
+        "text": "OK",
+        "confidence": 0.995
+      },
+      {
+        "text": "6.100",
+        "confidence": 0.9825
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.987
+      },
+      {
+        "text": "565",
+        "confidence": 0.9998
+      },
+      {
+        "text": "691",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.22",
+        "confidence": 0.999
+      },
+      {
+        "text": "16.31",
+        "confidence": 0.9961
+      },
+      {
+        "text": "9.21",
+        "confidence": 0.995
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9962
+      },
+      {
+        "text": "6.093",
+        "confidence": 0.9507
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9883
+      },
+      {
+        "text": "586",
+        "confidence": 0.999
+      },
+      {
+        "text": "690",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9432
+      },
+      {
+        "text": "17.63",
+        "confidence": 0.9969
+      },
+      {
+        "text": "9.80",
+        "confidence": 0.9642
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9923
+      },
+      {
+        "text": "2504093",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9905
+      },
+      {
+        "text": "0.22",
+        "confidence": 0.9939
+      },
+      {
+        "text": "0.021",
+        "confidence": 0.9955
+      },
+      {
+        "text": "0.010",
+        "confidence": 0.9991
+      },
+      {
+        "text": "0.78",
+        "confidence": 0.9447
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.998
+      },
+      {
+        "text": "0.08",
+        "confidence": 0.9885
+      },
+      {
+        "text": "0.013",
+        "confidence": 0.992
+      },
+      {
+        "text": "0.31",
+        "confidence": 0.998
+      },
+      {
+        "text": "0.0002",
+        "confidence": 0.9257
+      },
+      {
+        "text": "0.0067",
+        "confidence": 0.9979
+      },
+      {
+        "text": "0,0003",
+        "confidence": 0.9294
+      },
+      {
+        "text": "0.37",
+        "confidence": 0.9991
+      },
+      {
+        "text": "21",
+        "confidence": 0.9997
+      },
+      {
+        "text": "6.096",
+        "confidence": 0.9572
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9994
+      },
+      {
+        "text": "562",
+        "confidence": 0.9999
+      },
+      {
+        "text": "668",
+        "confidence": 0.9995
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9759
+      },
+      {
+        "text": "18.88",
+        "confidence": 0.9897
+      },
+      {
+        "text": "9.23",
+        "confidence": 0.956
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9935
+      },
+      {
+        "text": "6.093",
+        "confidence": 0.9973
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9877
+      },
+      {
+        "text": "563",
+        "confidence": 0.9999
+      },
+      {
+        "text": "667",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9988
+      },
+      {
+        "text": "16.19",
+        "confidence": 0.9046
+      },
+      {
+        "text": "9.05",
+        "confidence": 0.9644
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9877
+      },
+      {
+        "text": "6.091",
+        "confidence": 0.967
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.977
+      },
+      {
+        "text": "569",
+        "confidence": 0.9992
+      },
+      {
+        "text": "689",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.21",
+        "confidence": 0.9943
+      },
+      {
+        "text": "17,81",
+        "confidence": 0.932
+      },
+      {
+        "text": "8.81",
+        "confidence": 0.9981
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9897
+      },
+      {
+        "text": "6.090",
+        "confidence": 0.9784
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9406
+      },
+      {
+        "text": "558",
+        "confidence": 0.9997
+      },
+      {
+        "text": "670",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9792
+      },
+      {
+        "text": "18.06",
+        "confidence": 0.9862
+      },
+      {
+        "text": "9.51",
+        "confidence": 0.9682
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9842
+      },
+      {
+        "text": "2504092",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9958
+      },
+      {
+        "text": "0.22",
+        "confidence": 0.8329
+      },
+      {
+        "text": "0.028",
+        "confidence": 0.985
+      },
+      {
+        "text": "0.009",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0.73",
+        "confidence": 0.9959
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.08",
+        "confidence": 0.9451
+      },
+      {
+        "text": "0.014",
+        "confidence": 0.9324
+      },
+      {
+        "text": "0.32",
+        "confidence": 0.9598
+      },
+      {
+        "text": "0,0001",
+        "confidence": 0.955
+      },
+      {
+        "text": "0.0067",
+        "confidence": 0.9907
+      },
+      {
+        "text": "0.0004",
+        "confidence": 0.9293
+      },
+      {
+        "text": "0.36",
+        "confidence": 0.8809
+      },
+      {
+        "text": "16",
+        "confidence": 0.9997
+      },
+      {
+        "text": "6.098",
+        "confidence": 0.9604
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9949
+      },
+      {
+        "text": "553",
+        "confidence": 0.9999
+      },
+      {
+        "text": "666",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9965
+      },
+      {
+        "text": "18.50",
+        "confidence": 0.9922
+      },
+      {
+        "text": "9.58",
+        "confidence": 0.9925
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9899
+      },
+      {
+        "text": "6096",
+        "confidence": 0.9994
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9989
+      },
+      {
+        "text": "563",
+        "confidence": 0.9998
+      },
+      {
+        "text": "680",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.21",
+        "confidence": 0.9435
+      },
+      {
+        "text": "18.44",
+        "confidence": 0.9725
+      },
+      {
+        "text": "9.61",
+        "confidence": 0.9844
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9665
+      },
+      {
+        "text": "6.095",
+        "confidence": 0.9068
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9315
+      },
+      {
+        "text": "559",
+        "confidence": 0.9999
+      },
+      {
+        "text": "672",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9762
+      },
+      {
+        "text": "17,19",
+        "confidence": 0.91
+      },
+      {
+        "text": "9.34",
+        "confidence": 0.9008
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9953
+      },
+      {
+        "text": "6.092",
+        "confidence": 0.9982
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9946
+      },
+      {
+        "text": "581",
+        "confidence": 0.9995
+      },
+      {
+        "text": "684",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9846
+      },
+      {
+        "text": "18.06",
+        "confidence": 0.9988
+      },
+      {
+        "text": "10.24",
+        "confidence": 0.9553
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9876
+      },
+      {
+        "text": "0.07",
+        "confidence": 0.9968
+      },
+      {
+        "text": "0.015",
+        "confidence": 0.9887
+      },
+      {
+        "text": "0.33",
+        "confidence": 0.9954
+      },
+      {
+        "text": "0.0000",
+        "confidence": 0.9401
+      },
+      {
+        "text": "0,0063",
+        "confidence": 0.9525
+      },
+      {
+        "text": "0,0003",
+        "confidence": 0.9952
+      },
+      {
+        "text": "0.37",
+        "confidence": 0.9961
+      },
+      {
+        "text": "21",
+        "confidence": 0.999
+      },
+      {
+        "text": "6.120",
+        "confidence": 0.9894
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9449
+      },
+      {
+        "text": "570",
+        "confidence": 0.9999
+      },
+      {
+        "text": "646",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.13",
+        "confidence": 0.9739
+      },
+      {
+        "text": "16.06",
+        "confidence": 0.9957
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9964
+      },
+      {
+        "text": "9.43",
+        "confidence": 0.9606
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9932
+      },
+      {
+        "text": "2504091",
+        "confidence": 0.9999
+      },
+      {
+        "text": "0.22",
+        "confidence": 0.9991
+      },
+      {
+        "text": "0.018",
+        "confidence": 0.9943
+      },
+      {
+        "text": "0.007",
+        "confidence": 0.9986
+      },
+      {
+        "text": "0.75",
+        "confidence": 0.9968
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9989
+      },
+      {
+        "text": "6.099",
+        "confidence": 0.9616
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9967
+      },
+      {
+        "text": "593",
+        "confidence": 0.9999
+      },
+      {
+        "text": "672",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.13",
+        "confidence": 0.9593
+      },
+      {
+        "text": "18,63",
+        "confidence": 0.9552
+      },
+      {
+        "text": "9.34",
+        "confidence": 0.901
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9853
+      },
+      {
+        "text": "6.098",
+        "confidence": 0.9783
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9891
+      },
+      {
+        "text": "593",
+        "confidence": 0.9999
+      },
+      {
+        "text": "678",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9631
+      },
+      {
+        "text": "18,00",
+        "confidence": 0.9316
+      },
+      {
+        "text": "8.91",
+        "confidence": 0.9928
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9941
+      },
+      {
+        "text": "6.097",
+        "confidence": 0.9251
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9901
+      },
+      {
+        "text": "590",
+        "confidence": 0.9999
+      },
+      {
+        "text": "673",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9931
+      },
+      {
+        "text": "16.00",
+        "confidence": 0.9891
+      },
+      {
+        "text": "8.58",
+        "confidence": 0.9616
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9966
+      },
+      {
+        "text": "0.23",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.027",
+        "confidence": 0.906
+      },
+      {
+        "text": "0.007",
+        "confidence": 0.9611
+      },
+      {
+        "text": "0.07",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.019",
+        "confidence": 0.9725
+      },
+      {
+        "text": "0.36",
+        "confidence": 0.987
+      },
+      {
+        "text": "0.0000",
+        "confidence": 0.9563
+      },
+      {
+        "text": "0.0071",
+        "confidence": 0.9827
+      },
+      {
+        "text": "0,0005",
+        "confidence": 0.9622
+      },
+      {
+        "text": "0.36",
+        "confidence": 0.931
+      },
+      {
+        "text": "21",
+        "confidence": 0.9996
+      },
+      {
+        "text": "2504090",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.996
+      },
+      {
+        "text": "0.74",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.996
+      },
+      {
+        "text": "6.111",
+        "confidence": 0.989
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9879
+      },
+      {
+        "text": "548",
+        "confidence": 1.0
+      },
+      {
+        "text": "651",
+        "confidence": 0.9991
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.996
+      },
+      {
+        "text": "16.94",
+        "confidence": 0.9455
+      },
+      {
+        "text": "9.63",
+        "confidence": 0.9716
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9969
+      },
+      {
+        "text": "6.105",
+        "confidence": 0.9906
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9963
+      },
+      {
+        "text": "548",
+        "confidence": 0.9998
+      },
+      {
+        "text": "651",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.19",
+        "confidence": 0.9948
+      },
+      {
+        "text": "17.88",
+        "confidence": 0.9899
+      },
+      {
+        "text": "9.78",
+        "confidence": 0.9425
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9959
+      },
+      {
+        "text": "6.102",
+        "confidence": 0.9952
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9628
+      },
+      {
+        "text": "575",
+        "confidence": 0.9999
+      },
+      {
+        "text": "681",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.9369
+      },
+      {
+        "text": "16,69",
+        "confidence": 0.9941
+      },
+      {
+        "text": "9.50",
+        "confidence": 0.9932
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9961
+      },
+      {
+        "text": "6.099",
+        "confidence": 0.9701
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9597
+      },
+      {
+        "text": "558",
+        "confidence": 0.9996
+      },
+      {
+        "text": "667",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9973
+      },
+      {
+        "text": "16,81",
+        "confidence": 0.9498
+      },
+      {
+        "text": "8.92",
+        "confidence": 0.9907
+      },
+      {
+        "text": "OK",
+        "confidence": 0.992
+      },
+      {
+        "text": "DILER DEMIR",
+        "confidence": 0.9416
+      },
+      {
+        "text": "CELIK ENDUSTRI VE TICARET A.S.",
+        "confidence": 0.9083
+      },
+      {
+        "text": "CARES",
+        "confidence": 0.9992
+      },
+      {
+        "text": "UKAS",
+        "confidence": 0.9995
+      },
+      {
+        "text": "ToOITo",
+        "confidence": 0.5333
+      },
+      {
+        "text": "0002",
+        "confidence": 0.9997
+      },
+      {
+        "text": "CARES C",
+        "confidence": 0.9298
+      },
+      {
+        "text": "A",
+        "confidence": 0.7641
+      },
+      {
+        "text": "All incoming raw matenial has been checked by radicactivity detecten system",
+        "confidence": 0.9773
+      },
+      {
+        "text": "CERTIFICATE CF APPROVAL NUMBER 011001",
+        "confidence": 0.9773
+      },
+      {
+        "text": "Page 79",
+        "confidence": 0.9991
+      },
+      {
+        "text": "RESPONSIBLE CHIEF",
+        "confidence": 0.9988
+      },
+      {
+        "text": "Farm No 08 03 2-4/R-0",
+        "confidence": 0.95
+      },
+      {
+        "text": "EVRE OZAKYOL",
+        "confidence": 0.9623
+      }
+    ],
+    "full_text": [
+      "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+      "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+      "ISSUING DATE: 07.07.2025",
+      "CUSTOMER: MW STEEL TRADING LIMITED LONDON THAMESPORT LIBERTY",
+      "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+      "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+      "ORDER NO: MK250508-001",
+      "QUALITY CONTROL DEPARTMENT",
+      "CONSIGNMENT NO:2025-3133/01",
+      "SIZE",
+      "32MMX14M.",
+      "QUALITY",
+      "BS4449:2005 GR B500 B",
+      "PRODUCTION PROSES : QST",
+      "ORDER NO: 2025-3133 LOT-1",
+      "VESSEL NAME: MN WHITE IVY",
+      "CARES APPROVED",
+      "CHEMICAL COMPOSITION",
+      "MECHANICAL PROPERTIES",
+      "Heat",
+      "carben",
+      "RADIATION",
+      "Weight",
+      "Cross Sectional",
+      "Yleld Point",
+      "Tensile Strength",
+      "Percentage",
+      "Agt",
+      "Rebend",
+      "*0",
+      "s",
+      "2",
+      "*0",
+      "Mn",
+      "$N\\fra }$",
+      "Cr",
+      "Mo",
+      "Cu",
+      ">*",
+      "z2",
+      "Number",
+      "∞",
+      "equvalent",
+      "μR/H",
+      "Per",
+      "area",
+      "N/mm2(MPa)",
+      "N/mm2(MPa)",
+      "Rm/Re",
+      "elongation",
+      "%",
+      "Test",
+      "%",
+      "%",
+      "%",
+      "vatue",
+      "Kg/m",
+      "mm2",
+      "(Re)",
+      "(Rm)",
+      "Lo=5do",
+      "2504094",
+      "0.18",
+      "0.22",
+      "0,028",
+      "0,013",
+      "0.75",
+      "0.09",
+      "0.08",
+      "0.013",
+      "0.26",
+      "0.0005",
+      "0.0057",
+      "0,0004",
+      "0.35",
+      "18",
+      "6.097",
+      "804.00",
+      "592",
+      "691",
+      "1.17",
+      "18.25",
+      "9.67",
+      "OK",
+      "6.108",
+      "804.00",
+      "564",
+      "669",
+      "1.19",
+      "16,69",
+      "9.93",
+      "OK",
+      "6.100",
+      "804.00",
+      "565",
+      "691",
+      "1.22",
+      "16.31",
+      "9.21",
+      "OK",
+      "6.093",
+      "804.00",
+      "586",
+      "690",
+      "1.18",
+      "17.63",
+      "9.80",
+      "OK",
+      "2504093",
+      "0.19",
+      "0.22",
+      "0.021",
+      "0.010",
+      "0.78",
+      "0.10",
+      "0.08",
+      "0.013",
+      "0.31",
+      "0.0002",
+      "0.0067",
+      "0,0003",
+      "0.37",
+      "21",
+      "6.096",
+      "804.00",
+      "562",
+      "668",
+      "1.19",
+      "18.88",
+      "9.23",
+      "OK",
+      "6.093",
+      "804.00",
+      "563",
+      "667",
+      "1.18",
+      "16.19",
+      "9.05",
+      "OK",
+      "6.091",
+      "804.00",
+      "569",
+      "689",
+      "1.21",
+      "17,81",
+      "8.81",
+      "OK",
+      "6.090",
+      "804.00",
+      "558",
+      "670",
+      "1.20",
+      "18.06",
+      "9.51",
+      "OK",
+      "2504092",
+      "0.19",
+      "0.22",
+      "0.028",
+      "0.009",
+      "0.73",
+      "0.10",
+      "0.08",
+      "0.014",
+      "0.32",
+      "0,0001",
+      "0.0067",
+      "0.0004",
+      "0.36",
+      "16",
+      "6.098",
+      "804.00",
+      "553",
+      "666",
+      "1.20",
+      "18.50",
+      "9.58",
+      "OK",
+      "6096",
+      "804.00",
+      "563",
+      "680",
+      "1.21",
+      "18.44",
+      "9.61",
+      "OK",
+      "6.095",
+      "804.00",
+      "559",
+      "672",
+      "1.20",
+      "17,19",
+      "9.34",
+      "OK",
+      "6.092",
+      "804.00",
+      "581",
+      "684",
+      "1.18",
+      "18.06",
+      "10.24",
+      "OK",
+      "0.07",
+      "0.015",
+      "0.33",
+      "0.0000",
+      "0,0063",
+      "0,0003",
+      "0.37",
+      "21",
+      "6.120",
+      "804.00",
+      "570",
+      "646",
+      "1.13",
+      "16.06",
+      "0.20",
+      "9.43",
+      "OK",
+      "2504091",
+      "0.22",
+      "0.018",
+      "0.007",
+      "0.75",
+      "0.10",
+      "6.099",
+      "804.00",
+      "593",
+      "672",
+      "1.13",
+      "18,63",
+      "9.34",
+      "OK",
+      "6.098",
+      "804.00",
+      "593",
+      "678",
+      "1.14",
+      "18,00",
+      "8.91",
+      "OK",
+      "6.097",
+      "804.00",
+      "590",
+      "673",
+      "1.14",
+      "16.00",
+      "8.58",
+      "OK",
+      "0.23",
+      "0.027",
+      "0.007",
+      "0.07",
+      "0.019",
+      "0.36",
+      "0.0000",
+      "0.0071",
+      "0,0005",
+      "0.36",
+      "21",
+      "2504090",
+      "0.19",
+      "0.74",
+      "0.10",
+      "6.111",
+      "804.00",
+      "548",
+      "651",
+      "1.19",
+      "16.94",
+      "9.63",
+      "OK",
+      "6.105",
+      "804.00",
+      "548",
+      "651",
+      "1.19",
+      "17.88",
+      "9.78",
+      "OK",
+      "6.102",
+      "804.00",
+      "575",
+      "681",
+      "1.18",
+      "16,69",
+      "9.50",
+      "OK",
+      "6.099",
+      "804.00",
+      "558",
+      "667",
+      "1.20",
+      "16,81",
+      "8.92",
+      "OK",
+      "DILER DEMIR",
+      "CELIK ENDUSTRI VE TICARET A.S.",
+      "CARES",
+      "UKAS",
+      "ToOITo",
+      "0002",
+      "CARES C",
+      "A",
+      "All incoming raw matenial has been checked by radicactivity detecten system",
+      "CERTIFICATE CF APPROVAL NUMBER 011001",
+      "Page 79",
+      "RESPONSIBLE CHIEF",
+      "Farm No 08 03 2-4/R-0",
+      "EVRE OZAKYOL"
+    ]
+  },
+  {
+    "page": 4,
+    "file": "diler-07-07-2025-rerun-41-44_page4_text.txt",
+    "text_lines": [
+      {
+        "text": "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+        "confidence": 0.996
+      },
+      {
+        "text": "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+        "confidence": 0.9799
+      },
+      {
+        "text": "ISSUING DATE: 07.07.2025",
+        "confidence": 0.9846
+      },
+      {
+        "text": "C OE TEN  NRE",
+        "confidence": 0.3594
+      },
+      {
+        "text": "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+        "confidence": 0.9708
+      },
+      {
+        "text": "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+        "confidence": 0.9828
+      },
+      {
+        "text": "ORDER NO: MK2505C8-001",
+        "confidence": 0.9692
+      },
+      {
+        "text": "QUALITY CONTROL DEPARTMENT",
+        "confidence": 0.9975
+      },
+      {
+        "text": "CONSIGNMENT NO: 2025-3133/01",
+        "confidence": 0.9796
+      },
+      {
+        "text": "SIZE",
+        "confidence": 0.9987
+      },
+      {
+        "text": ":",
+        "confidence": 0.9978
+      },
+      {
+        "text": "32MMX14M.",
+        "confidence": 0.9905
+      },
+      {
+        "text": "QUALITY",
+        "confidence": 0.9995
+      },
+      {
+        "text": ":",
+        "confidence": 0.9295
+      },
+      {
+        "text": "BS4449:2005 GR B500 B",
+        "confidence": 0.9434
+      },
+      {
+        "text": "PRODUCTION PROSES:QST",
+        "confidence": 0.9787
+      },
+      {
+        "text": "ORDER NO: 2025-3133 L0T-1",
+        "confidence": 0.9763
+      },
+      {
+        "text": "VESSEL NAME: MV WHITE IVY",
+        "confidence": 0.9692
+      },
+      {
+        "text": "CARES APPROVED",
+        "confidence": 0.9995
+      },
+      {
+        "text": "CHEMICAL COMPOSITION",
+        "confidence": 0.9953
+      },
+      {
+        "text": "MECHANICAL PROPERTIES",
+        "confidence": 0.9916
+      },
+      {
+        "text": "Heat",
+        "confidence": 0.9974
+      },
+      {
+        "text": "carbon",
+        "confidence": 0.9984
+      },
+      {
+        "text": "RADIATION",
+        "confidence": 0.9997
+      },
+      {
+        "text": "Weight",
+        "confidence": 0.9943
+      },
+      {
+        "text": "Cross Sectional",
+        "confidence": 0.9944
+      },
+      {
+        "text": "Yield Point",
+        "confidence": 0.9419
+      },
+      {
+        "text": "Tensile Strength",
+        "confidence": 0.9859
+      },
+      {
+        "text": "Percentage",
+        "confidence": 0.9982
+      },
+      {
+        "text": "Agt",
+        "confidence": 0.8623
+      },
+      {
+        "text": "Rebend",
+        "confidence": 0.9999
+      },
+      {
+        "text": "Number",
+        "confidence": 1.0
+      },
+      {
+        "text": "0",
+        "confidence": 0.4995
+      },
+      {
+        "text": "S",
+        "confidence": 0.3861
+      },
+      {
+        "text": "6",
+        "confidence": 0.354
+      },
+      {
+        "text": "20",
+        "confidence": 0.7649
+      },
+      {
+        "text": "z",
+        "confidence": 0.501
+      },
+      {
+        "text": "Cr",
+        "confidence": 0.6012
+      },
+      {
+        "text": "$Or",
+        "confidence": 0.587
+      },
+      {
+        "text": "na$",
+        "confidence": 0.5367
+      },
+      {
+        "text": ">*",
+        "confidence": 0.8172
+      },
+      {
+        "text": "z",
+        "confidence": 0.7056
+      },
+      {
+        "text": "",
+        "confidence": 0.0
+      },
+      {
+        "text": "equvalent",
+        "confidence": 0.9994
+      },
+      {
+        "text": "μR/H",
+        "confidence": 0.7764
+      },
+      {
+        "text": "Per",
+        "confidence": 0.9987
+      },
+      {
+        "text": "area",
+        "confidence": 0.9996
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9972
+      },
+      {
+        "text": "N/mm2(MPa)",
+        "confidence": 0.9942
+      },
+      {
+        "text": "Rm/Re",
+        "confidence": 0.9929
+      },
+      {
+        "text": "elongation",
+        "confidence": 0.9957
+      },
+      {
+        "text": "%",
+        "confidence": 0.9935
+      },
+      {
+        "text": "Test",
+        "confidence": 0.9994
+      },
+      {
+        "text": "value",
+        "confidence": 0.997
+      },
+      {
+        "text": "Kg/m",
+        "confidence": 0.9898
+      },
+      {
+        "text": "mm2",
+        "confidence": 0.9996
+      },
+      {
+        "text": "(Re)",
+        "confidence": 0.9907
+      },
+      {
+        "text": "(Rm)",
+        "confidence": 0.9325
+      },
+      {
+        "text": "Lo=5do",
+        "confidence": 0.9813
+      },
+      {
+        "text": "2504089",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9951
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9979
+      },
+      {
+        "text": "0.031",
+        "confidence": 0.9869
+      },
+      {
+        "text": "0.012",
+        "confidence": 0.9984
+      },
+      {
+        "text": "0.75",
+        "confidence": 0.9995
+      },
+      {
+        "text": "0.11",
+        "confidence": 0.9985
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.017",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.32",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.0004",
+        "confidence": 0.9803
+      },
+      {
+        "text": "0.0075",
+        "confidence": 0.9971
+      },
+      {
+        "text": "0.0004",
+        "confidence": 0.9974
+      },
+      {
+        "text": "0.37",
+        "confidence": 0.9801
+      },
+      {
+        "text": "20",
+        "confidence": 0.9999
+      },
+      {
+        "text": "6.099",
+        "confidence": 0.9871
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9993
+      },
+      {
+        "text": "590",
+        "confidence": 0.9998
+      },
+      {
+        "text": "697",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.18",
+        "confidence": 0.999
+      },
+      {
+        "text": "18.88",
+        "confidence": 0.9202
+      },
+      {
+        "text": "9,58",
+        "confidence": 0.967
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9938
+      },
+      {
+        "text": "6.097",
+        "confidence": 0.9008
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9981
+      },
+      {
+        "text": "589",
+        "confidence": 0.9998
+      },
+      {
+        "text": "691",
+        "confidence": 0.9994
+      },
+      {
+        "text": "1.17",
+        "confidence": 0.9931
+      },
+      {
+        "text": "18.38",
+        "confidence": 0.9863
+      },
+      {
+        "text": "9.80",
+        "confidence": 0.9435
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9965
+      },
+      {
+        "text": "6.095",
+        "confidence": 0.9939
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.996
+      },
+      {
+        "text": "569",
+        "confidence": 0.9995
+      },
+      {
+        "text": "666",
+        "confidence": 0.9966
+      },
+      {
+        "text": "1.17",
+        "confidence": 0.9907
+      },
+      {
+        "text": "18,94",
+        "confidence": 0.9408
+      },
+      {
+        "text": "9.64",
+        "confidence": 0.9674
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9975
+      },
+      {
+        "text": "6.090",
+        "confidence": 0.9824
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9975
+      },
+      {
+        "text": "573",
+        "confidence": 0.9999
+      },
+      {
+        "text": "686",
+        "confidence": 0.991
+      },
+      {
+        "text": "1.20",
+        "confidence": 0.9997
+      },
+      {
+        "text": "16,81",
+        "confidence": 0.942
+      },
+      {
+        "text": "9.44",
+        "confidence": 0.889
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9976
+      },
+      {
+        "text": "2504088",
+        "confidence": 0.9998
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9378
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.995
+      },
+      {
+        "text": "0.021",
+        "confidence": 0.9976
+      },
+      {
+        "text": "0,016",
+        "confidence": 0.9718
+      },
+      {
+        "text": "0.76",
+        "confidence": 0.9917
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9951
+      },
+      {
+        "text": "0.12",
+        "confidence": 0.9959
+      },
+      {
+        "text": "0.015",
+        "confidence": 0.9978
+      },
+      {
+        "text": "0.33",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0,0008",
+        "confidence": 0.9321
+      },
+      {
+        "text": "0.0076",
+        "confidence": 0.9988
+      },
+      {
+        "text": "0,0004",
+        "confidence": 0.9337
+      },
+      {
+        "text": "0.38",
+        "confidence": 0.972
+      },
+      {
+        "text": "19",
+        "confidence": 0.9998
+      },
+      {
+        "text": "6,094",
+        "confidence": 0.9013
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9966
+      },
+      {
+        "text": "577",
+        "confidence": 0.9999
+      },
+      {
+        "text": "660",
+        "confidence": 0.9995
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9727
+      },
+      {
+        "text": "16.56",
+        "confidence": 0.9984
+      },
+      {
+        "text": "9.69",
+        "confidence": 0.9453
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9967
+      },
+      {
+        "text": "6.098",
+        "confidence": 0.9986
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9895
+      },
+      {
+        "text": "590",
+        "confidence": 0.9999
+      },
+      {
+        "text": "674",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9989
+      },
+      {
+        "text": "16.19",
+        "confidence": 0.9857
+      },
+      {
+        "text": "9.34",
+        "confidence": 0.899
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9985
+      },
+      {
+        "text": "6.097",
+        "confidence": 0.998
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9245
+      },
+      {
+        "text": "582",
+        "confidence": 0.9998
+      },
+      {
+        "text": "659",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1,13",
+        "confidence": 0.9408
+      },
+      {
+        "text": "16.06",
+        "confidence": 0.9969
+      },
+      {
+        "text": "9.52",
+        "confidence": 0.9973
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9982
+      },
+      {
+        "text": "6.096",
+        "confidence": 0.93
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9864
+      },
+      {
+        "text": "581",
+        "confidence": 0.9319
+      },
+      {
+        "text": "659",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.13",
+        "confidence": 0.9993
+      },
+      {
+        "text": "17.94",
+        "confidence": 0.975
+      },
+      {
+        "text": "9.09",
+        "confidence": 0.9304
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9969
+      },
+      {
+        "text": "2504079",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9958
+      },
+      {
+        "text": "0.19",
+        "confidence": 0.9395
+      },
+      {
+        "text": "0.013",
+        "confidence": 0.9979
+      },
+      {
+        "text": "0.011",
+        "confidence": 0.9751
+      },
+      {
+        "text": "0.74",
+        "confidence": 0.9989
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9941
+      },
+      {
+        "text": "0.12",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.015",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.31",
+        "confidence": 0.9864
+      },
+      {
+        "text": "0.0005",
+        "confidence": 0.9227
+      },
+      {
+        "text": "0.0075",
+        "confidence": 0.9986
+      },
+      {
+        "text": "0.0002",
+        "confidence": 0.9496
+      },
+      {
+        "text": "0.37",
+        "confidence": 0.9921
+      },
+      {
+        "text": "16",
+        "confidence": 1.0
+      },
+      {
+        "text": "6.112",
+        "confidence": 0.9995
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9992
+      },
+      {
+        "text": "602",
+        "confidence": 0.9998
+      },
+      {
+        "text": "682",
+        "confidence": 0.9997
+      },
+      {
+        "text": "1.13",
+        "confidence": 0.9992
+      },
+      {
+        "text": "18.06",
+        "confidence": 0.9952
+      },
+      {
+        "text": "9.23",
+        "confidence": 0.9508
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9891
+      },
+      {
+        "text": "6.113",
+        "confidence": 0.9681
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9992
+      },
+      {
+        "text": "601",
+        "confidence": 0.9993
+      },
+      {
+        "text": "680",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1,13",
+        "confidence": 0.8748
+      },
+      {
+        "text": "18,56",
+        "confidence": 0.9405
+      },
+      {
+        "text": "9,52",
+        "confidence": 0.8851
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9981
+      },
+      {
+        "text": "6,111",
+        "confidence": 0.8819
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9681
+      },
+      {
+        "text": "594",
+        "confidence": 0.9998
+      },
+      {
+        "text": "680",
+        "confidence": 0.9996
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.8908
+      },
+      {
+        "text": "16.19",
+        "confidence": 0.9956
+      },
+      {
+        "text": "8,88",
+        "confidence": 0.9623
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9952
+      },
+      {
+        "text": "6.103",
+        "confidence": 0.9994
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9547
+      },
+      {
+        "text": "568",
+        "confidence": 0.9996
+      },
+      {
+        "text": "648",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9875
+      },
+      {
+        "text": "18.31",
+        "confidence": 0.9991
+      },
+      {
+        "text": "9,43",
+        "confidence": 0.8762
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9904
+      },
+      {
+        "text": "2500812",
+        "confidence": 0.9999
+      },
+      {
+        "text": "0.014",
+        "confidence": 0.9839
+      },
+      {
+        "text": "0.73",
+        "confidence": 0.9947
+      },
+      {
+        "text": "0.11",
+        "confidence": 0.953
+      },
+      {
+        "text": "0.09",
+        "confidence": 0.9901
+      },
+      {
+        "text": "0.015",
+        "confidence": 0.9699
+      },
+      {
+        "text": "0.40",
+        "confidence": 0.9707
+      },
+      {
+        "text": "0.0025",
+        "confidence": 0.9899
+      },
+      {
+        "text": "0.0089",
+        "confidence": 0.9988
+      },
+      {
+        "text": "0.0004",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.36",
+        "confidence": 0.9961
+      },
+      {
+        "text": "18",
+        "confidence": 0.9921
+      },
+      {
+        "text": "6.125",
+        "confidence": 0.9987
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9978
+      },
+      {
+        "text": "586",
+        "confidence": 0.9998
+      },
+      {
+        "text": "669",
+        "confidence": 0.9995
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.999
+      },
+      {
+        "text": "0.22",
+        "confidence": 0.9945
+      },
+      {
+        "text": "0.024",
+        "confidence": 0.985
+      },
+      {
+        "text": "16.50",
+        "confidence": 0.975
+      },
+      {
+        "text": "9,53",
+        "confidence": 0.8896
+      },
+      {
+        "text": "0.18",
+        "confidence": 0.9964
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9936
+      },
+      {
+        "text": "6.126",
+        "confidence": 0.999
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9996
+      },
+      {
+        "text": "590",
+        "confidence": 0.9998
+      },
+      {
+        "text": "676",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.15",
+        "confidence": 0.9957
+      },
+      {
+        "text": "16.88",
+        "confidence": 0.9751
+      },
+      {
+        "text": "9.88",
+        "confidence": 0.9895
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9836
+      },
+      {
+        "text": "6.124",
+        "confidence": 0.9104
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.993
+      },
+      {
+        "text": "584",
+        "confidence": 0.9999
+      },
+      {
+        "text": "663",
+        "confidence": 0.9998
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9337
+      },
+      {
+        "text": "18.69",
+        "confidence": 0.9954
+      },
+      {
+        "text": "9.21",
+        "confidence": 0.9868
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9967
+      },
+      {
+        "text": "6.117",
+        "confidence": 0.8391
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9984
+      },
+      {
+        "text": "593",
+        "confidence": 0.9999
+      },
+      {
+        "text": "672",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.13",
+        "confidence": 0.8812
+      },
+      {
+        "text": "17.06",
+        "confidence": 0.9989
+      },
+      {
+        "text": "9.54",
+        "confidence": 0.9937
+      },
+      {
+        "text": "OK",
+        "confidence": 0.988
+      },
+      {
+        "text": "2408049",
+        "confidence": 0.9997
+      },
+      {
+        "text": "0.20",
+        "confidence": 0.9978
+      },
+      {
+        "text": "0.24",
+        "confidence": 0.9834
+      },
+      {
+        "text": "0.028",
+        "confidence": 0.9993
+      },
+      {
+        "text": "0.020",
+        "confidence": 0.9831
+      },
+      {
+        "text": "0.77",
+        "confidence": 0.9994
+      },
+      {
+        "text": "0.12",
+        "confidence": 0.9985
+      },
+      {
+        "text": "0.12",
+        "confidence": 0.9996
+      },
+      {
+        "text": "0.024",
+        "confidence": 0.9908
+      },
+      {
+        "text": "0.31",
+        "confidence": 0.9992
+      },
+      {
+        "text": "0,0043",
+        "confidence": 0.9723
+      },
+      {
+        "text": "0.0074",
+        "confidence": 0.984
+      },
+      {
+        "text": "0.0005",
+        "confidence": 0.9947
+      },
+      {
+        "text": "0.39",
+        "confidence": 0.996
+      },
+      {
+        "text": "19",
+        "confidence": 0.9998
+      },
+      {
+        "text": "6.095",
+        "confidence": 0.9992
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9997
+      },
+      {
+        "text": "596",
+        "confidence": 0.9997
+      },
+      {
+        "text": "681",
+        "confidence": 0.9991
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9899
+      },
+      {
+        "text": "16.69",
+        "confidence": 0.9992
+      },
+      {
+        "text": "9,58",
+        "confidence": 0.9789
+      },
+      {
+        "text": "OK",
+        "confidence": 0.995
+      },
+      {
+        "text": "6.120",
+        "confidence": 0.9992
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9994
+      },
+      {
+        "text": "590",
+        "confidence": 0.9999
+      },
+      {
+        "text": "675",
+        "confidence": 1.0
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.9836
+      },
+      {
+        "text": "18.63",
+        "confidence": 0.9709
+      },
+      {
+        "text": "9.84",
+        "confidence": 0.9953
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9675
+      },
+      {
+        "text": "6.096",
+        "confidence": 0.9654
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9844
+      },
+      {
+        "text": "594",
+        "confidence": 1.0
+      },
+      {
+        "text": "677",
+        "confidence": 1.0
+      },
+      {
+        "text": "1,14",
+        "confidence": 0.897
+      },
+      {
+        "text": "18.94",
+        "confidence": 0.9982
+      },
+      {
+        "text": "9.66",
+        "confidence": 0.8915
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9887
+      },
+      {
+        "text": "6.094",
+        "confidence": 0.9836
+      },
+      {
+        "text": "804.00",
+        "confidence": 0.9989
+      },
+      {
+        "text": "591",
+        "confidence": 0.9998
+      },
+      {
+        "text": "672",
+        "confidence": 0.9999
+      },
+      {
+        "text": "1.14",
+        "confidence": 0.8763
+      },
+      {
+        "text": "18.25",
+        "confidence": 0.9975
+      },
+      {
+        "text": "9.29",
+        "confidence": 0.9808
+      },
+      {
+        "text": "OK",
+        "confidence": 0.9917
+      },
+      {
+        "text": "DILER DEMIR",
+        "confidence": 0.9596
+      },
+      {
+        "text": "IK ENDSTRI VE TICARET A.S.",
+        "confidence": 0.9217
+      },
+      {
+        "text": "CARES",
+        "confidence": 0.9994
+      },
+      {
+        "text": "UKAS",
+        "confidence": 0.999
+      },
+      {
+        "text": "011001",
+        "confidence": 0.9979
+      },
+      {
+        "text": "0002",
+        "confidence": 0.9976
+      },
+      {
+        "text": "CARES CHUd A4",
+        "confidence": 0.7513
+      },
+      {
+        "text": "All incoming raw material has been checked by radicactivity detect on system",
+        "confidence": 0.9351
+      },
+      {
+        "text": "CERTIFICATE OF APPROVAL NUMBER O11001",
+        "confidence": 0.9603
+      },
+      {
+        "text": "Page 80",
+        "confidence": 0.9991
+      },
+      {
+        "text": "RESPONSIBLE CHIEF",
+        "confidence": 0.9995
+      },
+      {
+        "text": "Form No 08 03 2-4/R-0",
+        "confidence": 0.9554
+      },
+      {
+        "text": "ENRE OZAKYOL",
+        "confidence": 0.961
+      }
+    ],
+    "full_text": [
+      "DILER DEMIR CELIK ENDUSTRI VE TICARET A.S.",
+      "CERTIFICATE NUMBER: 25-3133/01MNF/EXP",
+      "ISSUING DATE: 07.07.2025",
+      "C OE TEN  NRE",
+      "MILL 'S TEST CERTIFICATE (EN 10204 3.1)",
+      "HOUSE GRAIN ROAD ROCHESTER ME3 CEP GB",
+      "ORDER NO: MK2505C8-001",
+      "QUALITY CONTROL DEPARTMENT",
+      "CONSIGNMENT NO: 2025-3133/01",
+      "SIZE",
+      ":",
+      "32MMX14M.",
+      "QUALITY",
+      ":",
+      "BS4449:2005 GR B500 B",
+      "PRODUCTION PROSES:QST",
+      "ORDER NO: 2025-3133 L0T-1",
+      "VESSEL NAME: MV WHITE IVY",
+      "CARES APPROVED",
+      "CHEMICAL COMPOSITION",
+      "MECHANICAL PROPERTIES",
+      "Heat",
+      "carbon",
+      "RADIATION",
+      "Weight",
+      "Cross Sectional",
+      "Yield Point",
+      "Tensile Strength",
+      "Percentage",
+      "Agt",
+      "Rebend",
+      "Number",
+      "0",
+      "S",
+      "6",
+      "20",
+      "z",
+      "Cr",
+      "$Or",
+      "na$",
+      ">*",
+      "z",
+      "",
+      "equvalent",
+      "μR/H",
+      "Per",
+      "area",
+      "N/mm2(MPa)",
+      "N/mm2(MPa)",
+      "Rm/Re",
+      "elongation",
+      "%",
+      "Test",
+      "value",
+      "Kg/m",
+      "mm2",
+      "(Re)",
+      "(Rm)",
+      "Lo=5do",
+      "2504089",
+      "0.19",
+      "0.19",
+      "0.031",
+      "0.012",
+      "0.75",
+      "0.11",
+      "0.10",
+      "0.017",
+      "0.32",
+      "0.0004",
+      "0.0075",
+      "0.0004",
+      "0.37",
+      "20",
+      "6.099",
+      "804.00",
+      "590",
+      "697",
+      "1.18",
+      "18.88",
+      "9,58",
+      "OK",
+      "6.097",
+      "804.00",
+      "589",
+      "691",
+      "1.17",
+      "18.38",
+      "9.80",
+      "OK",
+      "6.095",
+      "804.00",
+      "569",
+      "666",
+      "1.17",
+      "18,94",
+      "9.64",
+      "OK",
+      "6.090",
+      "804.00",
+      "573",
+      "686",
+      "1.20",
+      "16,81",
+      "9.44",
+      "OK",
+      "2504088",
+      "0.20",
+      "0.19",
+      "0.021",
+      "0,016",
+      "0.76",
+      "0.10",
+      "0.12",
+      "0.015",
+      "0.33",
+      "0,0008",
+      "0.0076",
+      "0,0004",
+      "0.38",
+      "19",
+      "6,094",
+      "804.00",
+      "577",
+      "660",
+      "1.14",
+      "16.56",
+      "9.69",
+      "OK",
+      "6.098",
+      "804.00",
+      "590",
+      "674",
+      "1.14",
+      "16.19",
+      "9.34",
+      "OK",
+      "6.097",
+      "804.00",
+      "582",
+      "659",
+      "1,13",
+      "16.06",
+      "9.52",
+      "OK",
+      "6.096",
+      "804.00",
+      "581",
+      "659",
+      "1.13",
+      "17.94",
+      "9.09",
+      "OK",
+      "2504079",
+      "0.19",
+      "0.19",
+      "0.013",
+      "0.011",
+      "0.74",
+      "0.10",
+      "0.12",
+      "0.015",
+      "0.31",
+      "0.0005",
+      "0.0075",
+      "0.0002",
+      "0.37",
+      "16",
+      "6.112",
+      "804.00",
+      "602",
+      "682",
+      "1.13",
+      "18.06",
+      "9.23",
+      "OK",
+      "6.113",
+      "804.00",
+      "601",
+      "680",
+      "1,13",
+      "18,56",
+      "9,52",
+      "OK",
+      "6,111",
+      "804.00",
+      "594",
+      "680",
+      "1.14",
+      "16.19",
+      "8,88",
+      "OK",
+      "6.103",
+      "804.00",
+      "568",
+      "648",
+      "1.14",
+      "18.31",
+      "9,43",
+      "OK",
+      "2500812",
+      "0.014",
+      "0.73",
+      "0.11",
+      "0.09",
+      "0.015",
+      "0.40",
+      "0.0025",
+      "0.0089",
+      "0.0004",
+      "0.36",
+      "18",
+      "6.125",
+      "804.00",
+      "586",
+      "669",
+      "1.14",
+      "0.22",
+      "0.024",
+      "16.50",
+      "9,53",
+      "0.18",
+      "OK",
+      "6.126",
+      "804.00",
+      "590",
+      "676",
+      "1.15",
+      "16.88",
+      "9.88",
+      "OK",
+      "6.124",
+      "804.00",
+      "584",
+      "663",
+      "1.14",
+      "18.69",
+      "9.21",
+      "OK",
+      "6.117",
+      "804.00",
+      "593",
+      "672",
+      "1.13",
+      "17.06",
+      "9.54",
+      "OK",
+      "2408049",
+      "0.20",
+      "0.24",
+      "0.028",
+      "0.020",
+      "0.77",
+      "0.12",
+      "0.12",
+      "0.024",
+      "0.31",
+      "0,0043",
+      "0.0074",
+      "0.0005",
+      "0.39",
+      "19",
+      "6.095",
+      "804.00",
+      "596",
+      "681",
+      "1.14",
+      "16.69",
+      "9,58",
+      "OK",
+      "6.120",
+      "804.00",
+      "590",
+      "675",
+      "1.14",
+      "18.63",
+      "9.84",
+      "OK",
+      "6.096",
+      "804.00",
+      "594",
+      "677",
+      "1,14",
+      "18.94",
+      "9.66",
+      "OK",
+      "6.094",
+      "804.00",
+      "591",
+      "672",
+      "1.14",
+      "18.25",
+      "9.29",
+      "OK",
+      "DILER DEMIR",
+      "IK ENDSTRI VE TICARET A.S.",
+      "CARES",
+      "UKAS",
+      "011001",
+      "0002",
+      "CARES CHUd A4",
+      "All incoming raw material has been checked by radicactivity detect on system",
+      "CERTIFICATE OF APPROVAL NUMBER O11001",
+      "Page 80",
+      "RESPONSIBLE CHIEF",
+      "Form No 08 03 2-4/R-0",
+      "ENRE OZAKYOL"
+    ]
+  }
+]
