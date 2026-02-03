@@ -1,0 +1,195 @@
+{
+  "document": {
+    "certificate_number": null,
+    "issuing_date": null,
+    "standard": null,
+    "customer": "MWSTEELTRADINGLIMITED",
+    "order_number": null
+  },
+  "traceability": {
+    "consignment_number": null,
+    "vessel_name": null,
+    "lot_number": null
+  },
+  "product": {
+    "size": "32MMX14M.",
+    "quality": null,
+    "production_process": "QST"
+  },
+  "chemical_composition": [
+    {
+      "heat_number": "25990039",
+      "elements": {
+        "C": 0.2,
+        "Si": 0.2,
+        "P": 0.19,
+        "S": 0.2,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.033,
+        "Mo": 0.028,
+        "Cu": 0.2,
+        "V": 0.017,
+        "N": 0.012,
+        "B": 0.65,
+        "Ce": 0.62
+      }
+    },
+    {
+      "heat_number": "25990032",
+      "elements": {
+        "C": 0.19,
+        "Si": 0.2,
+        "P": 0.2,
+        "S": 0.19,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.21,
+        "Mo": 0.2,
+        "Cu": 0.02,
+        "V": 0.18,
+        "N": 0.017,
+        "B": 0.016,
+        "Ce": 0.76
+      }
+    },
+    {
+      "heat_number": "25990041",
+      "elements": {
+        "C": 0.2,
+        "Si": 0.2,
+        "P": 0.19,
+        "S": 0.2,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.033,
+        "Mo": 0.028,
+        "Cu": 0.2,
+        "V": 0.017,
+        "N": 0.012,
+        "B": 0.65,
+        "Ce": 0.62
+      }
+    },
+    {
+      "heat_number": "25990085",
+      "elements": {
+        "C": 0.2,
+        "Si": 0.2,
+        "P": 0.19,
+        "S": 0.2,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.033,
+        "Mo": 0.028,
+        "Cu": 0.2,
+        "V": 0.017,
+        "N": 0.012,
+        "B": 0.65,
+        "Ce": 0.62
+      }
+    },
+    {
+      "heat_number": "25990031",
+      "elements": {
+        "C": 0.19,
+        "Si": 0.2,
+        "P": 0.2,
+        "S": 0.19,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.21,
+        "Mo": 0.2,
+        "Cu": 0.02,
+        "V": 0.18,
+        "N": 0.017,
+        "B": 0.016,
+        "Ce": 0.76
+      }
+    },
+    {
+      "heat_number": "25990034",
+      "elements": {
+        "C": 0.19,
+        "Si": 0.2,
+        "P": 0.2,
+        "S": 0.19,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.21,
+        "Mo": 0.2,
+        "Cu": 0.02,
+        "V": 0.18,
+        "N": 0.017,
+        "B": 0.016,
+        "Ce": 0.76
+      }
+    },
+    {
+      "heat_number": "25990035",
+      "elements": {
+        "C": 0.2,
+        "Si": 0.2,
+        "P": 0.19,
+        "S": 0.2,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.033,
+        "Mo": 0.028,
+        "Cu": 0.2,
+        "V": 0.017,
+        "N": 0.012,
+        "B": 0.65,
+        "Ce": 0.62
+      }
+    },
+    {
+      "heat_number": "25990040",
+      "elements": {
+        "C": 0.2,
+        "Si": 0.2,
+        "P": 0.19,
+        "S": 0.2,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.033,
+        "Mo": 0.028,
+        "Cu": 0.2,
+        "V": 0.017,
+        "N": 0.012,
+        "B": 0.65,
+        "Ce": 0.62
+      }
+    },
+    {
+      "heat_number": "25990024",
+      "elements": {
+        "C": 0.19,
+        "Si": 0.2,
+        "P": 0.2,
+        "S": 0.19,
+        "Mn": 0.19,
+        "Ni": 0.19,
+        "Cr": 0.21,
+        "Mo": 0.2,
+        "Cu": 0.02,
+        "V": 0.18,
+        "N": 0.017,
+        "B": 0.016,
+        "Ce": 0.76
+      }
+    }
+  ],
+  "mechanical_properties": [],
+  "approval": {
+    "certificate_of_approval_number": null,
+    "form_number": null,
+    "cares_approved": true
+  },
+  "extraction_metadata": {
+    "method": "docling",
+    "num_pages": 4,
+    "num_tables": 4,
+    "extraction_timestamp": "2026-02-03T15:20:21.377312"
+  }
+}
