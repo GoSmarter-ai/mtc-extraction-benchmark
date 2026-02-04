@@ -1,8 +1,3 @@
-"""
-Docling-based MTC extraction using the Docling library for document understanding.
-This serves as a comparison to the rule-based PaddleOCR extraction.
-"""
-
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -12,7 +7,7 @@ import re
 try:
     from docling.document_converter import DocumentConverter
 except ImportError:
-    print("⚠️  Docling not installed. Install with: pip install docling")
+    print("Docling not installed. Install with: pip install docling")
     raise
 
 
@@ -34,16 +29,8 @@ class MTCDoclingExtractor:
         print("✓ Docling extractor initialized")
 
     def extract_from_pdf(self, pdf_path: str) -> Dict[str, Any]:
-        """
-        Extract MTC data from PDF using Docling.
 
-        Args:
-            pdf_path: Path to PDF file
-
-        Returns:
-            Structured MTC data matching schema
-        """
-        print(f"\n📄 Processing with Docling: {pdf_path}")
+        print(f"\n Processing with Docling: {pdf_path}")
 
         # Convert PDF to Docling document
         result = self.converter.convert(pdf_path)
@@ -104,7 +91,7 @@ class MTCDoclingExtractor:
 
             return table_data
         except Exception as e:
-            print(f"   ⚠️  Error parsing table: {e}")
+            print(f"Error parsing table: {e}")
             return []
 
     def _extract_document_info(self, text: str) -> Dict[str, Optional[str]]:
@@ -211,9 +198,6 @@ class MTCDoclingExtractor:
     def _extract_chemical_composition(
         self, tables: List[Dict], text: str
     ) -> List[Dict[str, Any]]:
-        """
-        Extract chemical composition from tables or text.
-        """
         compositions = []
 
         # Standard elements in order
@@ -348,9 +332,7 @@ class MTCDoclingExtractor:
     def _extract_mechanical_properties(
         self, tables: List[Dict], text: str
     ) -> List[Dict[str, Any]]:
-        """
-        Extract mechanical properties from tables or text.
-        """
+
         properties = []
 
         # Try table-based extraction
@@ -415,7 +397,7 @@ class MTCDoclingExtractor:
 
         # Fallback to text-based extraction
         if not properties:
-            print("   ⚠️  Table extraction failed, using text-based extraction")
+            print("  Table extraction failed, using text-based extraction")
             properties = self._extract_mechanical_from_text(text)
 
         # Deduplicate
@@ -545,7 +527,7 @@ def main():
     pdf_files = list(pdf_dir.glob("*.pdf"))
 
     if not pdf_files:
-        print(f"❌ No PDF files found in {pdf_dir}")
+        print(f"No PDF files found in {pdf_dir}")
         return
 
     print(f"\n🔍 Found {len(pdf_files)} PDF file(s)")
