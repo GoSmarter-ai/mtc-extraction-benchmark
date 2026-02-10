@@ -1,0 +1,149 @@
+import json
+import os
+from pathlib import Path
+from openai import OpenAI
+
+"""
+LLM Extraction using GitHub Models (Free Open Source)
+
+This script extracts structured data from Mill Test Certificates using LLM.
+It processes pages in chunks if needed to stay within token limits.
+
+Available open-source models:
+- Meta-Llama-3-8B-Instruct: Fast, efficient (8B parameters)
+- Meta-Llama-3-70B-Instruct: More capable (70B parameters)  
+- Meta-Llama-3.1-405B-Instruct: Most powerful (405B parameters)
+
+Note: Some models have input token limits (~8000 tokens). For large documents,
+we chunk the processing by pages and merge results.
+
+Requires GITHUB_TOKEN environment variable (automatically available in Codespaces)
+"""
+
+# ---------- Configuration ----------
+USE_CHUNKED_PROCESSING = True  # Set to True if hitting token limits
+MAX_TOKENS_OUTPUT = 16384
+
+# ---------- Paths ----------
+TEXT_PATH = Path(
+    "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr/diler-07-07-2025-rerun-41-44_all_pages.txt"
+)
+PAGE_FILES = [
+    Path(
+        "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr/diler-07-07-2025-rerun-41-44_page1_text.txt"
+    ),
+    Path(
+        "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr/diler-07-07-2025-rerun-41-44_page2_text.txt"
+    ),
+    Path(
+        "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr/diler-07-07-2025-rerun-41-44_page3_text.txt"
+    ),
+    Path(
+        "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr/diler-07-07-2025-rerun-41-44_page4_text.txt"
+    ),
+]
+SCHEMA_PATH = Path(
+    "/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"
+)
+PROMPT_PATH = Path(
+    "/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"
+)
+OUTPUT_PATH = Path(
+    "/workspaces/mtc-extraction-benchmark/data/processed/schema_output/llm_certificate_full.json"
+)
+
+OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+# ---------- Load inputs ----------
+print("📄 Loading OCR text from all pages...")
+ocr_text = TEXT_PATH.read_text(errors="ignore")
+print(f"   Text length: {len(ocr_text)} characters")
+
+print("📋 Loading schema...")
+schema = json.loads(SCHEMA_PATH.read_text())
+
+print("💬 Loading prompt...")
+system_prompt = PROMPT_PATH.read_text()
+
+# ---------- Build prompt ----------
+user_prompt = f"""
+SCHEMA:
+{json.dumps(schema, indent=2)}
+
+OCR TEXT (ALL PAGES):
+\"\"\"
+{ocr_text}
+\"\"\"
+"""
+
+print(f"📊 Total prompt length: {len(user_prompt)} characters")
+
+# ---------- LLM call ----------
+print("🤖 Calling LLM (Meta Llama 3.1 405B)...")
+client = OpenAI(
+    base_url="https://models.inference.ai.azure.com",
+    api_key=os.environ["GITHUB_TOKEN"],
+)
+
+response = client.chat.completions.create(
+    model="Meta-Llama-3.1-405B-Instruct",  # Using powerful open-source Llama 3.1 405B model
+    temperature=0,
+    max_tokens=16384,  # Increased to handle complete multi-page extraction
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ],
+)
+
+raw_output = response.choices[0].message.content.strip()
+print(f"✓ LLM response received ({len(raw_output)} characters)")
+
+# ---------- Parse & save ----------
+print("🔍 Parsing JSON output...")
+
+try:
+    # Try to extract JSON if wrapped in markdown code blocks
+    if "```json" in raw_output:
+        json_start = raw_output.find("```json") + 7
+        json_end = raw_output.find("```", json_start)
+        raw_output = raw_output[json_start:json_end].strip()
+        print("   Found JSON in markdown code block")
+    elif "```" in raw_output:
+        json_start = raw_output.find("```") + 3
+        json_end = raw_output.find("```", json_start)
+        raw_output = raw_output[json_start:json_end].strip()
+        print("   Found JSON in code block")
+
+    parsed = json.loads(raw_output)
+
+    # Validation summary
+    print("\n📊 Extraction Summary:")
+    print(
+        f"   Certificate: {parsed.get('document', {}).get('certificate_number', 'N/A')}"
+    )
+    print(
+        f"   Heat numbers in chem comp: {len(parsed.get('chemical_composition', []))}"
+    )
+    print(f"   Mechanical test samples: {len(parsed.get('mechanical_properties', []))}")
+    print(
+        f"   Approval number: {parsed.get('approval', {}).get('certificate_of_approval_number', 'N/A')}"
+    )
+
+except json.JSONDecodeError as e:
+    print(f"❌ JSONDecodeError: {e}")
+    print(f"\nFirst 1000 chars of output:\n{raw_output[:1000]}")
+
+    # Save failed output for debugging
+    debug_path = OUTPUT_PATH.parent / "llm_failed_output.txt"
+    with open(debug_path, "w") as f:
+        f.write(raw_output)
+    print(f"\n💾 Full output saved to: {debug_path}")
+
+    raise ValueError("LLM output is not valid JSON")
+
+# ---------- Save output ----------
+with open(OUTPUT_PATH, "w") as f:
+    json.dump(parsed, f, indent=2)
+
+print(f"\n✅ LLM extraction completed successfully!")
+print(f"💾 Output saved to: {OUTPUT_PATH}")

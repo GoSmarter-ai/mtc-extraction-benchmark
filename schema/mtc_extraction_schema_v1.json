@@ -44,12 +44,13 @@
         },
         "traceability": {
             "type": "object",
-            "required": [
-                "heat_number"
-            ],
             "properties": {
                 "heat_number": {
-                    "type": "string"
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "description": "Primary heat number (if single heat certificate)"
                 },
                 "consignment_number": {
                     "type": [
@@ -58,6 +59,12 @@
                     ]
                 },
                 "vessel_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lot_number": {
                     "type": [
                         "string",
                         "null"
@@ -90,87 +97,174 @@
         },
         "chemical_composition": {
             "type": "array",
+            "description": "Array of chemical composition data, one entry per heat number",
             "items": {
                 "type": "object",
                 "required": [
-                    "element",
-                    "actual",
-                    "unit"
+                    "heat_number",
+                    "elements"
                 ],
                 "properties": {
-                    "element": {
+                    "heat_number": {
                         "type": "string",
-                        "enum": [
-                            "C",
-                            "Si",
-                            "Mn",
-                            "P",
-                            "S",
-                            "Ni",
-                            "Cr",
-                            "Mo",
-                            "Cu",
-                            "V",
-                            "N",
-                            "B"
-                        ]
+                        "description": "Heat/Cast number for this batch"
                     },
-                    "actual": {
-                        "type": [
-                            "number",
-                            "null"
-                        ]
-                    },
-                    "unit": {
-                        "type": "string",
-                        "enum": [
-                            "%"
-                        ]
+                    "elements": {
+                        "type": "object",
+                        "description": "Chemical elements and their percentages",
+                        "properties": {
+                            "C": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Si": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Mn": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "P": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "S": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Ni": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Cr": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Mo": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Cu": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "V": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "N": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "B": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ]
+                            },
+                            "Ce": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ],
+                                "description": "Carbon equivalent"
+                            }
+                        }
                     }
                 }
             }
         },
         "mechanical_properties": {
             "type": "array",
+            "description": "Array of mechanical test results, one entry per test sample",
             "items": {
                 "type": "object",
                 "required": [
-                    "property",
-                    "value",
-                    "unit"
+                    "heat_number"
                 ],
                 "properties": {
-                    "property": {
+                    "heat_number": {
                         "type": "string",
-                        "enum": [
-                            "yield_strength",
-                            "tensile_strength",
-                            "elongation",
-                            "carbon_equivalent",
-                            "rm_re_ratio",
-                            "radiation",
-                            "rebend_test"
-                        ]
+                        "description": "Heat number for this test sample"
                     },
-                    "value": {
+                    "test_sample": {
                         "type": [
-                            "number",
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "unit": {
-                        "type": [
-                            "string",
+                            "integer",
                             "null"
                         ],
-                        "enum": [
-                            "MPa",
-                            "%",
-                            "ratio",
-                            "R/h",
+                        "description": "Sample number (1, 2, 3, 4, etc.)"
+                    },
+                    "weight_kg_per_m": {
+                        "type": [
+                            "number",
                             "null"
-                        ]
+                        ],
+                        "description": "Weight per meter in kg/m"
+                    },
+                    "cross_sectional_area_mm2": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "description": "Cross-sectional area in mm²"
+                    },
+                    "yield_point_mpa": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "description": "Yield point (Re) in MPa"
+                    },
+                    "tensile_strength_mpa": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "description": "Tensile strength (Rm) in MPa"
+                    },
+                    "rm_re_ratio": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "description": "Rm/Re ratio"
+                    },
+                    "percentage_elongation": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "description": "Percentage elongation at Lo=5d0"
+                    },
+                    "agt_percent": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "description": "Agt percentage"
                     }
                 }
             }
