@@ -1,0 +1,123 @@
+{
+  "document": {
+    "certificate_number": "25-3133/01MNF/EXP",
+    "issuing_date": "2025-07-07",
+    "standard": "EN 10204 3.1",
+    "customer": "MW STEEL TRADING LIMITED LONDON THAMESPORT LIBERTY",
+    "order_number": "MK250508-001"
+  },
+  "traceability": {
+    "heat_number": null,
+    "consignment_number": "2025-3133/01",
+    "vessel_name": "MV WHITE IVY"
+  },
+  "product": {
+    "size": "32MMX14M",
+    "quality": "BS4449:2005 GR B500 B",
+    "production_process": "QST"
+  },
+  "chemical_composition": [
+    {
+      "element": "C",
+      "actual": 0.19,
+      "unit": "%"
+    },
+    {
+      "element": "Si",
+      "actual": 0.2,
+      "unit": "%"
+    },
+    {
+      "element": "Mn",
+      "actual": 0.63,
+      "unit": "%"
+    },
+    {
+      "element": "P",
+      "actual": 0.02,
+      "unit": "%"
+    },
+    {
+      "element": "S",
+      "actual": 0.012,
+      "unit": "%"
+    },
+    {
+      "element": "Ni",
+      "actual": 0.02,
+      "unit": "%"
+    },
+    {
+      "element": "Cr",
+      "actual": 0.03,
+      "unit": "%"
+    },
+    {
+      "element": "Mo",
+      "actual": 0.001,
+      "unit": "%"
+    },
+    {
+      "element": "Cu",
+      "actual": 0.0,
+      "unit": "%"
+    },
+    {
+      "element": "V",
+      "actual": 0.0056,
+      "unit": "%"
+    },
+    {
+      "element": "N",
+      "actual": 0.0005,
+      "unit": "%"
+    },
+    {
+      "element": "B",
+      "actual": 0.0007,
+      "unit": "%"
+    }
+  ],
+  "mechanical_properties": [
+    {
+      "property": "yield_strength",
+      "value": 583,
+      "unit": "MPa"
+    },
+    {
+      "property": "tensile_strength",
+      "value": 665,
+      "unit": "MPa"
+    },
+    {
+      "property": "elongation",
+      "value": 21.36,
+      "unit": "%"
+    },
+    {
+      "property": "carbon_equivalent",
+      "value": 0.3,
+      "unit": null
+    },
+    {
+      "property": "rm_re_ratio",
+      "value": 1.14,
+      "unit": "ratio"
+    },
+    {
+      "property": "radiation",
+      "value": "OK",
+      "unit": null
+    },
+    {
+      "property": "rebend_test",
+      "value": "OK",
+      "unit": null
+    }
+  ],
+  "approval": {
+    "certificate_of_approval_number": "O11001",
+    "form_number": "C8.03 2-4/R-0",
+    "cares_approved": true
+  }
+}
