@@ -1,0 +1,262 @@
+---
+title: "LLM vs Rule-Based Extraction Report"
+format:
+  html:
+    toc: true
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Overview
+
+This report mirrors the analysis in the comparison notebook and compares:
+
+- Rule-based extraction output
+- LLM extraction output
+
+Data sources:
+
+- `data/processed/schema_output/diler-07-07-2025-rerun-41-44_schema_output.json`
+- `data/processed/schema_output/llm_certificate_full.json`
+
+```{python}
+from pathlib import Path
+import json
+import pandas as pd
+
+pd.set_option("display.max_colwidth", 120)
+
+ROOT = Path.cwd()
+RULE_PATH = ROOT / "data/processed/schema_output/diler-07-07-2025-rerun-41-44_schema_output.json"
+LLM_PATH = ROOT / "data/processed/schema_output/llm_certificate_full.json"
+
+with open(RULE_PATH, "r", encoding="utf-8") as f:
+	rule_data = json.load(f)
+
+with open(LLM_PATH, "r", encoding="utf-8") as f:
+	llm_data = json.load(f)
+
+print("Rule path:", RULE_PATH)
+print("LLM path:", LLM_PATH)
+```
+
+# 1. Top-Level Structure Comparison
+
+```{python}
+rule_keys = set(rule_data.keys())
+llm_keys = set(llm_data.keys())
+
+pd.DataFrame(
+	{
+		"present_in_rule_based": [k in rule_keys for k in sorted(rule_keys | llm_keys)],
+		"present_in_llm": [k in llm_keys for k in sorted(rule_keys | llm_keys)],
+	},
+	index=sorted(rule_keys | llm_keys),
+)
+```
+
+# 2. Document / Traceability / Product Differences
+
+```{python}
+def compare_dict_fields(section_name, rule_obj, llm_obj):
+	all_fields = sorted(set(rule_obj.keys()) | set(llm_obj.keys()))
+	rows = []
+	for field in all_fields:
+		r = rule_obj.get(field)
+		l = llm_obj.get(field)
+		rows.append(
+			{
+				"section": section_name,
+				"field": field,
+				"rule_based": r,
+				"llm": l,
+				"same": r == l,
+			}
+		)
+	return rows
+
+rows = []
+rows += compare_dict_fields("document", rule_data.get("document", {}), llm_data.get("document", {}))
+rows += compare_dict_fields("traceability", rule_data.get("traceability", {}), llm_data.get("traceability", {}))
+rows += compare_dict_fields("product", rule_data.get("product", {}), llm_data.get("product", {}))
+
+df_basic = pd.DataFrame(rows)
+df_basic
+```
+
+```{python}
+df_basic[df_basic["same"] == False]
+```
+
+Observed differences from current outputs:
+
+- `document.customer`: rule-based is shorter; LLM includes extended customer/location text.
+- `traceability.lot_number`: rule-based has `1`; LLM has `2025-3133 LOT-1`.
+- `product.size`: formatting difference (`32MMX14M.` vs `32MMX14M`).
+
+# 3. Chemical Composition Coverage & Completeness
+
+```{python}
+required_elements = ["C", "Si", "P", "S", "Mn", "Ni", "Cr", "Mo", "Cu", "V", "N", "B", "Ce"]
+
+def chem_stats(data):
+	chems = data.get("chemical_composition", [])
+	heats = [str(item.get("heat_number")) for item in chems if item.get("heat_number") is not None]
+
+	complete = 0
+	details = []
+	for item in chems:
+		h = str(item.get("heat_number"))
+		elements_obj = item.get("elements", item)
+		missing = [e for e in required_elements if elements_obj.get(e) is None]
+		is_complete = len(missing) == 0
+		complete += int(is_complete)
+		details.append({"heat_number": h, "is_complete": is_complete, "missing_elements": missing})
+
+	return {
+		"count_heat_rows": len(chems),
+		"unique_heat_numbers": len(set(heats)),
+		"complete_heat_rows": complete,
+		"details_df": pd.DataFrame(details).sort_values("heat_number") if details else pd.DataFrame(),
+	}
+
+rule_chem = chem_stats(rule_data)
+llm_chem = chem_stats(llm_data)
+
+pd.DataFrame(
+	[
+		{
+			"method": "rule_based",
+			"heat_rows": rule_chem["count_heat_rows"],
+			"unique_heats": rule_chem["unique_heat_numbers"],
+			"complete_heats": rule_chem["complete_heat_rows"],
+		},
+		{
+			"method": "llm",
+			"heat_rows": llm_chem["count_heat_rows"],
+			"unique_heats": llm_chem["unique_heat_numbers"],
+			"complete_heats": llm_chem["complete_heat_rows"],
+		},
+	]
+)
+```
+
+```{python}
+llm_chem["details_df"][~llm_chem["details_df"]["is_complete"]]
+```
+
+Current computed snapshot:
+
+- Rule-based: 6 unique heats, 6 complete rows.
+- LLM: 20 unique heats, 11 complete rows using strict 13-element completeness.
+
+# 4. Mechanical Properties Coverage & Duplicates
+
+```{python}
+def mech_stats(data):
+	mech = data.get("mechanical_properties", [])
+	key_fields = [
+		"heat_number",
+		"test_sample",
+		"weight_kg_per_m",
+		"cross_sectional_area_mm2",
+		"yield_point_mpa",
+		"tensile_strength_mpa",
+		"rm_re_ratio",
+		"percentage_elongation",
+		"agt_percent",
+	]
+
+	keys = []
+	rebend_count = 0
+	for row in mech:
+		keys.append(tuple(row.get(k) for k in key_fields))
+		if row.get("rebend") is not None:
+			rebend_count += 1
+
+	total = len(mech)
+	unique = len(set(keys))
+	duplicates = total - unique
+
+	return {
+		"total_rows": total,
+		"unique_rows": unique,
+		"duplicate_rows": duplicates,
+		"rebend_rows": rebend_count,
+	}
+
+rule_mech = mech_stats(rule_data)
+llm_mech = mech_stats(llm_data)
+
+pd.DataFrame(
+	[
+		{"method": "rule_based", **rule_mech},
+		{"method": "llm", **llm_mech},
+	]
+)
+```
+
+Current computed snapshot:
+
+- Rule-based: 58 rows, 29 unique, 29 duplicates.
+- LLM: 80 rows, 80 unique, 0 duplicates.
+- LLM includes `rebend` values (40 rows in this output).
+
+# 5. Approval Section Comparison
+
+```{python}
+approval_rows = compare_dict_fields("approval", rule_data.get("approval", {}), llm_data.get("approval", {}))
+pd.DataFrame(approval_rows)
+```
+
+Current computed snapshot:
+
+- Rule-based includes `cares_approved: true`, but approval/form numbers are missing.
+- LLM includes `certificate_of_approval_number` and `form_number`, and also `cares_approved: true`.
+
+# 6. Summary Table
+
+```{python}
+summary = pd.DataFrame(
+	[
+		{
+			"metric": "chemical_unique_heat_numbers",
+			"rule_based": rule_chem["unique_heat_numbers"],
+			"llm": llm_chem["unique_heat_numbers"],
+			"delta_llm_minus_rule": llm_chem["unique_heat_numbers"] - rule_chem["unique_heat_numbers"],
+		},
+		{
+			"metric": "mechanical_total_rows",
+			"rule_based": rule_mech["total_rows"],
+			"llm": llm_mech["total_rows"],
+			"delta_llm_minus_rule": llm_mech["total_rows"] - rule_mech["total_rows"],
+		},
+		{
+			"metric": "mechanical_duplicate_rows",
+			"rule_based": rule_mech["duplicate_rows"],
+			"llm": llm_mech["duplicate_rows"],
+			"delta_llm_minus_rule": llm_mech["duplicate_rows"] - rule_mech["duplicate_rows"],
+		},
+		{
+			"metric": "approval_fields_present",
+			"rule_based": sum(v is not None for v in rule_data.get("approval", {}).values()),
+			"llm": sum(v is not None for v in llm_data.get("approval", {}).values()),
+			"delta_llm_minus_rule": sum(v is not None for v in llm_data.get("approval", {}).values())
+			- sum(v is not None for v in rule_data.get("approval", {}).values()),
+		},
+	]
+)
+summary
+```
+
+# Conclusion
+
+Based on the current outputs used by the notebook:
+
+- LLM substantially improves heat-number and mechanical-test coverage.
+- Rule-based output still has significant duplicate mechanical rows.
+- LLM provides richer approval metadata.
+- Completeness percentages depend on the strictness of chemical-element validation; this report uses strict 13-element presence checks.
