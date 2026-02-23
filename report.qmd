@@ -25,7 +25,10 @@ Data sources:
 ```{python}
 from pathlib import Path
 import json
+import re
+import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 pd.set_option("display.max_colwidth", 120)
 
@@ -251,6 +254,260 @@ summary = pd.DataFrame(
 )
 summary
 ```
+
+# 7. Advanced Visual Analytics (Repo-wide)
+
+These visuals use additional repository artifacts (OCR boxes and text files) to provide richer comparisons beyond the schema outputs.
+
+## 7.1 Core Metric Bar Chart
+
+```{python}
+plot_df = summary.copy()
+metrics = plot_df["metric"].tolist()
+x = np.arange(len(metrics))
+width = 0.38
+
+fig, ax = plt.subplots(figsize=(10, 4.8))
+ax.bar(x - width / 2, plot_df["rule_based"], width, label="Rule-based")
+ax.bar(x + width / 2, plot_df["llm"], width, label="LLM")
+ax.set_title("Core Comparison Metrics")
+ax.set_xticks(x)
+ax.set_xticklabels(metrics, rotation=20, ha="right")
+ax.set_ylabel("Value")
+ax.legend()
+ax.grid(axis="y", alpha=0.25)
+plt.tight_layout()
+plt.show()
+```
+
+## 7.2 Field Completeness Heatmap (Core Sections)
+
+```{python}
+sections = ["document", "traceability", "product", "approval"]
+all_rows = []
+for section in sections:
+	r = rule_data.get(section, {})
+	l = llm_data.get(section, {})
+	fields = sorted(set(r.keys()) | set(l.keys()))
+	for f in fields:
+		all_rows.append(
+			{
+				"section": section,
+				"field": f,
+				"rule_present": 1 if r.get(f) is not None else 0,
+				"llm_present": 1 if l.get(f) is not None else 0,
+			}
+		)
+
+field_df = pd.DataFrame(all_rows)
+heat = field_df.set_index(["section", "field"])[["rule_present", "llm_present"]]
+
+fig, ax = plt.subplots(figsize=(5.6, max(4, len(heat) * 0.35)))
+im = ax.imshow(heat.values, aspect="auto", vmin=0, vmax=1, cmap="YlGn")
+ax.set_xticks([0, 1])
+ax.set_xticklabels(["Rule-based", "LLM"])
+ax.set_yticks(np.arange(len(heat.index)))
+ax.set_yticklabels([f"{s}.{f}" for s, f in heat.index], fontsize=8)
+ax.set_title("Field Value Presence by Method (1=present, 0=missing)")
+cbar = plt.colorbar(im, ax=ax, fraction=0.035, pad=0.02)
+cbar.set_label("Presence")
+plt.tight_layout()
+plt.show()
+
+field_df.groupby("section")[["rule_present", "llm_present"]].mean().rename(
+	columns={"rule_present": "rule_presence_rate", "llm_present": "llm_presence_rate"}
+)
+```
+
+## 7.3 OCR Confidence Distribution by Page (from boxes)
+
+```{python}
+boxes_dir = ROOT / "data/processed/boxes"
+box_files = sorted(boxes_dir.glob("page_*.json"))
+
+box_rows = []
+for p in box_files:
+	page_num = int(re.search(r"page_(\d+)", p.stem).group(1))
+	items = json.loads(p.read_text())
+	for item in items:
+		box_rows.append(
+			{
+				"page": page_num,
+				"conf": float(item.get("conf", np.nan)),
+				"x": float(item.get("x", np.nan)),
+				"y": float(item.get("y", np.nan)),
+				"w": float(item.get("w", np.nan)),
+				"h": float(item.get("h", np.nan)),
+				"text_len": len(str(item.get("text", ""))),
+			}
+		)
+
+boxes_df = pd.DataFrame(box_rows).dropna(subset=["conf"])
+boxes_df["area"] = boxes_df["w"] * boxes_df["h"]
+
+page_conf = boxes_df.groupby("page")["conf"].agg(["count", "mean", "median", "min", "max"]).reset_index()
+page_conf
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
+
+axes[0].plot(page_conf["page"], page_conf["mean"], marker="o", linewidth=2, label="Mean confidence")
+axes[0].plot(page_conf["page"], page_conf["median"], marker="s", linewidth=1.5, label="Median confidence")
+axes[0].set_title("OCR Confidence by Page")
+axes[0].set_xlabel("Page")
+axes[0].set_ylabel("Confidence")
+axes[0].set_xticks(page_conf["page"])
+axes[0].grid(alpha=0.25)
+axes[0].legend()
+
+data_for_box = [boxes_df.loc[boxes_df["page"] == p, "conf"].values for p in sorted(boxes_df["page"].unique())]
+axes[1].boxplot(data_for_box, labels=[str(p) for p in sorted(boxes_df["page"].unique())], showfliers=False)
+axes[1].set_title("Confidence Distribution per Page")
+axes[1].set_xlabel("Page")
+axes[1].set_ylabel("Confidence")
+axes[1].grid(axis="y", alpha=0.25)
+
+plt.tight_layout()
+plt.show()
+```
+
+## 7.4 OCR Spatial Maps (Token Density + Mean Confidence)
+
+These are heat maps over normalized page coordinates, aggregated across all pages.
+
+```{python}
+norm_parts = []
+for p in sorted(box_files):
+	page_num = int(re.search(r"page_(\d+)", p.stem).group(1))
+	items = json.loads(p.read_text())
+	page_df = pd.DataFrame(items)
+	if page_df.empty:
+		continue
+	page_df["x_center"] = page_df["x"] + page_df["w"] / 2
+	page_df["y_center"] = page_df["y"] + page_df["h"] / 2
+	max_x = (page_df["x"] + page_df["w"]).max()
+	max_y = (page_df["y"] + page_df["h"]).max()
+	page_df["x_norm"] = page_df["x_center"] / max_x if max_x else 0
+	page_df["y_norm"] = page_df["y_center"] / max_y if max_y else 0
+	page_df["page"] = page_num
+	norm_parts.append(page_df[["page", "x_norm", "y_norm", "conf"]])
+
+norm_df = pd.concat(norm_parts, ignore_index=True)
+
+bins = 28
+density, _, _ = np.histogram2d(norm_df["x_norm"], norm_df["y_norm"], bins=bins, range=[[0, 1], [0, 1]])
+weighted, _, _ = np.histogram2d(
+	norm_df["x_norm"], norm_df["y_norm"], bins=bins, range=[[0, 1], [0, 1]], weights=norm_df["conf"]
+)
+mean_conf = np.divide(weighted, density, out=np.zeros_like(weighted), where=density > 0)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.6))
+im1 = axes[0].imshow(density.T, origin="lower", cmap="Blues", extent=[0, 1, 0, 1], aspect="auto")
+axes[0].set_title("Token Density Map (all pages)")
+axes[0].set_xlabel("Normalized X")
+axes[0].set_ylabel("Normalized Y")
+plt.colorbar(im1, ax=axes[0], fraction=0.046, pad=0.02)
+
+im2 = axes[1].imshow(mean_conf.T, origin="lower", cmap="viridis", extent=[0, 1, 0, 1], aspect="auto")
+axes[1].set_title("Mean Confidence Map (all pages)")
+axes[1].set_xlabel("Normalized X")
+axes[1].set_ylabel("Normalized Y")
+plt.colorbar(im2, ax=axes[1], fraction=0.046, pad=0.02)
+
+plt.tight_layout()
+plt.show()
+```
+
+## 7.5 Chemical Element Presence Heatmap
+
+Shows percentage of heat rows where each element exists, by method.
+
+```{python}
+def element_presence_rates(data, elements):
+	rows = data.get("chemical_composition", [])
+	if not rows:
+		return {e: 0.0 for e in elements}
+	rates = {}
+	for e in elements:
+		present = 0
+		for row in rows:
+			source = row.get("elements", row)
+			present += int(source.get(e) is not None)
+		rates[e] = present / len(rows)
+	return rates
+
+rule_elem = element_presence_rates(rule_data, required_elements)
+llm_elem = element_presence_rates(llm_data, required_elements)
+
+elem_matrix = pd.DataFrame([rule_elem, llm_elem], index=["Rule-based", "LLM"])
+elem_matrix
+
+fig, ax = plt.subplots(figsize=(11, 2.8))
+im = ax.imshow(elem_matrix.values, cmap="YlGn", vmin=0, vmax=1, aspect="auto")
+ax.set_xticks(np.arange(len(elem_matrix.columns)))
+ax.set_xticklabels(elem_matrix.columns, rotation=35, ha="right")
+ax.set_yticks(np.arange(len(elem_matrix.index)))
+ax.set_yticklabels(elem_matrix.index)
+ax.set_title("Element Presence Rate by Method")
+cbar = plt.colorbar(im, ax=ax, fraction=0.04, pad=0.02)
+cbar.set_label("Presence rate")
+plt.tight_layout()
+plt.show()
+```
+
+## 7.6 Text Volume by Source and Page
+
+Compares character and line counts across OCR/text artifacts in the repository.
+
+```{python}
+sources = {
+	"processed_text": ROOT / "data/processed/text",
+	"paddle_ocr": ROOT / "data/processed/paddle_ocr",
+	"pipeline_text": ROOT / "data/processed/pipeline_output/text",
+}
+
+records = []
+for source_name, folder in sources.items():
+	if not folder.exists():
+		continue
+	for p in sorted(folder.glob("*.txt")):
+		page_match = re.search(r"page[_-]?(\d+)", p.stem)
+		if not page_match:
+			continue
+		page = int(page_match.group(1))
+		text = p.read_text(encoding="utf-8", errors="ignore")
+		records.append({"source": source_name, "page": page, "chars": len(text), "lines": text.count("\n") + 1})
+
+text_df = pd.DataFrame(records).sort_values(["source", "page"])
+text_df.head()
+
+if not text_df.empty:
+	pivot_chars = text_df.pivot_table(index="page", columns="source", values="chars", aggfunc="mean").fillna(0)
+	ax = pivot_chars.plot(kind="bar", figsize=(10, 4.6), width=0.85)
+	ax.set_title("Text Volume by Source and Page (characters)")
+	ax.set_xlabel("Page")
+	ax.set_ylabel("Character count")
+	ax.grid(axis="y", alpha=0.25)
+	plt.tight_layout()
+	plt.show()
+
+	pivot_lines = text_df.pivot_table(index="page", columns="source", values="lines", aggfunc="mean").fillna(0)
+	ax = pivot_lines.plot(kind="line", figsize=(10, 4.2), marker="o")
+	ax.set_title("Text Line Count by Source and Page")
+	ax.set_xlabel("Page")
+	ax.set_ylabel("Line count")
+	ax.grid(alpha=0.25)
+	plt.tight_layout()
+	plt.show()
+
+text_df.groupby("source")[["chars", "lines"]].agg(["mean", "sum", "max"])
+```
+
+# 8. Notes
+
+- This report compares actual JSON outputs in `data/processed/schema_output`.
+- If file names differ in your environment, update `RULE_PATH` and `LLM_PATH` in Section 0 setup.
+- Metrics are computed directly from output files and can be reused for future documents.
+- Section 7 visuals pull from repo-wide OCR boxes and text artifacts.
 
 # Conclusion
 
