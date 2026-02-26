@@ -195,8 +195,9 @@ def process_pdf_with_paddleocr(input_dir, output_dir):
 
 
 if __name__ == "__main__":
-    INPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/raw/diler"
-    OUTPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/processed/paddle_ocr"
+    REPO_ROOT = Path(__file__).resolve().parents[2]
+    INPUT_DIR = str(REPO_ROOT / "data" / "raw" / "diler")
+    OUTPUT_DIR = str(REPO_ROOT / "data" / "processed" / "paddle_ocr")
 
     print("=" * 60)
     print("PaddleOCR PDF Processor (Memory Optimized)")

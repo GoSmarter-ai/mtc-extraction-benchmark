@@ -41,6 +41,11 @@ from typing import Dict, List, Optional
 from openai import OpenAI
 
 # ---------------------------------------------------------------------------
+# Repository root (works in Codespaces, CI runners, local checkouts)
+# ---------------------------------------------------------------------------
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+# ---------------------------------------------------------------------------
 # Available models on GitHub Models – ordered best → last
 # ---------------------------------------------------------------------------
 RANKED_MODELS: List[Dict[str, str]] = [
@@ -496,23 +501,23 @@ def main() -> int:
     parser.add_argument(
         "--ocr-text-dir",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/data/processed/pipeline_output/text"),
+        default=REPO_ROOT / "data" / "processed" / "pipeline_output" / "text",
         help="Directory containing cached OCR page .txt files",
     )
     parser.add_argument(
         "--schema",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"),
+        default=REPO_ROOT / "schema" / "mtc_extraction_schema_v1.json",
     )
     parser.add_argument(
         "--prompt",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"),
+        default=REPO_ROOT / "prompts" / "mtc_llm_extraction_prompt.txt",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/data/processed/benchmark_output"),
+        default=REPO_ROOT / "data" / "processed" / "benchmark_output",
         help="Directory to save per-model outputs and summary",
     )
     parser.add_argument(

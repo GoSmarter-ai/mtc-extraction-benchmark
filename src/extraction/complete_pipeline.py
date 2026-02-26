@@ -27,6 +27,9 @@ from paddleocr import PaddleOCR
 from pdf2image import convert_from_path
 from PIL import Image
 
+# Repository root (works in Codespaces, CI runners, local checkouts)
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 
 class MTCPipeline:
     """Complete pipeline for MTC extraction from PDF to structured JSON."""
@@ -369,27 +372,25 @@ def main():
     parser.add_argument(
         "--pdf",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/data/raw/diler/diler-07-07-2025-rerun-41-44.pdf"
-        ),
+        default=REPO_ROOT / "data" / "raw" / "diler" / "diler-07-07-2025-rerun-41-44.pdf",
         help="Path to input PDF file",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/data/processed/pipeline_output"),
+        default=REPO_ROOT / "data" / "processed" / "pipeline_output",
         help="Output directory for results",
     )
     parser.add_argument(
         "--schema",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"),
+        default=REPO_ROOT / "schema" / "mtc_extraction_schema_v1.json",
         help="Path to JSON schema file",
     )
     parser.add_argument(
         "--prompt",
         type=Path,
-        default=Path("/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"),
+        default=REPO_ROOT / "prompts" / "mtc_llm_extraction_prompt.txt",
         help="Path to system prompt file",
     )
     parser.add_argument(

@@ -1,11 +1,13 @@
 import os
+from pathlib import Path
 
 import cv2
 import pytesseract
 from pdf2image import convert_from_path
 
-PDF_PATH = "/workspaces/mtc-extraction-benchmark/data/raw/diler/diler-07-07-2025-rerun-41-44.pdf"
-OUTPUT_DIR = "/workspaces/mtc-extraction-benchmark/data/processed"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+PDF_PATH = str(REPO_ROOT / "data" / "raw" / "diler" / "diler-07-07-2025-rerun-41-44.pdf")
+OUTPUT_DIR = str(REPO_ROOT / "data" / "processed")
 DPI = 300
 TESSERACT_CONFIG = "--oem 3 --psm 6"
 
