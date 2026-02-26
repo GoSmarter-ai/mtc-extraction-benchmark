@@ -1,12 +1,11 @@
 import json
-from pathlib import Path
-from typing import Dict, List, Optional, Any
-from datetime import datetime
 import re
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 
 class MTCPaddleExtractor:
-
     def __init__(self, schema_path: Optional[str] = None):
         # Load schema if provided
         self.schema = None
@@ -17,7 +16,7 @@ class MTCPaddleExtractor:
         print("✓ PaddleOCR extractor initialized")
 
     def extract_from_paddle_json(self, json_path: str) -> Dict[str, Any]:
- 
+
         print(f"\n📄 Processing: {json_path}")
 
         # Load PaddleOCR JSON
@@ -62,15 +61,11 @@ class MTCPaddleExtractor:
     def _extract_document_info(self, text: str) -> Dict[str, Optional[str]]:
         """Extract document-level information."""
         # Extract certificate number
-        cert_match = re.search(
-            r"CERTIFICATE\s+NUMBER[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE
-        )
+        cert_match = re.search(r"CERTIFICATE\s+NUMBER[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE)
         certificate_number = cert_match.group(1) if cert_match else None
 
         # Extract issuing date
-        date_match = re.search(
-            r"ISSUING\s+DATE[:\s]+(\d{2}\.\d{2}\s+\d{4})", text, re.IGNORECASE
-        )
+        date_match = re.search(r"ISSUING\s+DATE[:\s]+(\d{2}\.\d{2}\s+\d{4})", text, re.IGNORECASE)
         issuing_date = None
         if date_match:
             # Convert DD.MM YYYY to YYYY-MM-DD
@@ -78,7 +73,7 @@ class MTCPaddleExtractor:
             try:
                 dt = datetime.strptime(date_str, "%d.%m %Y")
                 issuing_date = dt.strftime("%Y-%m-%d")
-            except:
+            except Exception:
                 issuing_date = date_str
 
         # Extract standard
@@ -108,21 +103,15 @@ class MTCPaddleExtractor:
     def _extract_traceability(self, text: str) -> Dict[str, Optional[str]]:
         """Extract traceability information."""
         # Extract consignment number
-        consignment_match = re.search(
-            r"CONSIGNMENT\s+NO[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE
-        )
+        consignment_match = re.search(r"CONSIGNMENT\s+NO[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE)
         consignment_number = consignment_match.group(1) if consignment_match else None
 
         # Extract vessel name - stop at newline
-        vessel_match = re.search(
-            r"VESSEL\s+NAME[:\s]+([A-Z\s]+?)(?=\n)", text, re.IGNORECASE
-        )
+        vessel_match = re.search(r"VESSEL\s+NAME[:\s]+([A-Z\s]+?)(?=\n)", text, re.IGNORECASE)
         vessel_name = vessel_match.group(1).strip() if vessel_match else None
 
         # Extract lot number
-        lot_match = re.search(
-            r"ORDER\s+NO:\s+[0-9-]+\s+LOT[:\s-]+(\d+)", text, re.IGNORECASE
-        )
+        lot_match = re.search(r"ORDER\s+NO:\s+[0-9-]+\s+LOT[:\s-]+(\d+)", text, re.IGNORECASE)
         lot_number = lot_match.group(1) if lot_match else None
 
         return {
@@ -134,9 +123,7 @@ class MTCPaddleExtractor:
     def _extract_product_info(self, text: str) -> Dict[str, Optional[str]]:
         """Extract product information."""
         # Extract size
-        size_match = re.search(
-            r"SIZE[:\s]+([0-9]+MM[X×][0-9]+M\.?)", text, re.IGNORECASE
-        )
+        size_match = re.search(r"SIZE[:\s]+([0-9]+MM[X×][0-9]+M\.?)", text, re.IGNORECASE)
         size = size_match.group(1) if size_match else None
 
         # Extract quality/grade - look for BS standard
@@ -152,9 +139,7 @@ class MTCPaddleExtractor:
         quality = quality_match.group(1).strip() if quality_match else None
 
         # Extract production process
-        process_match = re.search(
-            r"PRODUCTION\s+PROSES?[:\s]+([A-Z]+)", text, re.IGNORECASE
-        )
+        process_match = re.search(r"PRODUCTION\s+PROSES?[:\s]+([A-Z]+)", text, re.IGNORECASE)
         production_process = process_match.group(1) if process_match else None
 
         return {
@@ -227,9 +212,7 @@ class MTCPaddleExtractor:
                     }
                     compositions.append(composition_entry)
                 except (ValueError, IndexError) as e:
-                    print(
-                        f"Warning: Could not parse chemical composition for heat {heat_num}: {e}"
-                    )
+                    print(f"Warning: Could not parse chemical composition for heat {heat_num}: {e}")
                     continue
 
         return compositions
@@ -258,9 +241,7 @@ class MTCPaddleExtractor:
                 test_count = 0
                 i = heat_idx + 14  # Skip chemical composition values
 
-                while (
-                    i < len(lines) and i < heat_idx + 50
-                ):  # Look within reasonable range
+                while i < len(lines) and i < heat_idx + 50:  # Look within reasonable range
                     line = lines[i].strip()
 
                     # Check if this line starts a test sample (weight value ~6.xxx)
@@ -312,10 +293,8 @@ class MTCPaddleExtractor:
                                         # Add optional Agt if available
                                         if len(values) >= 7:
                                             try:
-                                                prop_entry["agt_percent"] = float(
-                                                    values[6]
-                                                )
-                                            except:
+                                                prop_entry["agt_percent"] = float(values[6])
+                                            except Exception:
                                                 pass
 
                                         properties.append(prop_entry)
@@ -354,14 +333,11 @@ class MTCPaddleExtractor:
 
 def main():
     """Example usage."""
-    import sys
 
     # Setup paths
     project_root = Path(__file__).parent.parent.parent
     schema_path = project_root / "schema" / "mtc_extraction_schema_v1.json"
-    paddle_data_dir = (
-        project_root / "data" / "processed" / "docling" / "paddle_combined"
-    )
+    paddle_data_dir = project_root / "data" / "processed" / "docling" / "paddle_combined"
     output_dir = project_root / "data" / "processed" / "schema_output"
 
     # Initialize extractor
@@ -383,14 +359,12 @@ def main():
             data = extractor.extract_from_paddle_json(str(json_file))
 
             # Save output
-            output_filename = (
-                json_file.stem.replace("_combined", "_schema_output") + ".json"
-            )
+            output_filename = json_file.stem.replace("_combined", "_schema_output") + ".json"
             output_path = output_dir / output_filename
             extractor.save_output(data, str(output_path))
 
             # Print summary
-            print(f"\n Extraction Summary:")
+            print("\n Extraction Summary:")
             print(f"   Certificate: {data['document'].get('certificate_number')}")
             print(f"   Lot Number: {data['traceability'].get('lot_number')}")
             print(f"   Chemical Compositions: {len(data['chemical_composition'])}")

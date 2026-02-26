@@ -1,8 +1,8 @@
-from pathlib import Path
-from typing import Dict, List, Optional, Any
-from datetime import datetime
 import json
 import re
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 try:
     from docling.document_converter import DocumentConverter
@@ -37,7 +37,6 @@ class MTCDoclingExtractor:
         doc = result.document
 
         # Extract full text
-        full_text = doc.export_to_markdown()
         plain_text = doc.export_to_text()
 
         # Extract tables from document
@@ -55,12 +54,8 @@ class MTCDoclingExtractor:
             "document": self._extract_document_info(plain_text),
             "traceability": self._extract_traceability(plain_text),
             "product": self._extract_product_info(plain_text),
-            "chemical_composition": self._extract_chemical_composition(
-                tables, plain_text
-            ),
-            "mechanical_properties": self._extract_mechanical_properties(
-                tables, plain_text
-            ),
+            "chemical_composition": self._extract_chemical_composition(tables, plain_text),
+            "mechanical_properties": self._extract_mechanical_properties(tables, plain_text),
             "approval": self._extract_approval(plain_text),
             "extraction_metadata": {
                 "method": "docling",
@@ -97,15 +92,11 @@ class MTCDoclingExtractor:
     def _extract_document_info(self, text: str) -> Dict[str, Optional[str]]:
         """Extract document metadata using regex patterns."""
         # Certificate number
-        cert_match = re.search(
-            r"CERTIFICATE\s+NUMBER[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE
-        )
+        cert_match = re.search(r"CERTIFICATE\s+NUMBER[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE)
         certificate_number = cert_match.group(1) if cert_match else None
 
         # Issuing date
-        date_match = re.search(
-            r"ISSUING\s+DATE[:\s]+(\d{2}\.\d{2}\s+\d{4})", text, re.IGNORECASE
-        )
+        date_match = re.search(r"ISSUING\s+DATE[:\s]+(\d{2}\.\d{2}\s+\d{4})", text, re.IGNORECASE)
         issuing_date = None
         if date_match:
             date_str = date_match.group(1)
@@ -140,21 +131,15 @@ class MTCDoclingExtractor:
     def _extract_traceability(self, text: str) -> Dict[str, Optional[str]]:
         """Extract traceability information."""
         # Consignment number
-        consignment_match = re.search(
-            r"CONSIGNMENT\s+NO[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE
-        )
+        consignment_match = re.search(r"CONSIGNMENT\s+NO[:\s]+([A-Z0-9/-]+)", text, re.IGNORECASE)
         consignment_number = consignment_match.group(1) if consignment_match else None
 
         # Vessel name
-        vessel_match = re.search(
-            r"VESSEL\s+NAME[:\s]+([A-Z\s]+?)(?=\n)", text, re.IGNORECASE
-        )
+        vessel_match = re.search(r"VESSEL\s+NAME[:\s]+([A-Z\s]+?)(?=\n)", text, re.IGNORECASE)
         vessel_name = vessel_match.group(1).strip() if vessel_match else None
 
         # Lot number
-        lot_match = re.search(
-            r"ORDER\s+NO:\s+[0-9-]+\s+LOT[:\s-]+(\d+)", text, re.IGNORECASE
-        )
+        lot_match = re.search(r"ORDER\s+NO:\s+[0-9-]+\s+LOT[:\s-]+(\d+)", text, re.IGNORECASE)
         lot_number = lot_match.group(1) if lot_match else None
 
         return {
@@ -166,9 +151,7 @@ class MTCDoclingExtractor:
     def _extract_product_info(self, text: str) -> Dict[str, Optional[str]]:
         """Extract product specifications."""
         # Size
-        size_match = re.search(
-            r"SIZE[:\s]+([0-9]+MM[X×][0-9]+M\.?)", text, re.IGNORECASE
-        )
+        size_match = re.search(r"SIZE[:\s]+([0-9]+MM[X×][0-9]+M\.?)", text, re.IGNORECASE)
         size = size_match.group(1) if size_match else None
 
         # Quality
@@ -178,15 +161,11 @@ class MTCDoclingExtractor:
             re.IGNORECASE,
         )
         if not quality_match:
-            quality_match = re.search(
-                r"(BS[0-9]+:[0-9]+\s+GR\s+[AB][0-9]+\s*[AB]?)", text
-            )
+            quality_match = re.search(r"(BS[0-9]+:[0-9]+\s+GR\s+[AB][0-9]+\s*[AB]?)", text)
         quality = quality_match.group(1).strip() if quality_match else None
 
         # Production process
-        process_match = re.search(
-            r"PRODUCTION\s+PROSES?[:\s]+([A-Z]+)", text, re.IGNORECASE
-        )
+        process_match = re.search(r"PRODUCTION\s+PROSES?[:\s]+([A-Z]+)", text, re.IGNORECASE)
         production_process = process_match.group(1) if process_match else None
 
         return {
@@ -195,9 +174,7 @@ class MTCDoclingExtractor:
             "production_process": production_process,
         }
 
-    def _extract_chemical_composition(
-        self, tables: List[Dict], text: str
-    ) -> List[Dict[str, Any]]:
+    def _extract_chemical_composition(self, tables: List[Dict], text: str) -> List[Dict[str, Any]]:
         compositions = []
 
         # Standard elements in order
@@ -243,9 +220,7 @@ class MTCDoclingExtractor:
                         val_match = re.search(r"0[.,]\d{1,4}", cell_str)
                         if val_match:
                             try:
-                                values.append(
-                                    float(val_match.group(0).replace(",", "."))
-                                )
+                                values.append(float(val_match.group(0).replace(",", ".")))
                             except ValueError:
                                 pass
 
@@ -329,9 +304,7 @@ class MTCDoclingExtractor:
 
         return compositions
 
-    def _extract_mechanical_properties(
-        self, tables: List[Dict], text: str
-    ) -> List[Dict[str, Any]]:
+    def _extract_mechanical_properties(self, tables: List[Dict], text: str) -> List[Dict[str, Any]]:
 
         properties = []
 
@@ -379,7 +352,6 @@ class MTCDoclingExtractor:
                             and 500 <= yield_val <= 700
                             and 600 <= tensile_val <= 800
                         ):
-
                             prop = {
                                 "heat_number": heat_number,
                                 "weight_kg_per_m": weight,
@@ -454,7 +426,6 @@ class MTCDoclingExtractor:
                                     and 500 <= yield_val <= 700
                                     and 600 <= tensile_val <= 800
                                 ):
-
                                     test_count += 1
                                     properties.append(
                                         {
@@ -467,9 +438,7 @@ class MTCDoclingExtractor:
                                             "rm_re_ratio": ratio,
                                             "percentage_elongation": elongation,
                                             "agt_percent": (
-                                                float(values[6])
-                                                if len(values) >= 7
-                                                else None
+                                                float(values[6]) if len(values) >= 7 else None
                                             ),
                                         }
                                     )
@@ -546,10 +515,8 @@ def main():
             extractor.save_output(data, str(output_path))
 
             # Print summary
-            print(f"\n📊 Extraction Summary:")
-            print(
-                f"   Certificate: {data['document'].get('certificate_number', 'N/A')}"
-            )
+            print("\n📊 Extraction Summary:")
+            print(f"   Certificate: {data['document'].get('certificate_number', 'N/A')}")
             print(f"   Lot Number: {data['traceability'].get('lot_number', 'N/A')}")
             print(f"   Chemical Compositions: {len(data['chemical_composition'])}")
             print(f"   Mechanical Props: {len(data['mechanical_properties'])}")

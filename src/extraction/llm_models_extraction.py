@@ -30,14 +30,13 @@ Usage:
     python src/extraction/llm_models_extraction.py --ground-truth data/ground_truth/cert.json
 """
 
-import os
-import json
-import time
 import argparse
-import traceback
-from pathlib import Path
-from typing import List, Dict, Optional
+import json
+import os
+import time
 from datetime import datetime
+from pathlib import Path
+from typing import Dict, List, Optional
 
 from openai import OpenAI
 
@@ -154,16 +153,15 @@ class LLMModelBenchmark:
         return pages
 
     @staticmethod
-    def run_ocr_fresh(
-        pdf_path: Path, dpi: int = 200, max_width: int = 2000
-    ) -> List[str]:
+    def run_ocr_fresh(pdf_path: Path, dpi: int = 200, max_width: int = 2000) -> List[str]:
         """Run PaddleOCR on a PDF and return page texts (imports heavy deps lazily)."""
+        import gc
+
         import cv2
         import numpy as np
-        from PIL import Image as PILImage
         from paddleocr import PaddleOCR
         from pdf2image import convert_from_path
-        import gc
+        from PIL import Image as PILImage
 
         print(f"📄 Converting PDF → images (DPI={dpi}) ...")
         images = convert_from_path(str(pdf_path), dpi=dpi)
@@ -176,9 +174,7 @@ class LLMModelBenchmark:
             print(f"   OCR page {page_num} …")
             if pil_img.width > max_width:
                 ratio = max_width / pil_img.width
-                pil_img = pil_img.resize(
-                    (max_width, int(pil_img.height * ratio)), PILImage.LANCZOS
-                )
+                pil_img = pil_img.resize((max_width, int(pil_img.height * ratio)), PILImage.LANCZOS)
             arr = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
             results = list(ocr_engine.predict(arr))
 
@@ -245,9 +241,7 @@ class LLMModelBenchmark:
 
         merged = results[0].copy()
 
-        seen_heats = {
-            item["heat_number"] for item in merged.get("chemical_composition", [])
-        }
+        seen_heats = {item["heat_number"] for item in merged.get("chemical_composition", [])}
         for r in results[1:]:
             for chem in r.get("chemical_composition", []):
                 if chem["heat_number"] not in seen_heats:
@@ -321,9 +315,7 @@ class LLMModelBenchmark:
         """Compute quick quality metrics for an extraction result."""
         m: Dict = {}
 
-        m["certificate_number"] = extracted.get("document", {}).get(
-            "certificate_number", "N/A"
-        )
+        m["certificate_number"] = extracted.get("document", {}).get("certificate_number", "N/A")
         m["chemical_count"] = len(extracted.get("chemical_composition", []))
         m["mechanical_count"] = len(extracted.get("mechanical_properties", []))
         m["has_approval"] = bool(
@@ -466,10 +458,10 @@ class LLMModelBenchmark:
             if r["status"] == "success":
                 print(
                     f"  {mid:<36} {'✅ OK':<9} {r['elapsed']:>6.1f}s "
-                    f"{m.get('chemical_count','—'):>6} "
-                    f"{m.get('mechanical_count','—'):>6} "
-                    f"{m.get('unique_chem_heats','—'):>6} "
-                    f"{m.get('certificate_number','N/A'):<28}"
+                    f"{m.get('chemical_count', '—'):>6} "
+                    f"{m.get('mechanical_count', '—'):>6} "
+                    f"{m.get('unique_chem_heats', '—'):>6} "
+                    f"{m.get('certificate_number', 'N/A'):<28}"
                 )
             else:
                 err_short = (r["error"] or "")[:40]
@@ -492,8 +484,7 @@ def main() -> int:
         "--pdf",
         type=Path,
         default=Path(
-            "/workspaces/mtc-extraction-benchmark/data/raw/diler/"
-            "diler-07-07-2025-rerun-41-44.pdf"
+            "/workspaces/mtc-extraction-benchmark/data/raw/diler/diler-07-07-2025-rerun-41-44.pdf"
         ),
         help="Input PDF (used only when --use-cached-ocr is not set)",
     )
@@ -505,31 +496,23 @@ def main() -> int:
     parser.add_argument(
         "--ocr-text-dir",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/data/processed/pipeline_output/text"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/data/processed/pipeline_output/text"),
         help="Directory containing cached OCR page .txt files",
     )
     parser.add_argument(
         "--schema",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"),
     )
     parser.add_argument(
         "--prompt",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"),
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/data/processed/benchmark_output"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/data/processed/benchmark_output"),
         help="Directory to save per-model outputs and summary",
     )
     parser.add_argument(

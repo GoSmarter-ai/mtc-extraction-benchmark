@@ -1,1 +1,18 @@
-openAI
+# LLM / API
+openai
+
+# OCR engines
+paddleocr
+pytesseract
+python-doctr
+
+# Document processing
+docling
+pdf2image
+Pillow
+opencv-python
+numpy
+
+# Data analysis & visualization
+pandas
+matplotlib

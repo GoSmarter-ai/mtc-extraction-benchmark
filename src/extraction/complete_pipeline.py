@@ -13,18 +13,19 @@ Usage:
     Or run with defaults (processes sample PDF)
 """
 
-import os
-import json
 import argparse
+import gc
+import json
+import os
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import List
+
 import cv2
 import numpy as np
-from PIL import Image
+from openai import OpenAI
 from paddleocr import PaddleOCR
 from pdf2image import convert_from_path
-from openai import OpenAI
-import gc
+from PIL import Image
 
 
 class MTCPipeline:
@@ -106,7 +107,7 @@ class MTCPipeline:
         img_array = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
 
         # Run OCR
-        print(f"     Running OCR...")
+        print("     Running OCR...")
         results = list(self.ocr.predict(img_array))
 
         # Extract text and create annotated image
@@ -210,9 +211,7 @@ OCR TEXT{page_info}:
         merged = results[0].copy()
 
         # Merge chemical composition (deduplicate by heat_number)
-        seen_heats = {
-            item["heat_number"] for item in merged.get("chemical_composition", [])
-        }
+        seen_heats = {item["heat_number"] for item in merged.get("chemical_composition", [])}
         for result in results[1:]:
             for chem in result.get("chemical_composition", []):
                 if chem["heat_number"] not in seen_heats:
@@ -271,9 +270,7 @@ OCR TEXT{page_info}:
         page_texts = []
 
         for page_num, pil_image in enumerate(images, 1):
-            text, img_original, img_annotated = self.extract_text_from_image(
-                pil_image, page_num
-            )
+            text, img_original, img_annotated = self.extract_text_from_image(pil_image, page_num)
             page_texts.append(text)
 
             # Save intermediates if requested
@@ -282,26 +279,18 @@ OCR TEXT{page_info}:
 
                 # Save images
                 cv2.imwrite(
-                    str(
-                        output_dir / "images" / f"{base_name}{page_suffix}_original.jpg"
-                    ),
+                    str(output_dir / "images" / f"{base_name}{page_suffix}_original.jpg"),
                     img_original,
                     [cv2.IMWRITE_JPEG_QUALITY, 85],
                 )
                 cv2.imwrite(
-                    str(
-                        output_dir
-                        / "images"
-                        / f"{base_name}{page_suffix}_annotated.jpg"
-                    ),
+                    str(output_dir / "images" / f"{base_name}{page_suffix}_annotated.jpg"),
                     img_annotated,
                     [cv2.IMWRITE_JPEG_QUALITY, 85],
                 )
 
                 # Save text
-                with open(
-                    output_dir / "text" / f"{base_name}{page_suffix}.txt", "w"
-                ) as f:
+                with open(output_dir / "text" / f"{base_name}{page_suffix}.txt", "w") as f:
                     f.write(f"Page {page_num}\n")
                     f.write("=" * 80 + "\n\n")
                     f.write(text if text else "No text detected.\n")
@@ -315,7 +304,7 @@ OCR TEXT{page_info}:
         gc.collect()
 
         # Step 3: LLM extraction
-        print(f"\n🧠 Extracting structured data with LLM...")
+        print("\n🧠 Extracting structured data with LLM...")
 
         if chunked_processing:
             # Process each page separately and merge
@@ -334,9 +323,7 @@ OCR TEXT{page_info}:
                     # Show what was extracted
                     chem_count = len(result.get("chemical_composition", []))
                     mech_count = len(result.get("mechanical_properties", []))
-                    print(
-                        f"   ✓ Page {i}: {chem_count} heat numbers, {mech_count} test samples"
-                    )
+                    print(f"   ✓ Page {i}: {chem_count} heat numbers, {mech_count} test samples")
 
                 except Exception as e:
                     print(f"   ⚠️  Error on page {i}: {e}")
@@ -363,14 +350,12 @@ OCR TEXT{page_info}:
             f"Certificate Number: {extracted_data.get('document', {}).get('certificate_number', 'N/A')}"
         )
         print(f"Heat Numbers: {len(extracted_data.get('chemical_composition', []))}")
-        print(
-            f"Mechanical Test Samples: {len(extracted_data.get('mechanical_properties', []))}"
-        )
+        print(f"Mechanical Test Samples: {len(extracted_data.get('mechanical_properties', []))}")
         print(
             f"Approval Number: {extracted_data.get('approval', {}).get('certificate_of_approval_number', 'N/A')}"
         )
         print("=" * 70)
-        print(f"\n✅ Pipeline completed successfully!")
+        print("\n✅ Pipeline completed successfully!")
         print(f"💾 Output saved to: {output_file}\n")
 
         return extracted_data
@@ -392,25 +377,19 @@ def main():
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/data/processed/pipeline_output"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/data/processed/pipeline_output"),
         help="Output directory for results",
     )
     parser.add_argument(
         "--schema",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/schema/mtc_extraction_schema_v1.json"),
         help="Path to JSON schema file",
     )
     parser.add_argument(
         "--prompt",
         type=Path,
-        default=Path(
-            "/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"
-        ),
+        default=Path("/workspaces/mtc-extraction-benchmark/prompts/mtc_llm_extraction_prompt.txt"),
         help="Path to system prompt file",
     )
     parser.add_argument(
