@@ -138,9 +138,7 @@ class LLMModelBenchmark:
         return pages
 
     @staticmethod
-    def run_ocr_fresh(
-        pdf_path: Path, dpi: int = 200, max_width: int = 2000
-    ) -> List[str]:
+    def run_ocr_fresh(pdf_path: Path, dpi: int = 200, max_width: int = 2000) -> List[str]:
         """Run PaddleOCR on a PDF and return page texts (imports heavy deps lazily)."""
         import gc
 
@@ -161,9 +159,7 @@ class LLMModelBenchmark:
             print(f"   OCR page {page_num} …")
             if pil_img.width > max_width:
                 ratio = max_width / pil_img.width
-                pil_img = pil_img.resize(
-                    (max_width, int(pil_img.height * ratio)), PILImage.LANCZOS
-                )
+                pil_img = pil_img.resize((max_width, int(pil_img.height * ratio)), PILImage.LANCZOS)
             arr = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
             results = list(ocr_engine.predict(arr))
 
@@ -250,9 +246,7 @@ class LLMModelBenchmark:
         }
         if hasattr(response, "usage") and response.usage is not None:
             usage["prompt_tokens"] = getattr(response.usage, "prompt_tokens", 0) or 0
-            usage["completion_tokens"] = (
-                getattr(response.usage, "completion_tokens", 0) or 0
-            )
+            usage["completion_tokens"] = getattr(response.usage, "completion_tokens", 0) or 0
             usage["total_tokens"] = getattr(response.usage, "total_tokens", 0) or 0
 
         # Strip markdown fences
@@ -311,10 +305,7 @@ class LLMModelBenchmark:
             except jsonschema.ValidationError as exc:
                 last_error = exc
                 short_msg = str(exc.message)[:120]
-                print(
-                    f"      ⚠️  Attempt {attempt}/{max_retries} – "
-                    f"schema violation: {short_msg}"
-                )
+                print(f"      ⚠️  Attempt {attempt}/{max_retries} – schema violation: {short_msg}")
 
         # All retries exhausted — raise the last error
         raise last_error  # type: ignore[misc]
@@ -442,9 +433,7 @@ class LLMModelBenchmark:
                                 elem_keys.update(v.keys())
                         voted_sub: dict = {}
                         for ek in elem_keys:
-                            ek_vals = [
-                                v.get(ek) for v in sub_values if isinstance(v, dict)
-                            ]
+                            ek_vals = [v.get(ek) for v in sub_values if isinstance(v, dict)]
                             voted_sub[ek] = _vote_scalar(ek_vals)
                         voted_item[ik] = voted_sub
                     else:
@@ -467,9 +456,7 @@ class LLMModelBenchmark:
 
         merged = results[0].copy()
 
-        seen_heats = {
-            item["heat_number"] for item in merged.get("chemical_composition", [])
-        }
+        seen_heats = {item["heat_number"] for item in merged.get("chemical_composition", [])}
         for r in results[1:]:
             for chem in r.get("chemical_composition", []):
                 if chem["heat_number"] not in seen_heats:
@@ -517,11 +504,7 @@ class LLMModelBenchmark:
                 if isinstance(obj, dict):
                     for k, v in obj.items():
                         # Keep first non-null / non-empty value
-                        if (
-                            k not in combined
-                            or combined[k] is None
-                            or combined[k] == ""
-                        ):
+                        if k not in combined or combined[k] is None or combined[k] == "":
                             combined[k] = v
             if combined:
                 merged[section] = combined
@@ -592,9 +575,7 @@ class LLMModelBenchmark:
                     model_id, clean_text, page_info=page_info
                 )
             else:
-                result, usage = self.extract_with_model(
-                    model_id, clean_text, page_info=page_info
-                )
+                result, usage = self.extract_with_model(model_id, clean_text, page_info=page_info)
 
             for k in cumulative_usage:
                 cumulative_usage[k] += usage.get(k, 0)
@@ -643,9 +624,7 @@ class LLMModelBenchmark:
                 cumulative_usage["completion_tokens"] += (
                     getattr(response.usage, "completion_tokens", 0) or 0
                 )
-                cumulative_usage["total_tokens"] += (
-                    getattr(response.usage, "total_tokens", 0) or 0
-                )
+                cumulative_usage["total_tokens"] += getattr(response.usage, "total_tokens", 0) or 0
 
             # Strip markdown fences
             if "```json" in raw:
@@ -660,9 +639,7 @@ class LLMModelBenchmark:
             return consolidated, cumulative_usage
 
         except Exception as exc:
-            print(
-                f"      ⚠️  Pass 2 consolidation failed ({exc}), " f"using Pass 1 merge"
-            )
+            print(f"      ⚠️  Pass 2 consolidation failed ({exc}), using Pass 1 merge")
             return draft, cumulative_usage
 
     # ------------------------------------------------------------------
@@ -719,9 +696,7 @@ class LLMModelBenchmark:
                         cumulative_usage[k] += usage.get(k, 0)
                     chem = len(result.get("chemical_composition", []))
                     mech = len(result.get("mechanical_properties", []))
-                    print(
-                        f"      Page {i} (consensus): " f"{chem} heats, {mech} samples"
-                    )
+                    print(f"      Page {i} (consensus): {chem} heats, {mech} samples")
                     page_results.append(result)
                 merged = self.merge_extractions_v2(page_results)
 
@@ -733,10 +708,7 @@ class LLMModelBenchmark:
                         continue
                     clean_text, low_conf = self.parse_ocr_with_confidence(text)
                     if low_conf:
-                        print(
-                            f"      ⚠️  Page {i}: "
-                            f"{len(low_conf)} low-confidence OCR tokens"
-                        )
+                        print(f"      ⚠️  Page {i}: {len(low_conf)} low-confidence OCR tokens")
 
                     result, usage = self.extract_with_validation(
                         model_id,
@@ -872,11 +844,7 @@ class LLMModelBenchmark:
             ex_val = ex_doc.get(field)
             if gt_val is not None:
                 doc_total += 1
-                match = (
-                    str(gt_val).strip() == str(ex_val).strip()
-                    if ex_val is not None
-                    else False
-                )
+                match = str(gt_val).strip() == str(ex_val).strip() if ex_val is not None else False
                 if match:
                     doc_correct += 1
                 doc_detail[field] = match
@@ -884,12 +852,8 @@ class LLMModelBenchmark:
         scores["document_fields"] = doc_detail
 
         # ---------- Chemical composition ----------
-        gt_chem = {
-            c["heat_number"]: c for c in ground_truth.get("chemical_composition", [])
-        }
-        ex_chem = {
-            c["heat_number"]: c for c in extracted.get("chemical_composition", [])
-        }
+        gt_chem = {c["heat_number"]: c for c in ground_truth.get("chemical_composition", [])}
+        ex_chem = {c["heat_number"]: c for c in extracted.get("chemical_composition", [])}
 
         chem_tp = len(set(ex_chem) & set(gt_chem))
         chem_fp = len(set(ex_chem) - set(gt_chem))
@@ -940,9 +904,7 @@ class LLMModelBenchmark:
         def _mech_key(m: dict) -> Tuple:
             return (m.get("heat_number", ""), m.get("test_sample"))
 
-        gt_mech = {
-            _mech_key(m): m for m in ground_truth.get("mechanical_properties", [])
-        }
+        gt_mech = {_mech_key(m): m for m in ground_truth.get("mechanical_properties", [])}
         ex_mech = {_mech_key(m): m for m in extracted.get("mechanical_properties", [])}
 
         mech_tp = len(set(ex_mech) & set(gt_mech))
@@ -1015,9 +977,7 @@ class LLMModelBenchmark:
         """Compute quick quality metrics for an extraction result."""
         m: Dict = {}
 
-        m["certificate_number"] = extracted.get("document", {}).get(
-            "certificate_number", "N/A"
-        )
+        m["certificate_number"] = extracted.get("document", {}).get("certificate_number", "N/A")
         m["chemical_count"] = len(extracted.get("chemical_composition", []))
         m["mechanical_count"] = len(extracted.get("mechanical_properties", []))
         m["has_approval"] = bool(
@@ -1126,9 +1086,7 @@ class LLMModelBenchmark:
 
                 # Rich field-level metrics when ground truth is available
                 if ground_truth:
-                    run["field_metrics"] = self.compute_field_f1(
-                        run["result"], ground_truth
-                    )
+                    run["field_metrics"] = self.compute_field_f1(run["result"], ground_truth)
                     f1 = run["field_metrics"].get("overall_f1", "N/A")
                     print(f"   📊 Overall F1: {f1}")
 
@@ -1160,19 +1118,12 @@ class LLMModelBenchmark:
             print(f"  🏆 ENSEMBLE (top {ensemble_top_k} models)")
             print(f"{'=' * 70}")
 
-            ens = self.ensemble_extract(
-                page_texts, model_ids=model_ids, top_k=ensemble_top_k
-            )
+            ens = self.ensemble_extract(page_texts, model_ids=model_ids, top_k=ensemble_top_k)
             if ens["status"] == "success" and ens["result"]:
                 ens["metrics"] = self.compute_metrics(ens["result"], ground_truth)
                 if ground_truth:
-                    ens["field_metrics"] = self.compute_field_f1(
-                        ens["result"], ground_truth
-                    )
-                    print(
-                        f"   📊 Ensemble Overall F1: "
-                        f"{ens['field_metrics'].get('overall_f1')}"
-                    )
+                    ens["field_metrics"] = self.compute_field_f1(ens["result"], ground_truth)
+                    print(f"   📊 Ensemble Overall F1: {ens['field_metrics'].get('overall_f1')}")
                 if output_dir:
                     out_file = output_dir / "ensemble_extracted.json"
                     out_file.write_text(json.dumps(ens["result"], indent=2))
@@ -1245,18 +1196,14 @@ class LLMModelBenchmark:
             display_name = "🏆 ENSEMBLE" if mid == "__ensemble__" else mid
             m = r.get("metrics", {})
             tok = r.get("token_usage", {})
-            tok_str = (
-                f"{tok.get('total_tokens', 0):,}" if tok.get("total_tokens") else "—"
-            )
+            tok_str = f"{tok.get('total_tokens', 0):,}" if tok.get("total_tokens") else "—"
 
             if r["status"] == "success":
                 f1_str = ""
                 if has_ground_truth:
                     fm = r.get("field_metrics", {})
                     f1_val = fm.get("overall_f1", "—")
-                    f1_str = (
-                        f"{f1_val:>6} " if isinstance(f1_val, float) else f"{'—':>6} "
-                    )
+                    f1_str = f"{f1_val:>6} " if isinstance(f1_val, float) else f"{'—':>6} "
 
                 print(
                     f"  {display_name:<36} {'✅ OK':<9} "
@@ -1294,18 +1241,14 @@ def main() -> int:
         "--pdf",
         type=Path,
         default=Path(
-            "/workspaces/mtc-extraction-benchmark/data/raw/diler/"
-            "diler-07-07-2025-rerun-41-44.pdf"
+            "/workspaces/mtc-extraction-benchmark/data/raw/diler/diler-07-07-2025-rerun-41-44.pdf"
         ),
         help="Input PDF (used only when --use-cached-ocr is not set)",
     )
     parser.add_argument(
         "--use-cached-ocr",
         action="store_true",
-        help=(
-            "Use pre-extracted OCR text from pipeline_output/text "
-            "instead of re-running OCR"
-        ),
+        help=("Use pre-extracted OCR text from pipeline_output/text instead of re-running OCR"),
     )
     parser.add_argument(
         "--ocr-text-dir",
@@ -1357,15 +1300,12 @@ def main() -> int:
         "--consistency-samples",
         type=int,
         default=0,
-        help=(
-            "Number of samples for self-consistency voting "
-            "(0=disabled, recommended: 3)"
-        ),
+        help=("Number of samples for self-consistency voting (0=disabled, recommended: 3)"),
     )
     parser.add_argument(
         "--ensemble",
         action="store_true",
-        help=("Enable cross-model ensemble " "(majority vote across top-k models)"),
+        help=("Enable cross-model ensemble (majority vote across top-k models)"),
     )
     parser.add_argument(
         "--ensemble-top-k",
@@ -1377,9 +1317,7 @@ def main() -> int:
         "--numeric-tolerance",
         type=float,
         default=0.001,
-        help=(
-            "Numeric tolerance for field-level metric comparisons " "(default: 0.001)"
-        ),
+        help=("Numeric tolerance for field-level metric comparisons (default: 0.001)"),
     )
     args = parser.parse_args()
 
