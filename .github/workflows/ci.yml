@@ -83,11 +83,11 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run benchmark (top 3 models)
+      - name: Run benchmark (confirmed working models)
         run: |
           python src/extraction/llm_models_extraction.py \
             --use-cached-ocr \
-            --models gpt-4o Meta-Llama-3.1-405B-Instruct Mistral-large-2407 \
+            --models gpt-4o Meta-Llama-3.1-405B-Instruct Meta-Llama-3.1-8B-Instruct gpt-4o-mini \
             --output data/processed/benchmark_output
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

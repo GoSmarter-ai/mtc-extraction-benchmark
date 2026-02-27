@@ -1,5 +1,6 @@
 # LLM / API
 openai
+jsonschema
 
 # OCR engines
 paddleocr
