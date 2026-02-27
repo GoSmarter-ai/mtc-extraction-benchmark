@@ -13,12 +13,12 @@
     "lot_number": "2025-3133 LOT-1"
   },
   "product": {
-    "size": "32MMX14M",
+    "size": "32MMX14M.",
     "quality": "BS4449:2005 GR B500 B",
     "production_process": "QST"
   },
   "approval": {
-    "certificate_of_approval_number": "011001",
+    "certificate_of_approval_number": "O11001",
     "form_number": "C8.03 2-4/R-0",
     "cares_approved": true
   },
@@ -118,9 +118,9 @@
       "elements": {
         "C": 0.19,
         "Si": 0.18,
-        "Mn": 0.65,
-        "P": 0.028,
-        "S": 0.016,
+        "Mn": 0.028,
+        "P": 0.016,
+        "S": 0.65,
         "Ni": 0.02,
         "Cr": 0.05,
         "Mo": 0.001,
@@ -136,9 +136,9 @@
       "elements": {
         "C": 0.2,
         "Si": 0.21,
-        "Mn": 0.71,
-        "P": 0.02,
-        "S": 0.017,
+        "Mn": 0.02,
+        "P": 0.017,
+        "S": 0.71,
         "Ni": 0.02,
         "Cr": 0.06,
         "Mo": 0.001,
@@ -154,17 +154,17 @@
       "elements": {
         "C": 0.2,
         "Si": 0.19,
-        "Mn": null,
-        "P": 0.029,
-        "S": 0.021,
+        "Mn": 0.029,
+        "P": 0.021,
+        "S": null,
         "Ni": null,
         "Cr": null,
         "Mo": null,
         "Cu": null,
-        "V": 0.002,
-        "N": 0.0055,
-        "B": 0.0006,
-        "Ce": 0.31
+        "V": null,
+        "N": null,
+        "B": null,
+        "Ce": null
       }
     },
     {
@@ -172,9 +172,9 @@
       "elements": {
         "C": 0.19,
         "Si": 0.19,
-        "Mn": 0.66,
-        "P": 0.02,
-        "S": 0.022,
+        "Mn": 0.02,
+        "P": 0.022,
+        "S": 0.66,
         "Ni": 0.02,
         "Cr": 0.06,
         "Mo": 0.001,
@@ -182,7 +182,7 @@
         "V": null,
         "N": null,
         "B": null,
-        "Ce": 0.37
+        "Ce": null
       }
     },
     {
@@ -190,9 +190,9 @@
       "elements": {
         "C": 0.2,
         "Si": 0.23,
-        "Mn": null,
-        "P": 0.014,
-        "S": 0.012,
+        "Mn": 0.014,
+        "P": 0.012,
+        "S": null,
         "Ni": null,
         "Cr": null,
         "Mo": null,
@@ -261,11 +261,11 @@
       "heat_number": "2504091",
       "elements": {
         "C": 0.22,
-        "Si": null,
-        "Mn": 0.018,
-        "P": 0.007,
-        "S": 0.75,
-        "Ni": 0.1,
+        "Si": 0.018,
+        "Mn": 0.007,
+        "P": 0.75,
+        "S": 0.1,
+        "Ni": null,
         "Cr": null,
         "Mo": null,
         "Cu": null,
@@ -279,11 +279,11 @@
       "heat_number": "2504090",
       "elements": {
         "C": 0.19,
-        "Si": null,
-        "Mn": null,
+        "Si": 0.74,
+        "Mn": 0.1,
         "P": null,
-        "S": 0.74,
-        "Ni": 0.1,
+        "S": null,
+        "Ni": null,
         "Cr": null,
         "Mo": null,
         "Cu": null,
@@ -351,16 +351,16 @@
       "heat_number": "2500812",
       "elements": {
         "C": 0.014,
-        "Si": null,
-        "Mn": 0.73,
-        "P": 0.11,
-        "S": 0.09,
-        "Ni": 0.015,
-        "Cr": 0.4,
-        "Mo": 0.0025,
-        "Cu": 0.0089,
-        "V": 0.0004,
-        "N": 0.36,
+        "Si": 0.73,
+        "Mn": 0.11,
+        "P": 0.09,
+        "S": 0.015,
+        "Ni": 0.4,
+        "Cr": 0.0025,
+        "Mo": 0.0089,
+        "Cu": 0.0004,
+        "V": 0.36,
+        "N": null,
         "B": null,
         "Ce": null
       }
@@ -387,7 +387,7 @@
   "mechanical_properties": [
     {
       "heat_number": "25990085",
-      "test_sample": 13,
+      "test_sample": 1,
       "weight_kg_per_m": 6.201,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 583,
@@ -398,7 +398,7 @@
     },
     {
       "heat_number": "25990085",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.2,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 584,
@@ -409,7 +409,7 @@
     },
     {
       "heat_number": "25990085",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.19,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 590,
@@ -420,7 +420,7 @@
     },
     {
       "heat_number": "25990085",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.185,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 593,
@@ -431,7 +431,7 @@
     },
     {
       "heat_number": "25990041",
-      "test_sample": 11,
+      "test_sample": 1,
       "weight_kg_per_m": 6.207,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 621,
@@ -442,7 +442,7 @@
     },
     {
       "heat_number": "25990041",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.212,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 611,
@@ -453,7 +453,7 @@
     },
     {
       "heat_number": "25990041",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.209,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 564,
@@ -464,7 +464,7 @@
     },
     {
       "heat_number": "25990041",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.204,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 598,
@@ -475,7 +475,7 @@
     },
     {
       "heat_number": "25990040",
-      "test_sample": 14,
+      "test_sample": 1,
       "weight_kg_per_m": 6.187,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 598,
@@ -486,7 +486,7 @@
     },
     {
       "heat_number": "25990040",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.203,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 616,
@@ -497,7 +497,7 @@
     },
     {
       "heat_number": "25990040",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.199,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 561,
@@ -508,7 +508,7 @@
     },
     {
       "heat_number": "25990040",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.195,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 579,
@@ -519,7 +519,7 @@
     },
     {
       "heat_number": "25990039",
-      "test_sample": 18,
+      "test_sample": 1,
       "weight_kg_per_m": 6.204,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 568,
@@ -530,7 +530,7 @@
     },
     {
       "heat_number": "25990039",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.209,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 606,
@@ -541,7 +541,7 @@
     },
     {
       "heat_number": "25990039",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.207,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 573,
@@ -552,7 +552,7 @@
     },
     {
       "heat_number": "25990039",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.195,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 568,
@@ -563,18 +563,18 @@
     },
     {
       "heat_number": "25990035",
-      "test_sample": 15,
+      "test_sample": 1,
       "weight_kg_per_m": 6.194,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 558,
       "tensile_strength_mpa": 679,
-      "rm_re_ratio": 1.22,
-      "percentage_elongation": 19.18,
-      "agt_percent": 10.39
+      "rm_re_ratio": null,
+      "percentage_elongation": null,
+      "agt_percent": null
     },
     {
       "heat_number": "25990035",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.201,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 563,
@@ -585,7 +585,7 @@
     },
     {
       "heat_number": "25990035",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.197,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 571,
@@ -596,7 +596,7 @@
     },
     {
       "heat_number": "25990035",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.189,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 568,
@@ -607,7 +607,7 @@
     },
     {
       "heat_number": "25990034",
-      "test_sample": 16,
+      "test_sample": 1,
       "weight_kg_per_m": 6.185,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 601,
@@ -618,7 +618,7 @@
     },
     {
       "heat_number": "25990034",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.2,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 602,
@@ -629,7 +629,7 @@
     },
     {
       "heat_number": "25990034",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.194,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 599,
@@ -640,7 +640,7 @@
     },
     {
       "heat_number": "25990034",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.188,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 613,
@@ -651,7 +651,7 @@
     },
     {
       "heat_number": "25990032",
-      "test_sample": 15,
+      "test_sample": 1,
       "weight_kg_per_m": 6.2,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 599,
@@ -662,7 +662,7 @@
     },
     {
       "heat_number": "25990032",
-      "test_sample": null,
+      "test_sample": 2,
       "weight_kg_per_m": 6.214,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 597,
@@ -673,7 +673,7 @@
     },
     {
       "heat_number": "25990032",
-      "test_sample": null,
+      "test_sample": 3,
       "weight_kg_per_m": 6.206,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 619,
@@ -684,7 +684,7 @@
     },
     {
       "heat_number": "25990032",
-      "test_sample": null,
+      "test_sample": 4,
       "weight_kg_per_m": 6.197,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 589,
@@ -695,7 +695,51 @@
     },
     {
       "heat_number": "25990031",
-      "test_sample": 17,
+      "test_sample": 1,
+      "weight_kg_per_m": 6.204,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 573,
+      "tensile_strength_mpa": 691,
+      "rm_re_ratio": 1.21,
+      "percentage_elongation": 19.95,
+      "agt_percent": 9.99
+    },
+    {
+      "heat_number": "25990031",
+      "test_sample": 2,
+      "weight_kg_per_m": 6.207,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 584,
+      "tensile_strength_mpa": 698,
+      "rm_re_ratio": 1.2,
+      "percentage_elongation": 19.79,
+      "agt_percent": 9.77
+    },
+    {
+      "heat_number": "25990031",
+      "test_sample": 3,
+      "weight_kg_per_m": 6.2,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 602,
+      "tensile_strength_mpa": 720,
+      "rm_re_ratio": 1.2,
+      "percentage_elongation": 19.11,
+      "agt_percent": 9.69
+    },
+    {
+      "heat_number": "25990031",
+      "test_sample": 4,
+      "weight_kg_per_m": 6.198,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 566,
+      "tensile_strength_mpa": 694,
+      "rm_re_ratio": 1.23,
+      "percentage_elongation": 20.68,
+      "agt_percent": 8.69
+    },
+    {
+      "heat_number": "25990031",
+      "test_sample": 5,
       "weight_kg_per_m": 6.19,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 599,
@@ -706,7 +750,40 @@
     },
     {
       "heat_number": "25990024",
-      "test_sample": 19,
+      "test_sample": 1,
+      "weight_kg_per_m": 6.197,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 583,
+      "tensile_strength_mpa": 718,
+      "rm_re_ratio": 1.23,
+      "percentage_elongation": 21.61,
+      "agt_percent": 9.88
+    },
+    {
+      "heat_number": "25990024",
+      "test_sample": 2,
+      "weight_kg_per_m": 6.192,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 585,
+      "tensile_strength_mpa": 715,
+      "rm_re_ratio": 1.22,
+      "percentage_elongation": 19.69,
+      "agt_percent": 10.27
+    },
+    {
+      "heat_number": "25990024",
+      "test_sample": 3,
+      "weight_kg_per_m": 6.187,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 599,
+      "tensile_strength_mpa": 728,
+      "rm_re_ratio": 1.22,
+      "percentage_elongation": 19.4,
+      "agt_percent": 10.41
+    },
+    {
+      "heat_number": "25990024",
+      "test_sample": 4,
       "weight_kg_per_m": 6.093,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 564,
@@ -717,7 +794,7 @@
     },
     {
       "heat_number": "2504095",
-      "test_sample": null,
+      "test_sample": 1,
       "weight_kg_per_m": 6.098,
       "cross_sectional_area_mm2": 804.0,
       "yield_point_mpa": 564,
@@ -725,6 +802,28 @@
       "rm_re_ratio": 1.18,
       "percentage_elongation": 18.25,
       "agt_percent": 10.52
+    },
+    {
+      "heat_number": "2504095",
+      "test_sample": 2,
+      "weight_kg_per_m": 6.095,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 597,
+      "tensile_strength_mpa": 696,
+      "rm_re_ratio": 1.17,
+      "percentage_elongation": 16.38,
+      "agt_percent": 10.12
+    },
+    {
+      "heat_number": "2504095",
+      "test_sample": 3,
+      "weight_kg_per_m": 6.09,
+      "cross_sectional_area_mm2": 804.0,
+      "yield_point_mpa": 558,
+      "tensile_strength_mpa": 669,
+      "rm_re_ratio": 1.2,
+      "percentage_elongation": 16.63,
+      "agt_percent": 10.42
     },
     {
       "heat_number": "2504094",
@@ -1075,7 +1174,7 @@
       "yield_point_mpa": 586,
       "tensile_strength_mpa": 669,
       "rm_re_ratio": 1.14,
-      "percentage_elongation": 16.5,
+      "percentage_elongation": 0.22,
       "agt_percent": 9.53
     },
     {

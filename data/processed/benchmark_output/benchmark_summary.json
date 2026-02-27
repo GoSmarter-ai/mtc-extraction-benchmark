@@ -1,0 +1,172 @@
+{
+  "timestamp": "2026-02-27T12:50:22.247255",
+  "models_tested": 10,
+  "config": {
+    "two_pass": false,
+    "consistency_samples": 0,
+    "ensemble": false,
+    "ensemble_top_k": 3
+  },
+  "results": {
+    "gpt-4o": {
+      "status": "success",
+      "elapsed_seconds": 50.87,
+      "error": null,
+      "metrics": {
+        "certificate_number": "25-3133/01MNF/EXP",
+        "chemical_count": 20,
+        "mechanical_count": 70,
+        "has_approval": true,
+        "unique_chem_heats": 20,
+        "unique_mech_heats": 20,
+        "has_document": true,
+        "has_traceability": true,
+        "has_product": true
+      },
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 12646,
+        "completion_tokens": 10959,
+        "total_tokens": 23605
+      }
+    },
+    "Meta-Llama-3.1-405B-Instruct": {
+      "status": "success",
+      "elapsed_seconds": 472.46,
+      "error": null,
+      "metrics": {
+        "certificate_number": "25-3133/01MNF/EXP",
+        "chemical_count": 20,
+        "mechanical_count": 79,
+        "has_approval": true,
+        "unique_chem_heats": 20,
+        "unique_mech_heats": 20,
+        "has_document": true,
+        "has_traceability": true,
+        "has_product": true
+      },
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 12853,
+        "completion_tokens": 12024,
+        "total_tokens": 24877
+      }
+    },
+    "Mistral-large-2407": {
+      "status": "error",
+      "elapsed_seconds": 0.26,
+      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: mistral-large-2407', 'details': 'Unknown model: mistral-large-2407'}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "Meta-Llama-3.1-70B-Instruct": {
+      "status": "error",
+      "elapsed_seconds": 0.01,
+      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: meta-llama-3.1-70b-instruct', 'details': 'Unknown model: meta-llama-3.1-70b-instruct'}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "Meta-Llama-3-70B-Instruct": {
+      "status": "error",
+      "elapsed_seconds": 0.01,
+      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: meta-llama-3-70b-instruct', 'details': 'Unknown model: meta-llama-3-70b-instruct'}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "Mistral-Nemo": {
+      "status": "error",
+      "elapsed_seconds": 0.01,
+      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: mistral-nemo', 'details': 'Unknown model: mistral-nemo'}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "Meta-Llama-3.1-8B-Instruct": {
+      "status": "success",
+      "elapsed_seconds": 60.8,
+      "error": null,
+      "metrics": {
+        "certificate_number": "25-3133/01MNF/EXP",
+        "chemical_count": 20,
+        "mechanical_count": 76,
+        "has_approval": true,
+        "unique_chem_heats": 20,
+        "unique_mech_heats": 20,
+        "has_document": true,
+        "has_traceability": true,
+        "has_product": true
+      },
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 12853,
+        "completion_tokens": 12349,
+        "total_tokens": 25202
+      }
+    },
+    "Meta-Llama-3-8B-Instruct": {
+      "status": "error",
+      "elapsed_seconds": 0.02,
+      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: meta-llama-3-8b-instruct', 'details': 'Unknown model: meta-llama-3-8b-instruct'}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "gpt-4o-mini": {
+      "status": "success",
+      "elapsed_seconds": 213.11,
+      "error": null,
+      "metrics": {
+        "certificate_number": "25-3133/01MNF/EXP",
+        "chemical_count": 20,
+        "mechanical_count": 79,
+        "has_approval": true,
+        "unique_chem_heats": 20,
+        "unique_mech_heats": 20,
+        "has_document": true,
+        "has_traceability": true,
+        "has_product": true
+      },
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 12646,
+        "completion_tokens": 11747,
+        "total_tokens": 24393
+      }
+    },
+    "AI21-Jamba-Instruct": {
+      "status": "error",
+      "elapsed_seconds": 0.01,
+      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: ai21-jamba-instruct', 'details': 'Unknown model: ai21-jamba-instruct'}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    }
+  }
+}
