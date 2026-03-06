@@ -2,6 +2,12 @@
 openai
 jsonschema
 
+# REST API
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+
 # OCR engines
 paddleocr
 pytesseract
