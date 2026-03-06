@@ -90,13 +90,15 @@ async def extract(
                 prompt_path=prompt_path,
             )
             pages = bench.run_ocr_fresh(pdf_path=tmp_path)
-            if two_pass:
-                result = bench.extract_two_pass(pages, model_id=model)
-            else:
-                result = bench.extract_with_validation(page_texts=pages, model_id=model)
-            tokens_used = result.pop("_tokens_used", 0)
-            validation_errors = result.pop("_validation_errors", [])
-            extracted = result
+            run = bench.run_model(
+                model_id=model,
+                page_texts=pages,
+                two_pass=two_pass,
+            )
+            if run["status"] == "error":
+                raise RuntimeError(run["error"])
+            tokens_used = (run.get("token_usage") or {}).get("total_tokens", 0)
+            extracted = run.get("result") or {}
 
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(
