@@ -1,9 +1,14 @@
 # Minimal dependencies required to run the test suite.
 # The smoke tests only import llm_models_extraction.py at module level,
 # which requires only openai and jsonschema at import time.
+# API tests need fastapi, httpx, pydantic, and python-multipart.
 # Heavy OCR/ML packages (paddleocr, docling, python-doctr, etc.) are
 # lazy-imported at runtime and must NOT be listed here — they cause
 # multi-minute install times in CI and are not needed for unit tests.
 
 openai
 jsonschema
+fastapi
+httpx
+pydantic
+python-multipart
