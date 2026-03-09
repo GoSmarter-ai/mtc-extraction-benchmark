@@ -1,0 +1,10 @@
+name: "CodeQL Config"
+
+# Exclude generated/vendored files from CodeQL analysis.
+# benchmark_report.html and report.html are Quarto-rendered outputs that
+# bundle third-party JS libraries (RequireJS 2.3.6, jQuery 3.5.1) with
+# known prototype-pollution patterns. These are not project source files.
+paths-ignore:
+  - "benchmark_report.html"
+  - "report.html"
+  - "report_files/**"

@@ -1488,11 +1488,11 @@ def main() -> int:
     # automatically on the next push once its secret is added to the repo.
     available_ids: List[str] = []
     for mid in model_ids:
-        key_env = ALL_MODELS_REGISTRY.get(mid, {}).get("api_key_env", "GITHUB_TOKEN")
-        if os.environ.get(key_env):
+        required_env = ALL_MODELS_REGISTRY.get(mid, {}).get("api_key_env", "GITHUB_TOKEN")
+        if os.environ.get(required_env):
             available_ids.append(mid)
         else:
-            print(f"   ⏭️  Auto-skipping {mid!r} — {key_env} not set")
+            print(f"   ⏭️  Auto-skipping {mid!r} — {required_env} not set")
     model_ids = available_ids
 
     if not model_ids:
