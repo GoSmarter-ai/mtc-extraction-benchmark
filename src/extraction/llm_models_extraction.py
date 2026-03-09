@@ -1190,7 +1190,7 @@ class LLMModelBenchmark:
                 safe_name = model_id.replace("/", "_").replace(".", "_")
                 cached_file = output_dir / f"{safe_name}_extracted.json"
                 if cached_file.exists():
-                    print(f"   ⏭️  Cached result found — skipping API call")
+                    print("   ⏭️  Cached result found — skipping API call")
                     cached_result = json.loads(cached_file.read_text())
                     run: Dict = {
                         "result": cached_result,
