@@ -1,0 +1,554 @@
+---
+title: "Multi-Model LLM Benchmark Report"
+subtitle: "MTC Structured Extraction — Visual Model Comparison"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    fig-width: 11
+    fig-height: 6
+    self-contained: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Overview
+
+This report compares all benchmarked language models on **Mill Test Certificate (MTC)
+structured extraction** accuracy.  Four models have confirmed results via GitHub Models;
+Qwen2.5 models are available via the HuggingFace Inference API.
+
+Models are scored against a human-annotated ground truth on five dimensions:
+
+| Dimension | Metric |
+|-----------|--------|
+| Document fields | Exact-match accuracy (5 fields) |
+| Chemical composition | Heat-number F1 + per-element accuracy |
+| Mechanical properties | Row F1 + per-property accuracy |
+| Approval | Exact-match accuracy |
+| **Overall** | Weighted mean of all component F1s |
+
+```{python}
+#| label: setup
+import json
+import sys
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+import pandas as pd
+from IPython.display import display
+
+ROOT = Path.cwd()
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from src.evaluation.evaluator import MTCEvaluator  # noqa: E402
+
+# ── Paths ──────────────────────────────────────────────────────────────────
+BENCHMARK_DIR = ROOT / "data" / "processed" / "benchmark_output"
+GT_PATH = ROOT / "data" / "ground_truth" / "diler-07-07-2025-rerun-41-44_gt.json"
+
+# ── Approximate public API cost per 1K tokens (USD) ───────────────────────
+# GitHub Models free tier and HuggingFace serverless are both $0 in Codespaces;
+# values below reflect public pricing if you were charged.
+COST_PER_1K: dict = {
+    "gpt-4o":                       {"prompt": 0.0025,  "completion": 0.010},
+    "gpt-4o-mini":                  {"prompt": 0.00015, "completion": 0.0006},
+    "Meta-Llama-3.1-405B-Instruct": {"prompt": 0.0,     "completion": 0.0},
+    "Meta-Llama-3.1-8B-Instruct":   {"prompt": 0.0,     "completion": 0.0},
+    "Qwen/Qwen2.5-72B-Instruct":    {"prompt": 0.0,     "completion": 0.0},
+    "Qwen/Qwen2.5-7B-Instruct":     {"prompt": 0.0,     "completion": 0.0},
+}
+
+# ── Load benchmark summary ─────────────────────────────────────────────────
+_summary_path = BENCHMARK_DIR / "benchmark_summary.json"
+if not _summary_path.exists():
+    print("⚠️  benchmark_summary.json not found — run the benchmark first.")
+    _summary: dict = {"results": {}}
+else:
+    _summary = json.loads(_summary_path.read_text())
+
+# ── Load ground truth ──────────────────────────────────────────────────────
+_ground_truth: dict | None = None
+if GT_PATH.exists():
+    _ground_truth = json.loads(GT_PATH.read_text())
+else:
+    print("⚠️  Ground truth not found at", GT_PATH, "— scores will be unavailable.")
+
+print(f"Summary has {len(_summary['results'])} model entries.")
+print(f"Ground truth loaded: {_ground_truth is not None}")
+```
+
+```{python}
+#| label: build-scores
+#| cache: false
+
+def _safe_name(model_id: str) -> str:
+    """Replicate the save-path transform used by the benchmark runner."""
+    return model_id.replace("/", "_").replace(".", "_")
+
+
+rows = []
+failed_rows = []
+
+for model_id, result in _summary["results"].items():
+    if result.get("status") != "success":
+        failed_rows.append({
+            "model_id":       model_id,
+            "elapsed_s":      result.get("elapsed_seconds", 0),
+            "error":          (result.get("error") or "")[:120],
+        })
+        continue
+
+    # ── Try to load the saved extraction JSON ───────────────────────────
+    extracted: dict | None = None
+    for candidate in [
+        BENCHMARK_DIR / f"{_safe_name(model_id)}_extracted.json",
+        BENCHMARK_DIR / f"{model_id.replace('/', '_')}_extracted.json",
+    ]:
+        if candidate.exists():
+            try:
+                extracted = json.loads(candidate.read_text())
+            except Exception:
+                pass
+            break
+
+    # ── Get or compute evaluation scores ────────────────────────────────
+    field_metrics = result.get("field_metrics") or {}
+
+    # Re-evaluate if field_metrics is missing / empty / legacy-flat format
+    if extracted and _ground_truth:
+        if not field_metrics or "document" not in field_metrics:
+            try:
+                field_metrics = MTCEvaluator.evaluate(extracted, _ground_truth)
+            except Exception as exc:
+                print(f"⚠️  MTCEvaluator failed for {model_id}: {exc}")
+                field_metrics = {}
+
+    # ── Unpack scores (handle nested MTCEvaluator dict) ──────────────────
+    if "document" in field_metrics:
+        doc_acc   = field_metrics["document"].get("document_accuracy")
+        chem_f1   = field_metrics["chemical"].get("heat_f1")
+        elem_acc  = field_metrics["chemical"].get("element_accuracy")
+        mech_f1   = field_metrics["mechanical"].get("mech_f1")
+        mech_prop = field_metrics["mechanical"].get("mech_property_accuracy")
+        appr_acc  = field_metrics["approval"].get("approval_accuracy")
+        overall   = field_metrics.get("overall_f1")
+        doc_fields = field_metrics["document"].get("document_fields", {})
+        elem_detail = field_metrics["chemical"].get("element_detail", {})
+    else:
+        # Legacy flat dict from compute_field_f1
+        doc_acc   = field_metrics.get("document_accuracy")
+        chem_f1   = field_metrics.get("heat_f1")
+        elem_acc  = field_metrics.get("element_accuracy")
+        mech_f1   = field_metrics.get("mech_f1")
+        mech_prop = field_metrics.get("mech_property_accuracy")
+        appr_acc  = None
+        overall   = field_metrics.get("overall_f1")
+        doc_fields = field_metrics.get("document_fields", {})
+        elem_detail = field_metrics.get("element_detail", {})
+
+    # ── Token usage & cost ────────────────────────────────────────────────
+    tok = result.get("token_usage", {})
+    p_tok = tok.get("prompt_tokens", 0) or 0
+    c_tok = tok.get("completion_tokens", 0) or 0
+    t_tok = tok.get("total_tokens", 0) or 0
+    costs = COST_PER_1K.get(model_id, {"prompt": 0.0, "completion": 0.0})
+    est_cost = round(p_tok / 1000 * costs["prompt"] + c_tok / 1000 * costs["completion"], 4)
+
+    # short display label
+    label = model_id.split("/")[-1]
+
+    rows.append({
+        "model_id":          model_id,
+        "label":             label,
+        "elapsed_s":         result.get("elapsed_seconds", 0),
+        "prompt_tokens":     p_tok,
+        "completion_tokens": c_tok,
+        "total_tokens":      t_tok,
+        "est_cost_usd":      est_cost,
+        "doc_accuracy":      doc_acc,
+        "chem_f1":           chem_f1,
+        "elem_accuracy":     elem_acc,
+        "mech_f1":           mech_f1,
+        "mech_prop_acc":     mech_prop,
+        "approval_acc":      appr_acc,
+        "overall_f1":        overall,
+        "_doc_fields":       doc_fields,
+        "_elem_detail":      elem_detail,
+    })
+
+df = pd.DataFrame(rows)
+df_failed = pd.DataFrame(failed_rows)
+
+# Chart-safe copy (NaN → 0)
+SCORE_COLS = [
+    "doc_accuracy", "chem_f1", "elem_accuracy",
+    "mech_f1", "mech_prop_acc", "approval_acc", "overall_f1",
+]
+df_c = df.copy()
+for col in SCORE_COLS:
+    df_c[col] = pd.to_numeric(df_c[col], errors="coerce").fillna(0)
+
+# Consistent per-model colours
+_PALETTE = [
+    "#4C72B0", "#DD8452", "#55A868", "#C44E52",
+    "#8172B3", "#937860", "#DA8BC3", "#8C8C8C",
+]
+MODEL_COLORS = {row["model_id"]: _PALETTE[i % len(_PALETTE)]
+               for i, row in enumerate(rows)}
+
+print(f"Successful models: {len(df)}")
+print(f"Failed models:     {len(df_failed)}")
+```
+
+# Model Registry
+
+```{python}
+#| label: registry-table
+registry_cols = ["label", "elapsed_s", "total_tokens", "est_cost_usd",
+                 "doc_accuracy", "chem_f1", "mech_f1", "overall_f1"]
+
+display_df = df[registry_cols].copy()
+display_df.columns = [
+    "Model", "Latency (s)", "Total Tokens", "Est. Cost ($)",
+    "Doc Acc", "Chem F1", "Mech F1", "Overall F1",
+]
+for col in ["Doc Acc", "Chem F1", "Mech F1", "Overall F1"]:
+    display_df[col] = display_df[col].apply(
+        lambda v: f"{v:.1%}" if pd.notna(v) else "—"
+    )
+display_df["Latency (s)"] = display_df["Latency (s)"].apply(lambda v: f"{v:.1f}s")
+
+display(display_df.style
+        .set_caption("Successful models — benchmark summary")
+        .hide(axis="index"))
+```
+
+# Grouped Bar Chart — Quality per Section
+
+Each cluster of bars represents one model; bar colour encodes the metric dimension.
+
+```{python}
+#| label: grouped-bar
+#| fig-cap: "Section-level accuracy / F1 grouped by model."
+
+if df_c.empty:
+    print("No successful model results to plot.")
+else:
+    metrics   = ["doc_accuracy", "chem_f1", "elem_accuracy",
+                 "mech_f1", "mech_prop_acc", "approval_acc"]
+    m_labels  = ["Doc Acc", "Chem F1", "Elem Acc",
+                 "Mech F1", "Mech Prop", "Approval"]
+    m_colors  = ["#4C72B0", "#55A868", "#8FBC8F",
+                 "#DD8452", "#E8A87C", "#C44E52"]
+
+    n_models  = len(df_c)
+    n_metrics = len(metrics)
+    bar_w     = 0.12
+    gap       = 0.25
+    group_w   = n_metrics * bar_w
+
+    fig, ax = plt.subplots(figsize=(max(10, n_models * 2.2), 5.5))
+    x_centers = np.arange(n_models) * (group_w + gap)
+
+    for mi, (col, lbl, clr) in enumerate(zip(metrics, m_labels, m_colors)):
+        offsets = x_centers + mi * bar_w - group_w / 2
+        vals    = df_c[col].tolist()
+        ax.bar(offsets, vals, bar_w, label=lbl, color=clr, alpha=0.88, edgecolor="white")
+
+    ax.set_xticks(x_centers)
+    ax.set_xticklabels(df_c["label"].tolist(), fontsize=10)
+    ax.set_ylim(0, 1.05)
+    ax.set_ylabel("Score (0 – 1)", fontsize=11)
+    ax.set_title("Extraction Quality by Section and Model", fontsize=13, fontweight="bold")
+    ax.legend(loc="upper right", fontsize=9, ncol=3)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.0%}"))
+    ax.grid(axis="y", alpha=0.3, linestyle="--")
+    ax.spines[["top", "right"]].set_visible(False)
+    plt.tight_layout()
+    plt.show()
+```
+
+# Radar / Spider Chart — Overall Quality Profile
+
+Each polygon represents one model across five quality axes.
+
+```{python}
+#| label: radar-chart
+#| fig-cap: "Overall quality radar chart — one polygon per model."
+
+if df_c.empty:
+    print("No successful model results to plot.")
+else:
+    radar_cols   = ["doc_accuracy", "chem_f1", "mech_f1", "mech_prop_acc", "approval_acc"]
+    radar_labels = ["Document\nAccuracy", "Chemical\nF1", "Mechanical\nF1",
+                    "Mech\nProperty", "Approval\nAccuracy"]
+    N = len(radar_cols)
+    angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
+    angles += angles[:1]  # close polygon
+
+    fig, ax = plt.subplots(figsize=(7, 7), subplot_kw={"polar": True})
+    ax.set_facecolor("#f8f9fa")
+    fig.patch.set_facecolor("white")
+
+    # Grid rings
+    for level in [0.25, 0.5, 0.75, 1.0]:
+        ax.plot(angles, [level] * (N + 1), color="grey", linewidth=0.5, linestyle="--", alpha=0.5)
+        ax.text(angles[0], level + 0.03, f"{level:.0%}", ha="center", fontsize=7, color="grey")
+
+    for _, row in df_c.iterrows():
+        vals = [row[c] for c in radar_cols]
+        vals += vals[:1]
+        clr  = MODEL_COLORS[row["model_id"]]
+        ax.plot(angles, vals, linewidth=2, color=clr, label=row["label"])
+        ax.fill(angles, vals, alpha=0.12, color=clr)
+
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(radar_labels, fontsize=10)
+    ax.set_ylim(0, 1.0)
+    ax.set_yticks([])
+    ax.spines["polar"].set_visible(False)
+    ax.set_title("Quality Radar — All Models", fontsize=13, fontweight="bold", pad=20)
+    ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.1), fontsize=9)
+    plt.tight_layout()
+    plt.show()
+```
+
+# Latency vs Quality Scatter
+
+Bubble size = total token usage.  Models in the upper-left corner offer the best
+quality-per-second trade-off.
+
+```{python}
+#| label: latency-scatter
+#| fig-cap: "Latency vs overall F1 — bubble area proportional to total tokens used."
+
+if df_c.empty:
+    print("No successful model results to plot.")
+else:
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+
+    tok_vals = df_c["total_tokens"].fillna(0).values
+    # Normalise bubble size: 200–2000 pt²
+    if tok_vals.max() > 0:
+        sizes = 200 + 1800 * (tok_vals / tok_vals.max())
+    else:
+        sizes = np.full(len(tok_vals), 400)
+
+    for _, row in df_c.iterrows():
+        clr = MODEL_COLORS[row["model_id"]]
+        ax.scatter(
+            row["elapsed_s"], row["overall_f1"],
+            s=sizes[df_c.index.get_loc(_)],
+            color=clr, alpha=0.8, edgecolors="white", linewidth=1.5, zorder=3,
+        )
+        ax.annotate(
+            row["label"],
+            xy=(row["elapsed_s"], row["overall_f1"]),
+            xytext=(6, 4), textcoords="offset points",
+            fontsize=9, color=clr, fontweight="bold",
+        )
+
+    ax.set_xlabel("Elapsed time (seconds)", fontsize=11)
+    ax.set_ylabel("Overall F1", fontsize=11)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.0%}"))
+    ax.set_title("Latency vs Quality  (bubble ∝ total tokens)", fontsize=13, fontweight="bold")
+    ax.grid(alpha=0.3, linestyle="--")
+    ax.spines[["top", "right"]].set_visible(False)
+    plt.tight_layout()
+    plt.show()
+```
+
+# Token Usage & Estimated Cost
+
+Stacked bars show prompt (left) and completion (right) token usage.
+Estimated costs use public API pricing — GitHub Models and HuggingFace serverless
+inference are **free** in Codespaces / on free tier (shown as $0.00).
+
+```{python}
+#| label: token-cost
+#| fig-cap: "Token usage (stacked) and estimated API cost per model."
+
+if df_c.empty:
+    print("No successful model results to plot.")
+else:
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
+
+    labels   = df_c["label"].tolist()
+    x        = np.arange(len(labels))
+    bar_w    = 0.5
+
+    p_toks = df_c["prompt_tokens"].tolist()
+    c_toks = df_c["completion_tokens"].tolist()
+    colors_list = [MODEL_COLORS[mid] for mid in df_c["model_id"]]
+
+    # ── Left: token stacked bar ──────────────────────────────────────────
+    bars_p = ax1.bar(x, p_toks, bar_w, label="Prompt tokens",     color=colors_list, alpha=0.85)
+    bars_c = ax1.bar(x, c_toks, bar_w, bottom=p_toks,             label="Completion tokens",
+                     color=colors_list, alpha=0.45, hatch="//")
+
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(labels, rotation=15, ha="right", fontsize=9)
+    ax1.set_ylabel("Tokens", fontsize=10)
+    ax1.set_title("Token Breakdown per Model", fontsize=12, fontweight="bold")
+    ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y/1000:.0f}K"))
+    ax1.grid(axis="y", alpha=0.3, linestyle="--")
+    ax1.spines[["top", "right"]].set_visible(False)
+    # Legend proxies
+    solid_patch = mpatches.Patch(color="grey", alpha=0.85, label="Prompt tokens")
+    hatch_patch = mpatches.Patch(color="grey", alpha=0.45, hatch="//", label="Completion tokens")
+    ax1.legend(handles=[solid_patch, hatch_patch], fontsize=9)
+
+    # ── Right: estimated cost bar ────────────────────────────────────────
+    costs = df_c["est_cost_usd"].tolist()
+    bars_cost = ax2.bar(x, costs, bar_w, color=colors_list, alpha=0.85, edgecolor="white")
+
+    for bar, v in zip(bars_cost, costs):
+        label_str = f"${v:.4f}" if v > 0 else "free"
+        ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.0001,
+                 label_str, ha="center", va="bottom", fontsize=8)
+
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(labels, rotation=15, ha="right", fontsize=9)
+    ax2.set_ylabel("Estimated cost (USD)", fontsize=10)
+    ax2.set_title("Estimated API Cost per Run", fontsize=12, fontweight="bold")
+    ax2.grid(axis="y", alpha=0.3, linestyle="--")
+    ax2.spines[["top", "right"]].set_visible(False)
+
+    plt.suptitle("Token Usage & Estimated Cost", fontsize=13, fontweight="bold", y=1.01)
+    plt.tight_layout()
+    plt.show()
+```
+
+# Per-Field Accuracy Heatmap
+
+Rows = models; columns = individual metrics.  Colour intensity shows accuracy (0 = red, 1 = green).
+
+```{python}
+#| label: heatmap
+#| fig-cap: "Per-section accuracy heatmap — each cell is one metric for one model."
+
+if df_c.empty:
+    print("No successful model results to plot.")
+else:
+    heat_cols   = ["doc_accuracy", "chem_f1", "elem_accuracy",
+                   "mech_f1", "mech_prop_acc", "approval_acc", "overall_f1"]
+    heat_labels = ["Doc\nAccuracy", "Chem\nF1", "Elem\nAccuracy",
+                   "Mech\nF1", "Mech\nProp", "Approval\nAcc", "Overall\nF1"]
+
+    matrix = df_c[heat_cols].values.astype(float)
+    model_names = df_c["label"].tolist()
+
+    fig, ax = plt.subplots(figsize=(11, max(3, len(model_names) * 0.8 + 1.2)))
+    im = ax.imshow(matrix, aspect="auto", vmin=0, vmax=1, cmap="RdYlGn")
+
+    ax.set_xticks(range(len(heat_labels)))
+    ax.set_xticklabels(heat_labels, fontsize=10)
+    ax.set_yticks(range(len(model_names)))
+    ax.set_yticklabels(model_names, fontsize=10)
+    ax.set_title("Per-Field Accuracy Heatmap — Model × Metric", fontsize=13, fontweight="bold")
+
+    # Annotate cells
+    for i in range(len(model_names)):
+        for j in range(len(heat_cols)):
+            val = matrix[i, j]
+            txt = f"{val:.0%}" if not np.isnan(val) else "—"
+            text_color = "white" if val < 0.4 or val > 0.80 else "black"
+            ax.text(j, i, txt, ha="center", va="center", fontsize=9,
+                    fontweight="bold", color=text_color)
+
+    cbar = plt.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
+    cbar.set_label("Score", fontsize=10)
+    cbar.ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.0%}"))
+
+    plt.tight_layout()
+    plt.show()
+```
+
+## Document Field Detail
+
+Per-field exact-match results for each successful model.
+
+```{python}
+#| label: doc-field-detail
+from src.evaluation.evaluator import MTCEvaluator as _MTCEval
+
+DOC_FIELDS = _MTCEval.DOCUMENT_FIELDS
+
+detail_rows = []
+for _, row in df.iterrows():
+    df_fields = row["_doc_fields"] or {}
+    for field in DOC_FIELDS:
+        val = df_fields.get(field)
+        detail_rows.append({
+            "Model":  row["label"],
+            "Field":  field,
+            "Match":  "✓" if val is True else ("✗" if val is False else "—"),
+        })
+
+detail_df = pd.DataFrame(detail_rows).pivot(index="Model", columns="Field", values="Match")
+display(detail_df.style
+        .set_caption("Document field exact-match per model (✓ = correct, ✗ = wrong, — = unevaluated)")
+        .applymap(lambda v: "color: green; font-weight: bold" if v == "✓"
+                  else ("color: red" if v == "✗" else ""), subset=detail_df.columns))
+```
+
+# Error / Failure Breakdown
+
+Models that failed during the benchmark run (endpoint unavailable, unknown model ID, etc.).
+
+```{python}
+#| label: failure-table
+if df_failed.empty:
+    print("No failures recorded.")
+else:
+    display(df_failed.rename(columns={
+        "model_id": "Model ID",
+        "elapsed_s": "Elapsed (s)",
+        "error": "Error Message",
+    }).style
+    .set_caption(f"{len(df_failed)} model(s) failed")
+    .hide(axis="index"))
+```
+
+# How to Add New Models
+
+## HuggingFace Models (Qwen2.5, etc.)
+
+1. **Get a HuggingFace token:** <https://huggingface.co/settings/tokens> (free account,
+   read access is sufficient for serverless inference).
+2. **Set the env var:** `export HF_TOKEN=hf_...` or add it as a Codespace secret.
+3. **Run** with the HF provider flag:
+
+```bash
+# Qwen2.5-72B only, with ground-truth evaluation, 1 s sleep between pages
+python src/extraction/llm_models_extraction.py \
+    --use-cached-ocr \
+    --models "Qwen/Qwen2.5-72B-Instruct" \
+    --ground-truth data/ground_truth/diler-07-07-2025-rerun-41-44_gt.json \
+    --rate-limit-sleep 1.0
+```
+
+4. **Render this report** after the run to see the new model appear in every chart:
+
+```bash
+quarto render benchmark_report.qmd
+```
+
+## GitHub Models (new model IDs)
+
+Add an entry to `RANKED_MODELS` in
+`src/extraction/llm_models_extraction.py` with the correct `id`, `label`,
+`provider`, `tier`, `base_url` (`https://models.inference.ai.azure.com`), and
+`api_key_env` (`GITHUB_TOKEN`).  Then run as normal.
+
+---
+
+*Report generated with [Quarto](https://quarto.org). Evaluation logic: `src/evaluation/evaluator.py`.*

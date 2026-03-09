@@ -82,6 +82,7 @@ jobs:
         with:
           python-version: "3.11"
 
+      # ── Cache 1: pip packages ─────────────────────────────────────────
       - name: Cache pip (benchmark)
         uses: actions/cache@v4
         with:
@@ -89,9 +90,31 @@ jobs:
           key: benchmark-${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: benchmark-${{ runner.os }}-pip-
 
+      # ── Cache 2: Python bytecode (__pycache__) ────────────────────────
+      - name: Cache Python bytecode
+        uses: actions/cache@v4
+        with:
+          path: |
+            src/**/__pycache__
+            .pytest_cache
+          key: pycache-${{ runner.os }}-py311-${{ hashFiles('src/**/*.py') }}
+          restore-keys: pycache-${{ runner.os }}-py311-
+
+      # ── Cache 3: previous benchmark outputs ──────────────────────────
+      # Key covers OCR text + prompt + schema: any change to inputs
+      # invalidates the cache and forces a fresh run.
+      # New models with no cached JSON run normally; already-extracted
+      # models are loaded from disk via --skip-existing.
+      - name: Restore benchmark output cache
+        uses: actions/cache@v4
+        with:
+          path: data/processed/benchmark_output
+          key: bench-out-${{ runner.os }}-${{ hashFiles('data/processed/pipeline_output/text/**', 'prompts/**', 'schema/**') }}
+          restore-keys: bench-out-${{ runner.os }}-
+
       - name: Install system dependencies
         run: |
-          sudo apt-get update
+          sudo apt-get update -qq
           sudo apt-get install -y poppler-utils tesseract-ocr
 
       - name: Install Python dependencies
@@ -99,22 +122,41 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run benchmark (confirmed working models)
+      # ── Run benchmark ─────────────────────────────────────────────────
+      # No --models flag: the script reads ALL_MODELS and auto-skips any
+      # model whose API key env var is missing (no secret = no run).
+      # --skip-existing: models with a cached JSON file in benchmark_output/
+      # are loaded from disk — no API call made, scores re-computed vs GT.
+      # To add a new model: add it to ALL_MODELS / HF_MODELS in
+      # llm_models_extraction.py and add the matching repo secret.
+      - name: Run benchmark (all available models)
         run: |
           python src/extraction/llm_models_extraction.py \
             --use-cached-ocr \
-            --models gpt-4o Meta-Llama-3.1-405B-Instruct Meta-Llama-3.1-8B-Instruct gpt-4o-mini \
+            --skip-existing \
+            --ground-truth data/ground_truth/diler-07-07-2025-rerun-41-44_gt.json \
             --output data/processed/benchmark_output
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        timeout-minutes: 20
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        timeout-minutes: 45
 
-      - name: Upload benchmark results
+      # ── Render Quarto benchmark report ───────────────────────────────
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render benchmark report
+        run: quarto render benchmark_report.qmd
+        continue-on-error: true
+
+      - name: Upload benchmark results + report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: benchmark-results-${{ github.sha }}
-          path: data/processed/benchmark_output/
+          path: |
+            data/processed/benchmark_output/
+            benchmark_report.html
           retention-days: 90
           if-no-files-found: warn
 

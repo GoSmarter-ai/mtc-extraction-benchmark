@@ -47,6 +47,7 @@ import argparse
 import json
 import os
 import re
+import sys
 import time
 from collections import Counter
 from datetime import datetime
@@ -61,35 +62,80 @@ from openai import OpenAI
 # ---------------------------------------------------------------------------
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
+# Ensure internal packages (src.evaluation, etc.) are importable when this
+# script is invoked directly from any working directory.
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from src.evaluation.evaluator import MTCEvaluator  # noqa: E402
+
 # ---------------------------------------------------------------------------
-# Available models on GitHub Models – ordered best → last
+# GitHub Models – ordered best → last
 # ---------------------------------------------------------------------------
+_GH_BASE = "https://models.inference.ai.azure.com"
 RANKED_MODELS: List[Dict[str, str]] = [
     {
         "id": "gpt-4o",
         "label": "GPT-4o",
         "provider": "OpenAI",
         "tier": "top",
+        "base_url": _GH_BASE,
+        "api_key_env": "GITHUB_TOKEN",
     },
     {
         "id": "Meta-Llama-3.1-405B-Instruct",
         "label": "Llama 3.1 405B",
         "provider": "Meta",
         "tier": "top",
+        "base_url": _GH_BASE,
+        "api_key_env": "GITHUB_TOKEN",
     },
     {
         "id": "Meta-Llama-3.1-8B-Instruct",
         "label": "Llama 3.1 8B",
         "provider": "Meta",
         "tier": "small",
+        "base_url": _GH_BASE,
+        "api_key_env": "GITHUB_TOKEN",
     },
     {
         "id": "gpt-4o-mini",
         "label": "GPT-4o Mini",
         "provider": "OpenAI",
         "tier": "small",
+        "base_url": _GH_BASE,
+        "api_key_env": "GITHUB_TOKEN",
     },
 ]
+
+# ---------------------------------------------------------------------------
+# HuggingFace Inference API models (OpenAI-compatible endpoint)
+# Requires HF_TOKEN environment variable.
+# ---------------------------------------------------------------------------
+_HF_BASE = "https://api-inference.huggingface.co/v1"
+HF_MODELS: List[Dict[str, str]] = [
+    {
+        "id": "Qwen/Qwen2.5-72B-Instruct",
+        "label": "Qwen2.5 72B",
+        "provider": "Qwen/Alibaba",
+        "tier": "top",
+        "base_url": _HF_BASE,
+        "api_key_env": "HF_TOKEN",
+    },
+    {
+        "id": "Qwen/Qwen2.5-7B-Instruct",
+        "label": "Qwen2.5 7B",
+        "provider": "Qwen/Alibaba",
+        "tier": "small",
+        "base_url": _HF_BASE,
+        "api_key_env": "HF_TOKEN",
+    },
+]
+
+# Combined list used when --models is not specified
+ALL_MODELS: List[Dict[str, str]] = RANKED_MODELS + HF_MODELS
+# Fast lookup by model id
+ALL_MODELS_REGISTRY: Dict[str, dict] = {m["id"]: m for m in ALL_MODELS}
 
 
 # ---------------------------------------------------------------------------
@@ -103,17 +149,42 @@ class LLMModelBenchmark:
         schema_path: Path,
         prompt_path: Path,
         max_tokens: int = 16384,
+        rate_limit_sleep: float = 0.0,
     ):
         self.schema = json.loads(schema_path.read_text())
         self.system_prompt = prompt_path.read_text()
         self.max_tokens = max_tokens
+        self.rate_limit_sleep = rate_limit_sleep
 
-        # Single client – all models share the same endpoint
-        self.client = OpenAI(
-            base_url="https://models.inference.ai.azure.com",
-            api_key=os.environ["GITHUB_TOKEN"],
-        )
-        print("✅ LLM client initialised (models.inference.ai.azure.com)\n")
+        # Per-provider client cache (keyed by api_key_env name)
+        self._client_cache: Dict[str, OpenAI] = {}
+        # Model-id → model config dict
+        self._model_registry: Dict[str, dict] = dict(ALL_MODELS_REGISTRY)
+        print(f"✅ LLM benchmark initialised — {len(ALL_MODELS)} models registered\n")
+
+    # ------------------------------------------------------------------
+    # Provider-aware client factory
+    # ------------------------------------------------------------------
+    def _make_client(self, model_id: str) -> OpenAI:
+        """Return an OpenAI-compatible client for the given model's provider.
+
+        Clients are cached by (base_url, api_key_env) so the same instance is
+        reused across multiple calls to the same provider.
+        """
+        cfg = self._model_registry.get(model_id, {})
+        base_url = cfg.get("base_url", "https://models.inference.ai.azure.com")
+        api_key_env = cfg.get("api_key_env", "GITHUB_TOKEN")
+
+        cache_key = f"{base_url}::{api_key_env}"
+        if cache_key not in self._client_cache:
+            api_key = os.environ.get(api_key_env, "")
+            if not api_key:
+                raise EnvironmentError(
+                    f"{api_key_env} is not set. "
+                    f"Required for model '{model_id}' ({base_url})."
+                )
+            self._client_cache[cache_key] = OpenAI(base_url=base_url, api_key=api_key)
+        return self._client_cache[cache_key]
 
     # ------------------------------------------------------------------
     # OCR text helpers
@@ -138,7 +209,9 @@ class LLMModelBenchmark:
         return pages
 
     @staticmethod
-    def run_ocr_fresh(pdf_path: Path, dpi: int = 200, max_width: int = 2000) -> List[str]:
+    def run_ocr_fresh(
+        pdf_path: Path, dpi: int = 200, max_width: int = 2000
+    ) -> List[str]:
         """Run PaddleOCR on a PDF and return page texts (imports heavy deps lazily)."""
         import gc
 
@@ -159,7 +232,9 @@ class LLMModelBenchmark:
             print(f"   OCR page {page_num} …")
             if pil_img.width > max_width:
                 ratio = max_width / pil_img.width
-                pil_img = pil_img.resize((max_width, int(pil_img.height * ratio)), PILImage.LANCZOS)
+                pil_img = pil_img.resize(
+                    (max_width, int(pil_img.height * ratio)), PILImage.LANCZOS
+                )
             arr = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
             results = list(ocr_engine.predict(arr))
 
@@ -226,7 +301,7 @@ class LLMModelBenchmark:
             f'OCR TEXT{page_info}:\n"""\n{ocr_text}\n"""'
         )
 
-        response = self.client.chat.completions.create(
+        response = self._make_client(model_id).chat.completions.create(
             model=model_id,
             temperature=temperature,
             max_tokens=self.max_tokens,
@@ -235,6 +310,8 @@ class LLMModelBenchmark:
                 {"role": "user", "content": user_prompt},
             ],
         )
+        if self.rate_limit_sleep > 0:
+            time.sleep(self.rate_limit_sleep)
 
         raw = response.choices[0].message.content.strip()
 
@@ -246,7 +323,9 @@ class LLMModelBenchmark:
         }
         if hasattr(response, "usage") and response.usage is not None:
             usage["prompt_tokens"] = getattr(response.usage, "prompt_tokens", 0) or 0
-            usage["completion_tokens"] = getattr(response.usage, "completion_tokens", 0) or 0
+            usage["completion_tokens"] = (
+                getattr(response.usage, "completion_tokens", 0) or 0
+            )
             usage["total_tokens"] = getattr(response.usage, "total_tokens", 0) or 0
 
         # Strip markdown fences
@@ -305,7 +384,9 @@ class LLMModelBenchmark:
             except jsonschema.ValidationError as exc:
                 last_error = exc
                 short_msg = str(exc.message)[:120]
-                print(f"      ⚠️  Attempt {attempt}/{max_retries} – schema violation: {short_msg}")
+                print(
+                    f"      ⚠️  Attempt {attempt}/{max_retries} – schema violation: {short_msg}"
+                )
 
         # All retries exhausted — raise the last error
         raise last_error  # type: ignore[misc]
@@ -433,7 +514,9 @@ class LLMModelBenchmark:
                                 elem_keys.update(v.keys())
                         voted_sub: dict = {}
                         for ek in elem_keys:
-                            ek_vals = [v.get(ek) for v in sub_values if isinstance(v, dict)]
+                            ek_vals = [
+                                v.get(ek) for v in sub_values if isinstance(v, dict)
+                            ]
                             voted_sub[ek] = _vote_scalar(ek_vals)
                         voted_item[ik] = voted_sub
                     else:
@@ -456,7 +539,9 @@ class LLMModelBenchmark:
 
         merged = results[0].copy()
 
-        seen_heats = {item["heat_number"] for item in merged.get("chemical_composition", [])}
+        seen_heats = {
+            item["heat_number"] for item in merged.get("chemical_composition", [])
+        }
         for r in results[1:]:
             for chem in r.get("chemical_composition", []):
                 if chem["heat_number"] not in seen_heats:
@@ -504,7 +589,11 @@ class LLMModelBenchmark:
                 if isinstance(obj, dict):
                     for k, v in obj.items():
                         # Keep first non-null / non-empty value
-                        if k not in combined or combined[k] is None or combined[k] == "":
+                        if (
+                            k not in combined
+                            or combined[k] is None
+                            or combined[k] == ""
+                        ):
                             combined[k] = v
             if combined:
                 merged[section] = combined
@@ -575,7 +664,9 @@ class LLMModelBenchmark:
                     model_id, clean_text, page_info=page_info
                 )
             else:
-                result, usage = self.extract_with_model(model_id, clean_text, page_info=page_info)
+                result, usage = self.extract_with_model(
+                    model_id, clean_text, page_info=page_info
+                )
 
             for k in cumulative_usage:
                 cumulative_usage[k] += usage.get(k, 0)
@@ -605,7 +696,7 @@ class LLMModelBenchmark:
         )
 
         try:
-            response = self.client.chat.completions.create(
+            response = self._make_client(model_id).chat.completions.create(
                 model=model_id,
                 temperature=0,
                 max_tokens=self.max_tokens,
@@ -624,7 +715,9 @@ class LLMModelBenchmark:
                 cumulative_usage["completion_tokens"] += (
                     getattr(response.usage, "completion_tokens", 0) or 0
                 )
-                cumulative_usage["total_tokens"] += getattr(response.usage, "total_tokens", 0) or 0
+                cumulative_usage["total_tokens"] += (
+                    getattr(response.usage, "total_tokens", 0) or 0
+                )
 
             # Strip markdown fences
             if "```json" in raw:
@@ -708,7 +801,9 @@ class LLMModelBenchmark:
                         continue
                     clean_text, low_conf = self.parse_ocr_with_confidence(text)
                     if low_conf:
-                        print(f"      ⚠️  Page {i}: {len(low_conf)} low-confidence OCR tokens")
+                        print(
+                            f"      ⚠️  Page {i}: {len(low_conf)} low-confidence OCR tokens"
+                        )
 
                     result, usage = self.extract_with_validation(
                         model_id,
@@ -844,7 +939,11 @@ class LLMModelBenchmark:
             ex_val = ex_doc.get(field)
             if gt_val is not None:
                 doc_total += 1
-                match = str(gt_val).strip() == str(ex_val).strip() if ex_val is not None else False
+                match = (
+                    str(gt_val).strip() == str(ex_val).strip()
+                    if ex_val is not None
+                    else False
+                )
                 if match:
                     doc_correct += 1
                 doc_detail[field] = match
@@ -852,8 +951,12 @@ class LLMModelBenchmark:
         scores["document_fields"] = doc_detail
 
         # ---------- Chemical composition ----------
-        gt_chem = {c["heat_number"]: c for c in ground_truth.get("chemical_composition", [])}
-        ex_chem = {c["heat_number"]: c for c in extracted.get("chemical_composition", [])}
+        gt_chem = {
+            c["heat_number"]: c for c in ground_truth.get("chemical_composition", [])
+        }
+        ex_chem = {
+            c["heat_number"]: c for c in extracted.get("chemical_composition", [])
+        }
 
         chem_tp = len(set(ex_chem) & set(gt_chem))
         chem_fp = len(set(ex_chem) - set(gt_chem))
@@ -904,7 +1007,9 @@ class LLMModelBenchmark:
         def _mech_key(m: dict) -> Tuple:
             return (m.get("heat_number", ""), m.get("test_sample"))
 
-        gt_mech = {_mech_key(m): m for m in ground_truth.get("mechanical_properties", [])}
+        gt_mech = {
+            _mech_key(m): m for m in ground_truth.get("mechanical_properties", [])
+        }
         ex_mech = {_mech_key(m): m for m in extracted.get("mechanical_properties", [])}
 
         mech_tp = len(set(ex_mech) & set(gt_mech))
@@ -977,7 +1082,9 @@ class LLMModelBenchmark:
         """Compute quick quality metrics for an extraction result."""
         m: Dict = {}
 
-        m["certificate_number"] = extracted.get("document", {}).get("certificate_number", "N/A")
+        m["certificate_number"] = extracted.get("document", {}).get(
+            "certificate_number", "N/A"
+        )
         m["chemical_count"] = len(extracted.get("chemical_composition", []))
         m["mechanical_count"] = len(extracted.get("mechanical_properties", []))
         m["has_approval"] = bool(
@@ -1034,6 +1141,7 @@ class LLMModelBenchmark:
         consistency_samples: int = 0,
         ensemble: bool = False,
         ensemble_top_k: int = 3,
+        skip_existing: bool = False,
     ) -> Dict[str, Dict]:
         """
         Run benchmark across multiple models.
@@ -1048,6 +1156,9 @@ class LLMModelBenchmark:
                                    (0 = off)
             ensemble:              Enable cross-model ensemble
             ensemble_top_k:        How many top models to use for ensemble
+            skip_existing:         If True and output_dir is set, load cached
+                                   per-model JSON and skip the API call for any
+                                   model whose output file already exists.
 
         Returns:
             Dict mapping model_id → { result, elapsed, status, metrics, … }
@@ -1074,6 +1185,36 @@ class LLMModelBenchmark:
             print(f"  [{idx}/{total}] 🧪 {model_id}{mode_label}")
             print(f"{'=' * 70}")
 
+            # ---- Skip-existing: load cache instead of calling the API ----
+            if skip_existing and output_dir:
+                safe_name = model_id.replace("/", "_").replace(".", "_")
+                cached_file = output_dir / f"{safe_name}_extracted.json"
+                if cached_file.exists():
+                    print(f"   ⏭️  Cached result found — skipping API call")
+                    cached_result = json.loads(cached_file.read_text())
+                    run: Dict = {
+                        "result": cached_result,
+                        "elapsed": 0.0,
+                        "status": "cached",
+                        "error": None,
+                        "token_usage": {
+                            "prompt_tokens": 0,
+                            "completion_tokens": 0,
+                            "total_tokens": 0,
+                        },
+                    }
+                    run["metrics"] = self.compute_metrics(cached_result, ground_truth)
+                    if ground_truth:
+                        run["field_metrics"] = MTCEvaluator.evaluate(
+                            cached_result, ground_truth
+                        )
+                        f1 = run["field_metrics"].get("overall_f1", "N/A")
+                        print(f"   📊 Overall F1 (cached): {f1}")
+                    else:
+                        run["field_metrics"] = {}
+                    results[model_id] = run
+                    continue
+
             run = self.run_model(
                 model_id,
                 page_texts,
@@ -1086,7 +1227,9 @@ class LLMModelBenchmark:
 
                 # Rich field-level metrics when ground truth is available
                 if ground_truth:
-                    run["field_metrics"] = self.compute_field_f1(run["result"], ground_truth)
+                    run["field_metrics"] = MTCEvaluator.evaluate(
+                        run["result"], ground_truth
+                    )
                     f1 = run["field_metrics"].get("overall_f1", "N/A")
                     print(f"   📊 Overall F1: {f1}")
 
@@ -1118,12 +1261,18 @@ class LLMModelBenchmark:
             print(f"  🏆 ENSEMBLE (top {ensemble_top_k} models)")
             print(f"{'=' * 70}")
 
-            ens = self.ensemble_extract(page_texts, model_ids=model_ids, top_k=ensemble_top_k)
+            ens = self.ensemble_extract(
+                page_texts, model_ids=model_ids, top_k=ensemble_top_k
+            )
             if ens["status"] == "success" and ens["result"]:
                 ens["metrics"] = self.compute_metrics(ens["result"], ground_truth)
                 if ground_truth:
-                    ens["field_metrics"] = self.compute_field_f1(ens["result"], ground_truth)
-                    print(f"   📊 Ensemble Overall F1: {ens['field_metrics'].get('overall_f1')}")
+                    ens["field_metrics"] = MTCEvaluator.evaluate(
+                        ens["result"], ground_truth
+                    )
+                    print(
+                        f"   📊 Ensemble Overall F1: {ens['field_metrics'].get('overall_f1')}"
+                    )
                 if output_dir:
                     out_file = output_dir / "ensemble_extracted.json"
                     out_file.write_text(json.dumps(ens["result"], indent=2))
@@ -1196,14 +1345,18 @@ class LLMModelBenchmark:
             display_name = "🏆 ENSEMBLE" if mid == "__ensemble__" else mid
             m = r.get("metrics", {})
             tok = r.get("token_usage", {})
-            tok_str = f"{tok.get('total_tokens', 0):,}" if tok.get("total_tokens") else "—"
+            tok_str = (
+                f"{tok.get('total_tokens', 0):,}" if tok.get("total_tokens") else "—"
+            )
 
             if r["status"] == "success":
                 f1_str = ""
                 if has_ground_truth:
                     fm = r.get("field_metrics", {})
                     f1_val = fm.get("overall_f1", "—")
-                    f1_str = f"{f1_val:>6} " if isinstance(f1_val, float) else f"{'—':>6} "
+                    f1_str = (
+                        f"{f1_val:>6} " if isinstance(f1_val, float) else f"{'—':>6} "
+                    )
 
                 print(
                     f"  {display_name:<36} {'✅ OK':<9} "
@@ -1248,7 +1401,9 @@ def main() -> int:
     parser.add_argument(
         "--use-cached-ocr",
         action="store_true",
-        help=("Use pre-extracted OCR text from pipeline_output/text instead of re-running OCR"),
+        help=(
+            "Use pre-extracted OCR text from pipeline_output/text instead of re-running OCR"
+        ),
     )
     parser.add_argument(
         "--ocr-text-dir",
@@ -1300,7 +1455,9 @@ def main() -> int:
         "--consistency-samples",
         type=int,
         default=0,
-        help=("Number of samples for self-consistency voting (0=disabled, recommended: 3)"),
+        help=(
+            "Number of samples for self-consistency voting (0=disabled, recommended: 3)"
+        ),
     )
     parser.add_argument(
         "--ensemble",
@@ -1319,12 +1476,47 @@ def main() -> int:
         default=0.001,
         help=("Numeric tolerance for field-level metric comparisons (default: 0.001)"),
     )
+    parser.add_argument(
+        "--providers",
+        nargs="+",
+        choices=["github", "huggingface"],
+        default=None,
+        help="Filter models by provider (default: all). E.g. --providers github huggingface",
+    )
+    parser.add_argument(
+        "--rate-limit-sleep",
+        type=float,
+        default=0.0,
+        help="Seconds to sleep between API calls (useful for HF rate limits, default: 0)",
+    )
+    parser.add_argument(
+        "--skip-existing",
+        action="store_true",
+        help=(
+            "If an extracted JSON for a model already exists in --output, "
+            "load it from disk instead of calling the API again."
+        ),
+    )
     args = parser.parse_args()
 
-    # ---- Validate environment ----
-    if "GITHUB_TOKEN" not in os.environ:
+    # ---- Validate environment (per provider) ----
+    _candidate_ids = args.models or [m["id"] for m in ALL_MODELS]
+    _needs_github = any(
+        ALL_MODELS_REGISTRY.get(mid, {}).get("api_key_env", "GITHUB_TOKEN")
+        == "GITHUB_TOKEN"
+        for mid in _candidate_ids
+    )
+    _needs_hf = any(
+        ALL_MODELS_REGISTRY.get(mid, {}).get("api_key_env") == "HF_TOKEN"
+        for mid in _candidate_ids
+    )
+    if _needs_github and "GITHUB_TOKEN" not in os.environ:
         print("❌ GITHUB_TOKEN not set. Required for GitHub Models API.")
         return 1
+    if _needs_hf and "HF_TOKEN" not in os.environ:
+        print(
+            "⚠️  HF_TOKEN not set — HuggingFace models will raise an error when called."
+        )
 
     if not args.schema.exists():
         print(f"❌ Schema not found: {args.schema}")
@@ -1337,9 +1529,34 @@ def main() -> int:
     if args.models:
         model_ids = args.models
     elif args.top_n:
-        model_ids = [m["id"] for m in RANKED_MODELS[: args.top_n]]
+        model_ids = [m["id"] for m in ALL_MODELS[: args.top_n]]
     else:
-        model_ids = [m["id"] for m in RANKED_MODELS]
+        candidate_models = ALL_MODELS
+        if args.providers:
+            key_map = {"github": "GITHUB_TOKEN", "huggingface": "HF_TOKEN"}
+            allowed_keys = {key_map[p] for p in args.providers if p in key_map}
+            candidate_models = [
+                m
+                for m in ALL_MODELS
+                if m.get("api_key_env", "GITHUB_TOKEN") in allowed_keys
+            ]
+        model_ids = [m["id"] for m in candidate_models]
+
+    # ---- Auto-exclude models whose API key env var is missing ----
+    # This means adding a model to ALL_MODELS is enough — it will run
+    # automatically on the next push once its secret is added to the repo.
+    available_ids: List[str] = []
+    for mid in model_ids:
+        key_env = ALL_MODELS_REGISTRY.get(mid, {}).get("api_key_env", "GITHUB_TOKEN")
+        if os.environ.get(key_env):
+            available_ids.append(mid)
+        else:
+            print(f"   ⏭️  Auto-skipping {mid!r} — {key_env} not set")
+    model_ids = available_ids
+
+    if not model_ids:
+        print("❌ No models available — check that at least GITHUB_TOKEN is set.")
+        return 1
 
     print(f"🏁 Models to benchmark ({len(model_ids)}):")
     for i, mid in enumerate(model_ids, 1):
@@ -1358,14 +1575,17 @@ def main() -> int:
 
     # ---- Get OCR text ----
     if args.use_cached_ocr:
-        bench = LLMModelBenchmark(args.schema, args.prompt)
+        bench = LLMModelBenchmark(
+            args.schema, args.prompt, rate_limit_sleep=args.rate_limit_sleep
+        )
         page_texts = bench.load_ocr_pages(args.ocr_text_dir)
     else:
         if not args.pdf.exists():
             print(f"❌ PDF not found: {args.pdf}")
             return 1
-        # Initialise benchmark (LLM client) first, then OCR
-        bench = LLMModelBenchmark(args.schema, args.prompt)
+        bench = LLMModelBenchmark(
+            args.schema, args.prompt, rate_limit_sleep=args.rate_limit_sleep
+        )
         page_texts = bench.run_ocr_fresh(args.pdf)
 
     # ---- Load ground truth if provided ----
@@ -1384,6 +1604,7 @@ def main() -> int:
         consistency_samples=args.consistency_samples,
         ensemble=args.ensemble,
         ensemble_top_k=args.ensemble_top_k,
+        skip_existing=args.skip_existing,
     )
 
     return 0
