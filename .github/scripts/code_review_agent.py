@@ -220,8 +220,19 @@ GITHUB_MODELS_BASE_URL = "https://models.inference.ai.azure.com"
 CANDIDATE_MODELS = [
     "o4-mini",    # OpenAI reasoning model, optimised for code (200K ctx)
     "o3-mini",    # Efficient reasoning model, strong code analysis
-    "gpt-4o",     # Reliable fallback
+    "gpt-4o",     # Reliable fallback (standard chat model)
 ]
+
+# Models that use the OpenAI "reasoning" API contract:
+#   - system role → developer role
+#   - temperature param not supported
+#   - max_tokens → max_completion_tokens
+REASONING_MODELS = {"o4-mini", "o3-mini", "o1", "o1-mini", "o3"}
+
+# Token budget for the generated review.
+# Reasoning models use max_completion_tokens; standard models use max_tokens.
+# 16,384 gives enough headroom for 10–15 detailed findings with tables/links.
+MAX_OUTPUT_TOKENS = 16_384
 
 
 # ---------------------------------------------------------------------------
@@ -316,23 +327,33 @@ def main() -> None:
     context = collect_context()
 
     client = OpenAI(base_url=GITHUB_MODELS_BASE_URL, api_key=token)
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": build_user_prompt(context, today)},
-    ]
 
     # Try each candidate model in priority order; use the first that succeeds.
     response = None
     used_model = None
     for model in CANDIDATE_MODELS:
         print(f"🤖 Trying model '{model}' via GitHub Models …")
+
+        is_reasoning = model in REASONING_MODELS
+
+        # Reasoning models use the "developer" role instead of "system".
+        system_role = "developer" if is_reasoning else "system"
+        messages = [
+            {"role": system_role, "content": SYSTEM_PROMPT},
+            {"role": "user", "content": build_user_prompt(context, today)},
+        ]
+
+        # Reasoning models do not support `temperature` and use
+        # `max_completion_tokens` instead of `max_tokens`.
+        call_kwargs: dict = {"model": model, "messages": messages}
+        if is_reasoning:
+            call_kwargs["max_completion_tokens"] = MAX_OUTPUT_TOKENS
+        else:
+            call_kwargs["temperature"] = 0.3
+            call_kwargs["max_tokens"] = MAX_OUTPUT_TOKENS
+
         try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                temperature=0.3,
-                max_tokens=4096,
-            )
+            response = client.chat.completions.create(**call_kwargs)
             used_model = model
             print(f"   ✅ Using model: {used_model}")
             break
