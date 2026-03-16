@@ -1,0 +1,41 @@
+name: Weekly Code Review
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  models: read
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: code-review-${{ runner.os }}-pip-openai-${{ hashFiles('.github/scripts/code_review_agent.py') }}
+          restore-keys: code-review-${{ runner.os }}-pip-openai-
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run AI code review agent and create issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python .github/scripts/code_review_agent.py
