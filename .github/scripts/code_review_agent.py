@@ -80,6 +80,8 @@ SKIP_DIRS = {
     "data",          # raw/processed certificate data — not source code
     "report_files",  # generated Quarto HTML assets
     "Misc",          # ad-hoc scratch files
+    "docs",          # documentation — not source code, keeps context small
+    "notebooks",     # Jupyter notebooks — large and binary-ish
     ".pytest_cache",
     ".mypy_cache",
     ".ruff_cache",
@@ -88,6 +90,15 @@ SKIP_DIRS = {
     ".venv",
     "venv",
 }
+
+# GitHub Models free-tier request limits are much stricter than the full
+# context-window sizes.  Empirically:
+#   o4-mini / o3-mini  →  4,000 input tokens  (~14,000 chars)
+#   gpt-4o             →  8,000 input tokens  (~28,000 chars)
+# We target gpt-4o's budget, reserving ~2,000 chars for the system prompt
+# and user-message preamble, leaving ~20,000 chars for file context.
+MAX_FILE_CHARS = 1_000   # chars per file before truncation
+MAX_CONTEXT_CHARS = 20_000  # total chars across all files
 
 
 def _is_likely_binary(path: Path) -> bool:
@@ -156,28 +167,50 @@ def read_file(path: Path) -> str:
 
 
 def collect_context() -> str:
-    """Assemble the full repository context to send to the model."""
+    """Assemble the repository context to send to the model.
+
+    Each file is truncated to MAX_FILE_CHARS characters and the total
+    context is capped at MAX_CONTEXT_CHARS to stay within the GitHub
+    Models free-tier request-size limits.
+    """
     files = discover_files()
     parts: list[str] = []
+    total_chars = 0
+    included = 0
+    skipped_budget = 0
+
     for path in files:
         rel = path.relative_to(REPO_ROOT)
         content = read_file(path)
-        parts.append(f"### {rel}\n```\n{content}\n```")
+
+        # Truncate individual files that are too long.
+        if len(content) > MAX_FILE_CHARS:
+            content = content[:MAX_FILE_CHARS] + f"\n... [truncated at {MAX_FILE_CHARS} chars]"
+
+        chunk = f"### {rel}\n```\n{content}\n```"
+
+        # Stop adding files once we would exceed the total budget.
+        if total_chars + len(chunk) > MAX_CONTEXT_CHARS:
+            skipped_budget += 1
+            continue
+
+        parts.append(chunk)
+        total_chars += len(chunk)
+        included += 1
 
     context = "\n\n".join(parts)
 
-    # Informational size report (o4-mini supports ~200 K tokens)
     _CHARS_PER_TOKEN = 3.5
     estimated_tokens = len(context) / _CHARS_PER_TOKEN
     print(
-        f"   Included {len(files)} files, "
+        f"   Included {included}/{len(files)} files, "
         f"~{estimated_tokens:,.0f} estimated tokens "
         f"({len(context):,} chars)"
     )
-    if estimated_tokens > 150_000:
+    if skipped_budget:
         print(
-            "⚠️  Context is very large. Consider adding directories to "
-            "SKIP_DIRS if the model call fails."
+            f"   ℹ️  {skipped_budget} file(s) omitted to stay within the "
+            f"{MAX_CONTEXT_CHARS:,}-char context budget."
         )
 
     return context
@@ -216,7 +249,8 @@ def create_github_issue(title: str, body: str, repo: str, token: str) -> dict:
 GITHUB_MODELS_BASE_URL = "https://models.inference.ai.azure.com"
 
 # Preferred models in priority order — the first one that responds successfully
-# is used. o4-mini is code-optimised with a 200 K token context window.
+# is used. o4-mini is code-optimised; note that GitHub Models free-tier caps
+# request bodies at 4,000 tokens (o4-mini/o3-mini) or 8,000 tokens (gpt-4o).
 CANDIDATE_MODELS = [
     "o4-mini",    # OpenAI reasoning model, optimised for code (200K ctx)
     "o3-mini",    # Efficient reasoning model, strong code analysis
