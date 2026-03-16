@@ -22,92 +22,162 @@ from openai import OpenAI
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 # ---------------------------------------------------------------------------
-# Files included in the review context (ordered by importance)
+# Dynamic file discovery
 # ---------------------------------------------------------------------------
-CONTEXT_FILES = [
-    # Project definition
+
+# Directories to scan recursively for reviewable source files
+SCAN_DIRS = [
+    "src",
+    "tests",
+    "docs",
+    "schema",
+    "prompts",
+    "scripts",
+    ".github/workflows",
+    ".github/scripts",
+]
+
+# Individual root-level files always included when present
+ROOT_FILES = [
     "README.md",
     "project-plan.md",
     "QUICKSTART.md",
-    # Configuration / dependencies
     "pyproject.toml",
     "requirements.txt",
     "requirements-test.txt",
-    # CI / DevOps
-    ".github/workflows/ci.yml",
-    # Schema
-    "schema/mtc_extraction_schema_v1.json",
-    # Source — evaluation
-    "src/evaluation/evaluator.py",
-    # Source — extraction
-    "src/extraction/llm_models_extraction.py",
-    "src/extraction/complete_pipeline.py",
-    "src/extraction/hybrid_pipeline.py",
-    "src/extraction/docling_extraction.py",
-    "src/extraction/paddle_extraction.py",
-    # Source — API
-    "src/api/main.py",
-    "src/api/models.py",
-    "src/api/routes/extract.py",
-    "src/api/routes/benchmark.py",
-    # Tests
-    "tests/test_api.py",
-    "tests/test_smoke.py",
-    # Selected docs
-    "docs/implementation_phase1_to_4.md",
-    "docs/cicd_and_workflow.md",
-    "docs/LLM_approach.md",
-    "docs/model_expansion_and_ci_automation.md",
-    "docs/week2_ocr_report.md",
+    "Dockerfile",
+    ".gitignore",
+    "benchmark_report.qmd",
+    "report.qmd",
 ]
 
-# Maximum characters read per file — keeps the context within model limits
-MAX_FILE_CHARS = 10_000
+# Text-based extensions eligible for review
+INCLUDE_EXTENSIONS = {".py", ".md", ".yml", ".yaml", ".json", ".txt", ".qmd", ".sh"}
 
-# Approximate character-to-token ratio; used for a soft guard only
-_CHARS_PER_TOKEN = 3.5
-# Leave headroom for system prompt + response; gpt-4o supports 128 k tokens
-MAX_CONTEXT_TOKENS = 90_000
+# Explicitly excluded extensions — PDFs and all binary/generated formats
+EXCLUDE_EXTENSIONS = {
+    ".pdf",
+    ".html",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".woff",
+    ".css",
+    ".js",
+    ".bak",
+    ".ipynb",
+    ".woff2",
+    ".ico",
+    ".svg",
+}
 
-# GitHub Models endpoint and model
-GITHUB_MODELS_BASE_URL = "https://models.inference.ai.azure.com"
-REVIEW_MODEL = "gpt-4o"
+# Directory names skipped during recursive scan
+SKIP_DIRS = {
+    "__pycache__",
+    ".git",
+    "node_modules",
+    "data",          # raw/processed certificate data — not source code
+    "report_files",  # generated Quarto HTML assets
+    "Misc",          # ad-hoc scratch files
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "dist",
+    "build",
+    ".venv",
+    "venv",
+}
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def read_file(path: Path, max_chars: int = MAX_FILE_CHARS) -> str:
-    """Return file contents, truncating if necessary."""
+def _is_likely_binary(path: Path) -> bool:
+    """Return True if the file appears to be binary (quick heuristic)."""
     try:
-        content = path.read_text(encoding="utf-8", errors="ignore")
+        chunk = path.read_bytes()[:512]
+    except OSError:
+        return True
+    return b"\x00" in chunk
+
+
+def discover_files() -> list[Path]:
+    """
+    Discover all reviewable files in the repository.
+
+    Returns an ordered list: root config files first, then scanned
+    directories in definition order, files sorted alphabetically within
+    each directory.
+    """
+    seen: set[Path] = set()
+    files: list[Path] = []
+
+    def add(path: Path, *, bypass_extension_check: bool = False) -> None:
+        resolved = path.resolve()
+        if resolved in seen:
+            return
+        if path.suffix.lower() in EXCLUDE_EXTENSIONS:
+            return
+        if not bypass_extension_check and path.suffix.lower() not in INCLUDE_EXTENSIONS:
+            return
+        if _is_likely_binary(path):
+            return
+        seen.add(resolved)
+        files.append(path)
+
+    # 1. Root-level files (explicit, in declared order) — bypass extension check
+    #    because files like Dockerfile, .gitignore, pyproject.toml are always
+    #    useful for review regardless of extension.
+    for rel in ROOT_FILES:
+        p = REPO_ROOT / rel
+        if p.exists() and p.is_file():
+            add(p, bypass_extension_check=True)
+
+    # 2. Scanned directories (recursive, alphabetical within each dir)
+    for dir_rel in SCAN_DIRS:
+        dir_path = REPO_ROOT / dir_rel
+        if not dir_path.is_dir():
+            continue
+        for path in sorted(dir_path.rglob("*")):
+            if not path.is_file():
+                continue
+            # Skip if any ancestor directory is in SKIP_DIRS
+            if any(part in SKIP_DIRS for part in path.parts):
+                continue
+            add(path)
+
+    return files
+
+
+def read_file(path: Path) -> str:
+    """Return the full contents of a file as text."""
+    try:
+        return path.read_text(encoding="utf-8", errors="ignore")
     except Exception as exc:
         return f"[Could not read file: {exc}]"
-    if len(content) > max_chars:
-        return content[:max_chars] + f"\n\n… [truncated — {len(content)} chars total]"
-    return content
 
 
 def collect_context() -> str:
-    """Assemble the repository context that will be sent to the model."""
+    """Assemble the full repository context to send to the model."""
+    files = discover_files()
     parts: list[str] = []
-    for rel in CONTEXT_FILES:
-        path = REPO_ROOT / rel
-        if not path.exists():
-            continue
+    for path in files:
+        rel = path.relative_to(REPO_ROOT)
         content = read_file(path)
         parts.append(f"### {rel}\n```\n{content}\n```")
 
     context = "\n\n".join(parts)
 
-    # Soft guard: warn if context is unexpectedly large
+    # Informational size report (o4-mini supports ~200 K tokens)
+    _CHARS_PER_TOKEN = 3.5
     estimated_tokens = len(context) / _CHARS_PER_TOKEN
-    if estimated_tokens > MAX_CONTEXT_TOKENS:
+    print(
+        f"   Included {len(files)} files, "
+        f"~{estimated_tokens:,.0f} estimated tokens "
+        f"({len(context):,} chars)"
+    )
+    if estimated_tokens > 150_000:
         print(
-            f"⚠️  Context is ~{estimated_tokens:,.0f} estimated tokens "
-            f"(limit ~{MAX_CONTEXT_TOKENS:,}). "
-            "Consider reducing MAX_FILE_CHARS or CONTEXT_FILES."
+            "⚠️  Context is very large. Consider adding directories to "
+            "SKIP_DIRS if the model call fails."
         )
 
     return context
@@ -136,6 +206,22 @@ def create_github_issue(title: str, body: str, repo: str, token: str) -> dict:
         raise RuntimeError(
             f"GitHub API returned HTTP {exc.code}: {body_bytes.decode(errors='replace')}"
         ) from exc
+
+
+# ---------------------------------------------------------------------------
+# Model configuration
+# ---------------------------------------------------------------------------
+
+# GitHub Models endpoint
+GITHUB_MODELS_BASE_URL = "https://models.inference.ai.azure.com"
+
+# Preferred models in priority order — the first one that responds successfully
+# is used. o4-mini is code-optimised with a 200 K token context window.
+CANDIDATE_MODELS = [
+    "o4-mini",    # OpenAI reasoning model, optimised for code (200K ctx)
+    "o3-mini",    # Efficient reasoning model, strong code analysis
+    "gpt-4o",     # Reliable fallback
+]
 
 
 # ---------------------------------------------------------------------------
@@ -228,24 +314,36 @@ def main() -> None:
 
     print("📚 Collecting repository context …")
     context = collect_context()
-    print(f"   Context size: {len(context):,} characters")
 
-    print(f"🤖 Calling {REVIEW_MODEL} via GitHub Models …")
     client = OpenAI(base_url=GITHUB_MODELS_BASE_URL, api_key=token)
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": build_user_prompt(context, today)},
+    ]
 
-    try:
-        response = client.chat.completions.create(
-            model=REVIEW_MODEL,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": build_user_prompt(context, today)},
-            ],
-            temperature=0.3,
-            max_tokens=4096,
+    # Try each candidate model in priority order; use the first that succeeds.
+    response = None
+    used_model = None
+    for model in CANDIDATE_MODELS:
+        print(f"🤖 Trying model '{model}' via GitHub Models …")
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.3,
+                max_tokens=4096,
+            )
+            used_model = model
+            print(f"   ✅ Using model: {used_model}")
+            break
+        except Exception as exc:
+            print(f"   ⚠️  Model '{model}' unavailable: {exc}")
+
+    if response is None:
+        raise RuntimeError(
+            f"All candidate models failed: {CANDIDATE_MODELS}. "
+            "Check GitHub Models availability."
         )
-    except Exception as exc:
-        print(f"❌ AI model call failed: {exc}")
-        raise
 
     review_body = response.choices[0].message.content.strip()
     print(f"   Review generated ({len(review_body):,} characters)")
@@ -255,7 +353,7 @@ def main() -> None:
         f"*Automatically generated by the "
         f"[Weekly Code Review Agent]"
         f"(../../.github/workflows/code-review.yml) "
-        f"on {today} using {REVIEW_MODEL} via GitHub Models.*"
+        f"on {today} using {used_model} via GitHub Models.*"
     )
     issue_body = review_body + footer
 
