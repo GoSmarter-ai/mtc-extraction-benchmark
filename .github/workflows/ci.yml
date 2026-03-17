@@ -145,6 +145,9 @@ jobs:
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Install Jupyter for Quarto
+        run: pip install jupyter nbformat nbclient ipykernel
+
       - name: Render benchmark report
         run: quarto render benchmark_report.qmd
         continue-on-error: true
