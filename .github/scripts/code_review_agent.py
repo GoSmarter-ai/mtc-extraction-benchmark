@@ -9,6 +9,7 @@ and cloud architect mentoring the contributors.
 
 import json
 import os
+import subprocess
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -77,9 +78,9 @@ SKIP_DIRS = {
     "__pycache__",
     ".git",
     "node_modules",
-    "data",          # raw/processed certificate data — not source code
+    "data",  # raw/processed certificate data — not source code
     "report_files",  # generated Quarto HTML assets
-    "Misc",          # ad-hoc scratch files
+    "Misc",  # ad-hoc scratch files
     ".pytest_cache",
     ".mypy_cache",
     ".ruff_cache",
@@ -155,29 +156,107 @@ def read_file(path: Path) -> str:
         return f"[Could not read file: {exc}]"
 
 
-def collect_context() -> str:
-    """Assemble the full repository context to send to the model."""
-    files = discover_files()
+def _git(*args: str, timeout: int = 30) -> str:
+    """Run a git command and return stdout, or empty string on failure."""
+    result = subprocess.run(
+        ["git", *args],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+    )
+    return result.stdout
+
+
+def collect_git_diff_context() -> str:
+    """
+    Build a compact diff-based context covering the last 7 days of commits
+    (or the last 5 commits if there were no recent ones).
+    Returns a formatted string ready to embed in the user prompt.
+    """
+    # Count commits in last 7 days
+    log_out = _git("log", "--since=7 days ago", "--oneline")
+    recent_count = len([line for line in log_out.splitlines() if line.strip()])
+    n = max(min(recent_count, 15), 3)  # at least 3, at most 15
+
     parts: list[str] = []
-    for path in files:
-        rel = path.relative_to(REPO_ROOT)
-        content = read_file(path)
-        parts.append(f"### {rel}\n```\n{content}\n```")
+
+    stat = _git("diff", f"HEAD~{n}", "HEAD", "--stat")
+    if stat.strip():
+        parts.append(f"**Changed files (last {n} commits / ~7 days):**\n```\n{stat.strip()}\n```")
+
+    diff = _git(
+        "diff",
+        f"HEAD~{n}",
+        "HEAD",
+        "--",
+        "*.py",
+        "*.yml",
+        "*.yaml",
+        "*.toml",
+        "*.md",
+        "*.txt",
+    )
+    if diff.strip():
+        # Hard cap on diff size to stay within model token budget
+        diff_capped = diff[:8_000] + ("\n… [diff truncated]" if len(diff) > 8_000 else "")
+        parts.append(f"**Code diff:**\n```diff\n{diff_capped}\n```")
+
+    return "\n\n".join(parts)
+
+
+def collect_context() -> str:
+    """
+    Assemble a token-budget-aware repository context.
+
+    Strategy (in priority order, stops when MAX_CONTEXT_CHARS is reached):
+      1. A handful of key structural files (README, project-plan, pyproject.toml)
+         each truncated to 1 500 chars.
+      2. Git diff of the last 7 days — the most actionable signal for a
+         weekly code review.
+    """
+    _CHARS_PER_TOKEN = 3.5
+    budget = MAX_CONTEXT_CHARS
+    parts: list[str] = []
+
+    # ── 1. Key structural files (truncated) ─────────────────────────────────
+    PRIORITY_FILES = ["README.md", "project-plan.md", "pyproject.toml"]
+    FILE_CHAR_LIMIT = 1_500
+    for rel in PRIORITY_FILES:
+        p = REPO_ROOT / rel
+        if not p.exists():
+            continue
+        text = p.read_text(encoding="utf-8", errors="ignore")
+        if len(text) > FILE_CHAR_LIMIT:
+            text = text[:FILE_CHAR_LIMIT] + "\n… [truncated]"
+        entry = f"### {rel}\n```\n{text}\n```"
+        if len(entry) > budget:
+            break
+        parts.append(entry)
+        budget -= len(entry)
+
+    # ── 2. Git diff (recent changes) ────────────────────────────────────────
+    print("   📂 Collecting git diff for last 7 days …")
+    diff_ctx = collect_git_diff_context()
+    if diff_ctx and len(diff_ctx) <= budget:
+        parts.append(f"### Recent changes\n{diff_ctx}")
+        budget -= len(diff_ctx)
+    elif diff_ctx:
+        # Still include as much as fits
+        truncated = diff_ctx[: budget - 50] + "\n… [truncated]"
+        parts.append(f"### Recent changes\n{truncated}")
+        budget = 0
 
     context = "\n\n".join(parts)
-
-    # Informational size report (o4-mini supports ~200 K tokens)
-    _CHARS_PER_TOKEN = 3.5
     estimated_tokens = len(context) / _CHARS_PER_TOKEN
     print(
-        f"   Included {len(files)} files, "
+        f"   Included {len(parts)} sections, "
         f"~{estimated_tokens:,.0f} estimated tokens "
         f"({len(context):,} chars)"
     )
-    if estimated_tokens > 150_000:
+    if estimated_tokens > 4_500:
         print(
-            "⚠️  Context is very large. Consider adding directories to "
-            "SKIP_DIRS if the model call fails."
+            "⚠️  Context may still exceed model token limits. Consider reducing MAX_CONTEXT_CHARS."
         )
 
     return context
@@ -216,11 +295,13 @@ def create_github_issue(title: str, body: str, repo: str, token: str) -> dict:
 GITHUB_MODELS_BASE_URL = "https://models.inference.ai.azure.com"
 
 # Preferred models in priority order — the first one that responds successfully
-# is used. o4-mini is code-optimised with a 200 K token context window.
+# is used.  gpt-4o is listed first because the GitHub Models free tier grants
+# it the highest per-request token budget (~8 K tokens) vs. ~4 K for the
+# reasoning models.
 CANDIDATE_MODELS = [
-    "o4-mini",    # OpenAI reasoning model, optimised for code (200K ctx)
-    "o3-mini",    # Efficient reasoning model, strong code analysis
-    "gpt-4o",     # Reliable fallback (standard chat model)
+    "gpt-4o",  # Standard chat model — highest free-tier token budget
+    "o3-mini",  # Efficient reasoning model, strong code analysis
+    "o4-mini",  # OpenAI reasoning model, optimised for code
 ]
 
 # Models that use the OpenAI "reasoning" API contract:
@@ -229,10 +310,18 @@ CANDIDATE_MODELS = [
 #   - max_tokens → max_completion_tokens
 REASONING_MODELS = {"o4-mini", "o3-mini", "o1", "o1-mini", "o3"}
 
+# Hard character cap for the context passed to the model.  Derived from the
+# tightest GitHub Models free-tier limit (gpt-4o ≈ 8 K total tokens):
+#   8 000 tokens  −  ~450 system-prompt tokens  −  ~50 preamble tokens
+#   − MAX_OUTPUT_TOKENS  ≈  5 500 input tokens  ×  3.5 chars/token ≈ 19 000 chars
+# We keep a comfortable margin here.
+MAX_CONTEXT_CHARS = 14_000
+
 # Token budget for the generated review.
 # Reasoning models use max_completion_tokens; standard models use max_tokens.
-# 16,384 gives enough headroom for 10–15 detailed findings with tables/links.
-MAX_OUTPUT_TOKENS = 16_384
+# Kept at 2 000 so the total request stays within GitHub Models free-tier
+# limits (4 K–8 K tokens depending on model).
+MAX_OUTPUT_TOKENS = 2_000
 
 
 # ---------------------------------------------------------------------------
@@ -317,6 +406,7 @@ Today's date: {today}
 # Main
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     token = os.environ["GITHUB_TOKEN"]
     repo = os.environ["GITHUB_REPOSITORY"]
@@ -362,8 +452,7 @@ def main() -> None:
 
     if response is None:
         raise RuntimeError(
-            f"All candidate models failed: {CANDIDATE_MODELS}. "
-            "Check GitHub Models availability."
+            f"All candidate models failed: {CANDIDATE_MODELS}. Check GitHub Models availability."
         )
 
     review_body = response.choices[0].message.content.strip()
