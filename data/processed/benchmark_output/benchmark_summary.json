@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-02-27T12:50:22.247255",
-  "models_tested": 10,
+  "timestamp": "2026-03-17T14:04:08.995546",
+  "models_tested": 2,
   "config": {
     "two_pass": false,
     "consistency_samples": 0,
@@ -8,164 +8,357 @@
     "ensemble_top_k": 3
   },
   "results": {
-    "gpt-4o": {
+    "Qwen/Qwen2.5-72B-Instruct": {
+      "status": "error",
+      "elapsed_seconds": 0.7,
+      "error": "BadRequestError: Error code: 400 - {'code': 400, 'reason': 'INVALID_REQUEST_BODY', 'message': 'max_tokens (current value: 16384) must be between 0 and 8192 ', 'metadata': {}}",
+      "metrics": {},
+      "field_metrics": {},
+      "token_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    "Qwen/Qwen2.5-7B-Instruct": {
       "status": "success",
-      "elapsed_seconds": 50.87,
+      "elapsed_seconds": 109.24,
       "error": null,
       "metrics": {
         "certificate_number": "25-3133/01MNF/EXP",
         "chemical_count": 20,
-        "mechanical_count": 70,
+        "mechanical_count": 78,
         "has_approval": true,
         "unique_chem_heats": 20,
         "unique_mech_heats": 20,
         "has_document": true,
         "has_traceability": true,
-        "has_product": true
+        "has_product": true,
+        "gt_chemical_count": 20,
+        "gt_mechanical_count": 70,
+        "chemical_match": true,
+        "mechanical_match": false,
+        "cert_number_match": true,
+        "date_match": true
       },
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 12646,
-        "completion_tokens": 10959,
-        "total_tokens": 23605
-      }
-    },
-    "Meta-Llama-3.1-405B-Instruct": {
-      "status": "success",
-      "elapsed_seconds": 472.46,
-      "error": null,
-      "metrics": {
-        "certificate_number": "25-3133/01MNF/EXP",
-        "chemical_count": 20,
-        "mechanical_count": 79,
-        "has_approval": true,
-        "unique_chem_heats": 20,
-        "unique_mech_heats": 20,
-        "has_document": true,
-        "has_traceability": true,
-        "has_product": true
+      "field_metrics": {
+        "document": {
+          "document_accuracy": 1.0,
+          "document_fields": {
+            "certificate_number": true,
+            "issuing_date": true,
+            "standard": true,
+            "customer": true,
+            "order_number": true
+          },
+          "correct": 5,
+          "total": 5
+        },
+        "chemical": {
+          "heat_precision": 1.0,
+          "heat_recall": 1.0,
+          "heat_f1": 1.0,
+          "element_accuracy": 0.5882,
+          "element_correct": 130,
+          "element_total": 221,
+          "element_detail": {
+            "25990085": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": false,
+              "V": false,
+              "N": false,
+              "B": true,
+              "Ce": true
+            },
+            "2504090": {
+              "C": true,
+              "S": false,
+              "Ni": false
+            },
+            "25990035": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "2504095": {
+              "C": true,
+              "Si": true,
+              "P": false,
+              "S": false
+            },
+            "2504091": {
+              "C": true,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": false
+            },
+            "25990040": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "25990032": {
+              "C": true,
+              "Si": true,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "2504089": {
+              "C": true,
+              "Si": false,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": false,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "25990034": {
+              "C": true,
+              "Si": true,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "25990031": {
+              "C": true,
+              "Si": true,
+              "P": false,
+              "S": false,
+              "V": false,
+              "N": false,
+              "B": true,
+              "Ce": false
+            },
+            "25990024": {
+              "C": true,
+              "Si": true,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Ce": true
+            },
+            "2504088": {
+              "C": true,
+              "Si": false,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": false,
+              "Cr": false,
+              "Mo": false,
+              "Cu": false,
+              "V": false,
+              "N": false,
+              "B": true,
+              "Ce": true
+            },
+            "2500812": {
+              "C": true,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": false,
+              "Cr": false,
+              "Mo": false,
+              "Cu": false,
+              "V": false,
+              "N": false
+            },
+            "25990039": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "2504093": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": false,
+              "Cr": false,
+              "Mo": false,
+              "Cu": false,
+              "V": false,
+              "N": false,
+              "B": false,
+              "Ce": false
+            },
+            "2504079": {
+              "C": true,
+              "Si": false,
+              "Mn": false,
+              "P": false,
+              "S": false,
+              "Ni": false,
+              "Cr": false,
+              "Mo": false,
+              "Cu": false,
+              "V": false,
+              "N": false,
+              "B": true,
+              "Ce": true
+            },
+            "2504092": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": false,
+              "Cr": false,
+              "Mo": false,
+              "Cu": false,
+              "V": false,
+              "N": false,
+              "B": false,
+              "Ce": false
+            },
+            "2408049": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": true,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            },
+            "2504094": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": false,
+              "Cr": false,
+              "Mo": false,
+              "Cu": false,
+              "V": false,
+              "N": false,
+              "B": false,
+              "Ce": false
+            },
+            "25990041": {
+              "C": true,
+              "Si": true,
+              "Mn": true,
+              "P": true,
+              "S": false,
+              "Ni": true,
+              "Cr": true,
+              "Mo": true,
+              "Cu": true,
+              "V": true,
+              "N": true,
+              "B": true,
+              "Ce": true
+            }
+          },
+          "extracted_heats": 20,
+          "gt_heats": 20,
+          "missing_heats": [],
+          "extra_heats": []
+        },
+        "mechanical": {
+          "mech_precision": 0.8333,
+          "mech_recall": 0.9286,
+          "mech_f1": 0.8784,
+          "mech_property_accuracy": 0.9582,
+          "fuzzy_matched": 65,
+          "unmatched_extracted": 13,
+          "unmatched_gt": 5,
+          "extracted_rows": 78,
+          "gt_rows": 70
+        },
+        "approval": {
+          "approval_accuracy": 0.6667,
+          "approval_fields": {
+            "certificate_of_approval_number": false,
+            "form_number": true,
+            "cares_approved": true
+          }
+        },
+        "overall_f1": 0.8486,
+        "config": {
+          "numeric_tolerance": 0.001,
+          "mech_weight_tol": 0.01,
+          "mech_yield_tol": 5.0
+        }
       },
-      "field_metrics": {},
       "token_usage": {
-        "prompt_tokens": 12853,
-        "completion_tokens": 12024,
-        "total_tokens": 24877
-      }
-    },
-    "Mistral-large-2407": {
-      "status": "error",
-      "elapsed_seconds": 0.26,
-      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: mistral-large-2407', 'details': 'Unknown model: mistral-large-2407'}}",
-      "metrics": {},
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0
-      }
-    },
-    "Meta-Llama-3.1-70B-Instruct": {
-      "status": "error",
-      "elapsed_seconds": 0.01,
-      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: meta-llama-3.1-70b-instruct', 'details': 'Unknown model: meta-llama-3.1-70b-instruct'}}",
-      "metrics": {},
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0
-      }
-    },
-    "Meta-Llama-3-70B-Instruct": {
-      "status": "error",
-      "elapsed_seconds": 0.01,
-      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: meta-llama-3-70b-instruct', 'details': 'Unknown model: meta-llama-3-70b-instruct'}}",
-      "metrics": {},
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0
-      }
-    },
-    "Mistral-Nemo": {
-      "status": "error",
-      "elapsed_seconds": 0.01,
-      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: mistral-nemo', 'details': 'Unknown model: mistral-nemo'}}",
-      "metrics": {},
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0
-      }
-    },
-    "Meta-Llama-3.1-8B-Instruct": {
-      "status": "success",
-      "elapsed_seconds": 60.8,
-      "error": null,
-      "metrics": {
-        "certificate_number": "25-3133/01MNF/EXP",
-        "chemical_count": 20,
-        "mechanical_count": 76,
-        "has_approval": true,
-        "unique_chem_heats": 20,
-        "unique_mech_heats": 20,
-        "has_document": true,
-        "has_traceability": true,
-        "has_product": true
-      },
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 12853,
-        "completion_tokens": 12349,
-        "total_tokens": 25202
-      }
-    },
-    "Meta-Llama-3-8B-Instruct": {
-      "status": "error",
-      "elapsed_seconds": 0.02,
-      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: meta-llama-3-8b-instruct', 'details': 'Unknown model: meta-llama-3-8b-instruct'}}",
-      "metrics": {},
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0
-      }
-    },
-    "gpt-4o-mini": {
-      "status": "success",
-      "elapsed_seconds": 213.11,
-      "error": null,
-      "metrics": {
-        "certificate_number": "25-3133/01MNF/EXP",
-        "chemical_count": 20,
-        "mechanical_count": 79,
-        "has_approval": true,
-        "unique_chem_heats": 20,
-        "unique_mech_heats": 20,
-        "has_document": true,
-        "has_traceability": true,
-        "has_product": true
-      },
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 12646,
-        "completion_tokens": 11747,
-        "total_tokens": 24393
-      }
-    },
-    "AI21-Jamba-Instruct": {
-      "status": "error",
-      "elapsed_seconds": 0.01,
-      "error": "BadRequestError: Error code: 400 - {'error': {'code': 'unknown_model', 'message': 'Unknown model: ai21-jamba-instruct', 'details': 'Unknown model: ai21-jamba-instruct'}}",
-      "metrics": {},
-      "field_metrics": {},
-      "token_usage": {
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0
+        "prompt_tokens": 14637,
+        "completion_tokens": 13547,
+        "total_tokens": 28184
       }
     }
   }

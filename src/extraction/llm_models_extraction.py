@@ -112,7 +112,7 @@ RANKED_MODELS: List[Dict[str, str]] = [
 # HuggingFace Inference API models (OpenAI-compatible endpoint)
 # Requires HF_TOKEN environment variable.
 # ---------------------------------------------------------------------------
-_HF_BASE = "https://api-inference.huggingface.co/v1"
+_HF_BASE = "https://router.huggingface.co/v1"
 HF_MODELS: List[Dict[str, str]] = [
     {
         "id": "Qwen/Qwen2.5-72B-Instruct",
