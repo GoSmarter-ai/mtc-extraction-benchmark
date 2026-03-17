@@ -98,7 +98,7 @@ rows = []
 failed_rows = []
 
 for model_id, result in _summary["results"].items():
-    if result.get("status") != "success":
+    if result.get("status") not in ("success", "cached"):
         failed_rows.append({
             "model_id":       model_id,
             "elapsed_s":      result.get("elapsed_seconds", 0),
