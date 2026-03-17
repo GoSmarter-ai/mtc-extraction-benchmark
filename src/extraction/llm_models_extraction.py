@@ -124,27 +124,9 @@ HF_MODELS: List[Dict[str, str]] = [
         "max_tokens": 8192,
     },
     {
-        "id": "microsoft/Phi-3.5-mini-instruct",
-        "label": "Phi-3.5 Mini",
-        "provider": "Microsoft",
-        "tier": "small",
-        "base_url": _HF_BASE,
-        "api_key_env": "HF_TOKEN",
-        "max_tokens": 8192,
-    },
-    {
-        "id": "google/gemma-2-9b-it",
-        "label": "Gemma 2 9B",
-        "provider": "Google",
-        "tier": "small",
-        "base_url": _HF_BASE,
-        "api_key_env": "HF_TOKEN",
-        "max_tokens": 8192,
-    },
-    {
-        "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
-        "label": "DeepSeek-R1 Distill 8B",
-        "provider": "DeepSeek",
+        "id": "meta-llama/Llama-3.1-8B-Instruct",
+        "label": "Llama 3.1 8B",
+        "provider": "Meta",
         "tier": "small",
         "base_url": _HF_BASE,
         "api_key_env": "HF_TOKEN",
@@ -343,6 +325,12 @@ class LLMModelBenchmark:
             usage["prompt_tokens"] = getattr(response.usage, "prompt_tokens", 0) or 0
             usage["completion_tokens"] = getattr(response.usage, "completion_tokens", 0) or 0
             usage["total_tokens"] = getattr(response.usage, "total_tokens", 0) or 0
+
+        # Strip DeepSeek-R1 / reasoning model <think>...</think> blocks
+        if "<think>" in raw:
+            think_end = raw.find("</think>")
+            if think_end != -1:
+                raw = raw[think_end + 8 :].strip()
 
         # Strip markdown fences
         if "```json" in raw:
