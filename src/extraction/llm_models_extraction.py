@@ -1302,7 +1302,8 @@ class LLMModelBenchmark:
             tok = r.get("token_usage", {})
             tok_str = f"{tok.get('total_tokens', 0):,}" if tok.get("total_tokens") else "—"
 
-            if r["status"] == "success":
+            if r["status"] in ("success", "cached"):
+                status_label = "⏭️ CACHE" if r["status"] == "cached" else "✅ OK"
                 f1_str = ""
                 if has_ground_truth:
                     fm = r.get("field_metrics", {})
@@ -1310,7 +1311,7 @@ class LLMModelBenchmark:
                     f1_str = f"{f1_val:>6} " if isinstance(f1_val, float) else f"{'—':>6} "
 
                 print(
-                    f"  {display_name:<36} {'✅ OK':<9} "
+                    f"  {display_name:<36} {status_label:<9} "
                     f"{r['elapsed']:>6.1f}s "
                     f"{m.get('chemical_count', '—'):>6} "
                     f"{m.get('mechanical_count', '—'):>6} "
