@@ -212,23 +212,26 @@ print(f"Failed models:     {len(df_failed)}")
 
 ```{python}
 #| label: registry-table
-registry_cols = ["label", "elapsed_s", "total_tokens", "est_cost_usd",
-                 "doc_accuracy", "chem_f1", "mech_f1", "overall_f1"]
+if df.empty:
+    print("No successful model results to display.")
+else:
+    registry_cols = ["label", "elapsed_s", "total_tokens", "est_cost_usd",
+                     "doc_accuracy", "chem_f1", "mech_f1", "overall_f1"]
 
-display_df = df[registry_cols].copy()
-display_df.columns = [
-    "Model", "Latency (s)", "Total Tokens", "Est. Cost ($)",
-    "Doc Acc", "Chem F1", "Mech F1", "Overall F1",
-]
-for col in ["Doc Acc", "Chem F1", "Mech F1", "Overall F1"]:
-    display_df[col] = display_df[col].apply(
-        lambda v: f"{v:.1%}" if pd.notna(v) else "—"
-    )
-display_df["Latency (s)"] = display_df["Latency (s)"].apply(lambda v: f"{v:.1f}s")
+    display_df = df[registry_cols].copy()
+    display_df.columns = [
+        "Model", "Latency (s)", "Total Tokens", "Est. Cost ($)",
+        "Doc Acc", "Chem F1", "Mech F1", "Overall F1",
+    ]
+    for col in ["Doc Acc", "Chem F1", "Mech F1", "Overall F1"]:
+        display_df[col] = display_df[col].apply(
+            lambda v: f"{v:.1%}" if pd.notna(v) else "—"
+        )
+    display_df["Latency (s)"] = display_df["Latency (s)"].apply(lambda v: f"{v:.1f}s")
 
-display(display_df.style
-        .set_caption("Successful models — benchmark summary")
-        .hide(axis="index"))
+    display(display_df.style
+            .set_caption("Successful models — benchmark summary")
+            .hide(axis="index"))
 ```
 
 # Grouped Bar Chart — Quality per Section
@@ -342,11 +345,11 @@ else:
     else:
         sizes = np.full(len(tok_vals), 400)
 
-    for _, row in df_c.iterrows():
+    for i, (_, row) in enumerate(df_c.iterrows()):
         clr = MODEL_COLORS[row["model_id"]]
         ax.scatter(
             row["elapsed_s"], row["overall_f1"],
-            s=sizes[df_c.index.get_loc(_)],
+            s=sizes[i],
             color=clr, alpha=0.8, edgecolors="white", linewidth=1.5, zorder=3,
         )
         ax.annotate(
@@ -482,22 +485,25 @@ from src.evaluation.evaluator import MTCEvaluator as _MTCEval
 
 DOC_FIELDS = _MTCEval.DOCUMENT_FIELDS
 
-detail_rows = []
-for _, row in df.iterrows():
-    df_fields = row["_doc_fields"] or {}
-    for field in DOC_FIELDS:
-        val = df_fields.get(field)
-        detail_rows.append({
-            "Model":  row["label"],
-            "Field":  field,
-            "Match":  "✓" if val is True else ("✗" if val is False else "—"),
-        })
+if df.empty:
+    print("No successful model results to display.")
+else:
+    detail_rows = []
+    for _, row in df.iterrows():
+        df_fields = row["_doc_fields"] or {}
+        for field in DOC_FIELDS:
+            val = df_fields.get(field)
+            detail_rows.append({
+                "Model":  row["label"],
+                "Field":  field,
+                "Match":  "✓" if val is True else ("✗" if val is False else "—"),
+            })
 
-detail_df = pd.DataFrame(detail_rows).pivot(index="Model", columns="Field", values="Match")
-display(detail_df.style
-        .set_caption("Document field exact-match per model (✓ = correct, ✗ = wrong, — = unevaluated)")
-        .applymap(lambda v: "color: green; font-weight: bold" if v == "✓"
-                  else ("color: red" if v == "✗" else ""), subset=detail_df.columns))
+    detail_df = pd.DataFrame(detail_rows).pivot(index="Model", columns="Field", values="Match")
+    display(detail_df.style
+            .set_caption("Document field exact-match per model (✓ = correct, ✗ = wrong, — = unevaluated)")
+            .map(lambda v: "color: green; font-weight: bold" if v == "✓"
+                      else ("color: red" if v == "✗" else ""), subset=detail_df.columns))
 ```
 
 # Error / Failure Breakdown
