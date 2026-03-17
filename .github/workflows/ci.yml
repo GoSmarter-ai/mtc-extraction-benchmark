@@ -150,16 +150,22 @@ jobs:
 
       - name: Render benchmark report
         run: quarto render benchmark_report.qmd
-        continue-on-error: true
 
-      - name: Upload benchmark results + report
+      - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: benchmark-results-${{ github.sha }}
-          path: |
-            data/processed/benchmark_output/
-            benchmark_report.html
+          path: data/processed/benchmark_output/
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Upload benchmark report (HTML)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-report-${{ github.sha }}
+          path: benchmark_report.html
           retention-days: 90
           if-no-files-found: warn
 
