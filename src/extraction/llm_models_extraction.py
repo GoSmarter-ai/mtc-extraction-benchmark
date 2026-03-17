@@ -115,20 +115,40 @@ RANKED_MODELS: List[Dict[str, str]] = [
 _HF_BASE = "https://router.huggingface.co/v1"
 HF_MODELS: List[Dict[str, str]] = [
     {
-        "id": "Qwen/Qwen2.5-72B-Instruct",
-        "label": "Qwen2.5 72B",
-        "provider": "Qwen/Alibaba",
-        "tier": "top",
-        "base_url": _HF_BASE,
-        "api_key_env": "HF_TOKEN",
-    },
-    {
         "id": "Qwen/Qwen2.5-7B-Instruct",
         "label": "Qwen2.5 7B",
         "provider": "Qwen/Alibaba",
         "tier": "small",
         "base_url": _HF_BASE,
         "api_key_env": "HF_TOKEN",
+        "max_tokens": 8192,
+    },
+    {
+        "id": "microsoft/Phi-3.5-mini-instruct",
+        "label": "Phi-3.5 Mini",
+        "provider": "Microsoft",
+        "tier": "small",
+        "base_url": _HF_BASE,
+        "api_key_env": "HF_TOKEN",
+        "max_tokens": 8192,
+    },
+    {
+        "id": "google/gemma-2-9b-it",
+        "label": "Gemma 2 9B",
+        "provider": "Google",
+        "tier": "small",
+        "base_url": _HF_BASE,
+        "api_key_env": "HF_TOKEN",
+        "max_tokens": 8192,
+    },
+    {
+        "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "label": "DeepSeek-R1 Distill 8B",
+        "provider": "DeepSeek",
+        "tier": "small",
+        "base_url": _HF_BASE,
+        "api_key_env": "HF_TOKEN",
+        "max_tokens": 8192,
     },
 ]
 
@@ -296,10 +316,13 @@ class LLMModelBenchmark:
             f'OCR TEXT{page_info}:\n"""\n{ocr_text}\n"""'
         )
 
+        effective_max_tokens = self._model_registry.get(model_id, {}).get(
+            "max_tokens", self.max_tokens
+        )
         response = self._make_client(model_id).chat.completions.create(
             model=model_id,
             temperature=temperature,
-            max_tokens=self.max_tokens,
+            max_tokens=effective_max_tokens,
             messages=[
                 {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": user_prompt},
